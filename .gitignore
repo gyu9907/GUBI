@@ -94,3 +94,7 @@ hs_err_pid*
 replay_pid*
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse
+
+/GUBI/src/main/webapp/WEB-INF/Command.properties
+/GUBI/src/main/webapp/WEB-INF/web.xml
+GUBI/.classpath
