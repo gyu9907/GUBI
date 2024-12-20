@@ -2,18 +2,21 @@ package product.domain;
 
 public class ProductVO {
 	
-	private int productno; 		/* 상품 일련번호 */
-	private int fk_categoryno;  /* 카테고리 일련번호 */
-	private String name; 		/* 상품명 */
-	private String description; /* 상세설명 */
-	private int price; 			/* 가격 */
-	private String thumbnail_img; 	/* 상품 이미지 */
-	private String registerday; 	/* 등록일자 */
-	private int cnt; 				/* 재고 */
-	private int delivery_price; 	/* 배송비 */
-	private int is_delete; 			/* 삭제여부 */
-	private int point_pct; 			/* 포인트적립비율 */
+	private int productno; 		   /* 상품 일련번호 */
+	private int fk_categoryno;     /* 카테고리 일련번호 */
+	private String name; 		   /* 상품명 */
+	private String description;    /* 상세설명 */
+	private int price; 			  /* 가격 */
+	private String thumbnail_img;  /* 상품 미리보기 이미지 */
+	private String registerday; 	  /* 등록일자 */
+	private int cnt; 			  /* 재고 */
+	private int delivery_price; 	  /* 배송비 */
+	private String detail_html; 	  /* 상품설명 html 경로 */
+	private int is_delete; 		  /* 삭제여부 */
+	private int point_pct; 		  /* 포인트적립비율 */
 	
+	
+
 	// getter setter 
 	public int getProductno() {
 		return productno;
@@ -68,6 +71,12 @@ public class ProductVO {
 	}
 	public void setDelivery_price(int delivery_price) {
 		this.delivery_price = delivery_price;
+	}
+	public String getDetail_html() {
+		return detail_html;
+	}
+	public void setDetail_html(String detail_html) {
+		this.detail_html = detail_html;
 	}
 	public int getIs_delete() {
 		return is_delete;
