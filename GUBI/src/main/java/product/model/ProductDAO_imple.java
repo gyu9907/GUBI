@@ -237,7 +237,6 @@ public class ProductDAO_imple implements ProductDAO {
 					pstmt.setInt(i++, colorRGB[0]);
 					pstmt.setInt(i++, colorRGB[1]);
 					pstmt.setInt(i++, colorRGB[2]);
-					System.out.println(colorRGB[0] +", "+ colorRGB[1] +", "+ colorRGB[2]);
 				}
 			}
 
@@ -443,7 +442,6 @@ public class ProductDAO_imple implements ProductDAO {
 					pstmt.setInt(i++, colorRGB[0]);
 					pstmt.setInt(i++, colorRGB[1]);
 					pstmt.setInt(i++, colorRGB[2]);
-					System.out.println(colorRGB[0] +", "+ colorRGB[1] +", "+ colorRGB[2]);
 				}
 			}
 
@@ -617,7 +615,6 @@ public class ProductDAO_imple implements ProductDAO {
 					pstmt.setInt(i++, colorRGB[0]);
 					pstmt.setInt(i++, colorRGB[1]);
 					pstmt.setInt(i++, colorRGB[2]);
-					System.out.println(colorRGB[0] +", "+ colorRGB[1] +", "+ colorRGB[2]);
 				}
 			}
 
