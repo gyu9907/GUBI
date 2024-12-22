@@ -62,19 +62,20 @@ public class ProductSearch extends AbstractController {
 			currentShowPageNo = "1";
 		}
 		
-		System.out.println("searchType : "+searchType);
-		System.out.println("searchWord : "+searchWord);
-		System.out.println("major_category : "+major_category);
-		System.out.println("small_category : "+small_category);
-		System.out.println("startDate : "+startDate);
-		System.out.println("endDate : "+endDate);
-		System.out.println("is_delete : "+is_delete);
-		System.out.println("startPrice : "+startPrice);
-		System.out.println("endPrice : "+endPrice);
-		System.out.println("currentShowPageNo : "+currentShowPageNo);
-		System.out.println("colors : "+colors);
-		System.out.println("startCnt : "+startCnt);
-		System.out.println("endCnt : "+endCnt);
+		// 테스트용 출력
+//		System.out.println("searchType : "+searchType);
+//		System.out.println("searchWord : "+searchWord);
+//		System.out.println("major_category : "+major_category);
+//		System.out.println("small_category : "+small_category);
+//		System.out.println("startDate : "+startDate);
+//		System.out.println("endDate : "+endDate);
+//		System.out.println("is_delete : "+is_delete);
+//		System.out.println("startPrice : "+startPrice);
+//		System.out.println("endPrice : "+endPrice);
+//		System.out.println("currentShowPageNo : "+currentShowPageNo);
+//		System.out.println("colors : "+colors);
+//		System.out.println("startCnt : "+startCnt);
+//		System.out.println("endCnt : "+endCnt);
 		
 		Map<String, String> paraMap = new HashMap<>();
 		
@@ -124,20 +125,20 @@ public class ProductSearch extends AbstractController {
         int pageNo  = ( (Integer.parseInt(currentShowPageNo) - 1)/blockSize ) * blockSize + 1; 
         // pageNo 는 페이지바에서 보여지는 첫번째 번호이다.
 
-		pageBar += "<li class='page-item'><a class='page-link' href='javascript:adminProduct(\""+request.getContextPath()+"\", 1)'>&laquo;</a></li>";
+		pageBar += "<li class='page-item'><a class='page-link' href='javascript:searchProduct(\""+request.getContextPath()+"\", 1)'>&laquo;</a></li>";
 
         // 첫번째 페이지 바에서는 다음 버튼을 표시하지 않는다.
 		if (pageNo > 1) {
-			pageBar += "<li class='page-item'><a class='page-link' href='javascript:adminProduct(\""+request.getContextPath()+"\", "+(pageNo-1)+")'>&lt;</a></li>";
+			pageBar += "<li class='page-item'><a class='page-link' href='javascript:searchProduct(\""+request.getContextPath()+"\", "+(pageNo-1)+")'>&lt;</a></li>";
 		}
 
         while(!(loop > blockSize || pageNo > totalPage)) {
         	
         	if(pageNo == Integer.parseInt(currentShowPageNo)) {
-	        	pageBar += "<li class='page-item active'><a class='page-link' href='javascript:adminProduct(\""+request.getContextPath()+"\", "+pageNo+")'>"+pageNo+"</a></li>";
+	        	pageBar += "<li class='page-item active'><a class='page-link' href='javascript:searchProduct(\""+request.getContextPath()+"\", "+pageNo+")'>"+pageNo+"</a></li>";
         	}
         	else {
-	        	pageBar += "<li class='page-item'><a class='page-link' href='javascript:adminProduct(\""+request.getContextPath()+"\", "+pageNo+")'>"+pageNo+"</a></li>";
+	        	pageBar += "<li class='page-item'><a class='page-link' href='javascript:searchProduct(\""+request.getContextPath()+"\", "+pageNo+")'>"+pageNo+"</a></li>";
         	}
         	
         	loop++;   // 1  2  3  4  5  6  7  8  9  10
@@ -155,9 +156,9 @@ public class ProductSearch extends AbstractController {
         
         // 마지막 페이지 바에서는 다음 버튼을 표시하지 않는다.
         if(pageNo <= totalPage) {
-			pageBar += "<li class='page-item'><a class='page-link' href='javascript:adminProduct(\""+request.getContextPath()+"\", "+pageNo+")'>&gt;</a></li>";
+			pageBar += "<li class='page-item'><a class='page-link' href='javascript:searchProduct(\""+request.getContextPath()+"\", "+pageNo+")'>&gt;</a></li>";
         }
-		pageBar += "<li class='page-item'><a class='page-link' href='javascript:adminProduct(\""+request.getContextPath()+"\", "+totalPage+")'>&raquo;</a></li>";
+		pageBar += "<li class='page-item'><a class='page-link' href='javascript:searchProduct(\""+request.getContextPath()+"\", "+totalPage+")'>&raquo;</a></li>";
 		// === 페이지바 만들기 끝 === //
 		
 		try {
