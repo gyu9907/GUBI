@@ -1,5 +1,9 @@
 package product.domain;
 
+import java.util.List;
+
+import category.domain.CategoryVO;
+
 public class ProductVO {
 	
 	private int productno; 		   /* 상품 일련번호 */
@@ -15,6 +19,12 @@ public class ProductVO {
 	private int is_delete; 		  /* 삭제여부 */
 	private int point_pct; 		  /* 포인트적립비율 */
 	
+	// select 용 field
+	private List<OptionVO> optionList;
+	private int optionCnt;
+	private List<ProductImgVO> productImgList;
+	private int productImgCnt;
+	private CategoryVO categoryVO;
 	
 
 	// getter setter 
@@ -89,6 +99,36 @@ public class ProductVO {
 	}
 	public void setPoint_pct(int point_pct) {
 		this.point_pct = point_pct;
+	}
+	public List<OptionVO> getOptionList() {
+		return optionList;
+	}
+	public void setOptionList(List<OptionVO> optionList) {
+		this.optionList = optionList;
+	}
+	public int getOptionCnt() {
+		return optionCnt;
+	}
+	public void setOptionCnt(int optionCnt) {
+		this.optionCnt = optionCnt;
+	}
+	public List<ProductImgVO> getProductImgList() {
+		return productImgList;
+	}
+	public void setProductImgList(List<ProductImgVO> productImgList) {
+		this.productImgList = productImgList;
+	}
+	public int getProductImgCnt() {
+		return productImgCnt;
+	}
+	public void setProductImgCnt(int productImgCnt) {
+		this.productImgCnt = productImgCnt;
+	}
+	public CategoryVO getCategoryVO() {
+		return categoryVO;
+	}
+	public void setCategoryVO(CategoryVO categoryVO) {
+		this.categoryVO = categoryVO;
 	}
 	
 	
