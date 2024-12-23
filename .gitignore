@@ -98,3 +98,4 @@ replay_pid*
 GUBI/.classpath
 /GUBI/src/main/webapp/data
 GUBI/src/main/java/util/config/AppConfig.java
+GUBI/src/main/webapp/WEB-INF/Command.properties
