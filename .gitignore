@@ -96,3 +96,5 @@ replay_pid*
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse
 
 GUBI/.classpath
+/GUBI/src/main/webapp/data
+GUBI/src/main/java/util/config/AppConfig.java
