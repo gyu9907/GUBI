@@ -1,0 +1,272 @@
+@charset "UTF-8";
+/* 로고 */
+div#header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);;
+}
+img#logo {
+    /* border: 1px solid red;   */
+    margin:1% ;
+}
+
+/* 관리자메뉴 */
+div#adminmenu{
+    /* border: solid 1px black; */
+    height: 40px;
+    text-align: center;
+}
+div#adminmenu > ul > li a {
+    color:BLACK;
+    font-size: 10pt;
+}
+/* 본문내용 */
+div#contents{
+    /* border: solid 1px black; */
+    display: flex;
+}
+
+/* 사이드메뉴 */
+div#sidemenu {
+    /* border: solid 1px black; */
+    width: 15%;
+    margin: -2px auto;
+}
+div#sidemenu > h3 {
+    text-align: center;
+    margin: 3% 0 10% 0;
+}
+div#sidemenu ul,
+div#sidemenu li{
+    /* border: solid 1px black; */
+    list-style-type: none;
+    padding: 0;
+    margin:0;
+}
+div#menulist > ul > li a {
+    /* border: 1px solid red; */
+    font-size: 14pt;
+    padding: 0;
+    margin: 0;
+}
+div#menulist > ul > ul {
+    font-size:10pt;
+    line-height: 30px;
+    /* border: 1px solid blue; */
+}
+div#menulist > ul > ul > li a {
+    color: gray;
+    text-decoration: none;
+    margin: 0 auto;
+    display: inline-block;
+    /* border: 1px solid black; */
+    width: 70px;
+    padding-left: 3%;
+}
+#menulist > ul > ul:nth-child(2) > li:nth-child(1) a {
+    /* border: 1px solid red; */
+    width: 200px;
+}
+div#menulist > ul > ul > li a:hover {
+    color: black;
+}
+div#menulist > ul > ul > li button.btn {
+    font-size: 8pt;
+    height: 15px;
+    position: relative;
+}
+div#menulist > ul > ul > li button.btn span {
+    position: relative;
+    top: -6px;
+}
+div#menulist > ul > ul > li:last-child {
+    margin-bottom: 10%;
+}
+
+/* 본문 */
+div#article {
+    /* border: solid 1px black; */
+    width: 90%;
+}
+table.table { /* 모든 테이블 */
+    font-size: 10pt;
+}
+/* 본문상단 */
+div#searchbutton {
+    text-align: center;
+}
+div#searchbutton > button {
+    font-size: 10pt;
+}
+td#radio > label input#t {
+    position: relative;
+    top: 2px;
+}
+button.datebtn {
+    font-size: 8pt;
+}
+table.table > thead > tr > th.th span {
+    /* border: 1px solid red; */
+    position: relative;
+    top: -3px;
+}
+div#membersearch > h6 {
+    border-left: 4px solid #0240b1;
+    font-weight: bold;
+}
+/* 본문하단 */
+div#memberlist {
+    /* border: solid 1px blue; */
+    height: 900px;
+}
+div#top {
+    display: flex;
+}
+div#memberlist > table.table > thead > tr  th {
+    font-size: 12pt;
+}
+div#productupdate > button {
+    width: 90px;
+    height: 30px;
+    font-size: 8pt;
+    font-weight: bold;
+    position: relative;
+    top: 10px;
+}
+div#productupdate > button span {
+    position: relative;
+}
+table.table > tbody > tr > td button.update {
+    width: 70px;
+    height: 20px;
+    font-size: 8pt;
+    position: relative;
+    left: -7px;
+}
+table.table > tbody > tr > td span {
+    position: relative;
+    top: -5px;
+}
+table.table > tbody > tr#tr:hover {
+    background-color: #EEEEEE;
+	cursor: pointer;
+}
+/* 모달 */
+div.modal-body {
+    display: flex;
+    border: 1px solid gray;
+}
+div.left {
+    width:40%;
+    padding: 2%;
+}
+div.left > div:first-child {
+    border-bottom: 1px solid black;
+    padding-bottom: 3%;
+}
+span.regiday {
+    display: block;
+    font-size: 10pt;
+    color:gray;
+    float: right;
+}
+div.left img {
+    width: 250px;
+    display: block;
+    margin: 30px auto;
+    aspect-ratio: 4/5;
+    object-fit: contain;
+}
+
+div.right {
+    border-left: 1px solid gray;
+    width:60%;
+    padding: 2%;
+    position: relative;
+}
+div.right > div.productname {
+    font-size: 20pt;
+}
+div.cnt {
+    position: absolute;
+    bottom: 120px;
+    right: 0;
+    color: gray;
+    padding-right: 1%;
+}
+div.delivery_price {
+    position: absolute;
+    font-size: 12pt;
+    bottom: 90px;
+    right: 0;
+    color: gray;
+    padding-right: 1%;
+}
+div.product_price {
+    position: absolute;
+    font-size: 12pt;
+    bottom: 60px;
+    right: 0;
+    color: gray;
+    padding-right: 1%;
+}
+div.price {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: 24pt;
+    border-top: 1px solid gray ;
+    padding-right: 1%;
+}
+div.optionlist {
+    width:30%;
+    height: 30px;
+    display: flex;
+}
+div.optionimg {
+    width: 25px;
+    height:25px;
+    margin-right: 3%;
+    margin-top: 2%;
+}
+div.info {
+    border-bottom: 1px solid gray;
+    padding-bottom: 1%;
+    font-size: 10.5pt;
+    width: 200px;
+}
+/* 푸터 */
+div#footer{
+    border: solid 1px black;
+    height: 100px;
+}
+
+/* 페이지바 */
+div#pageBar > nav > ul.pagination {
+	/* border: 1px solid blue; */
+	display: flex; 
+    justify-content: center;
+	text-align: center;
+}
+div#pageBar > nav > ul.pagination > li.page-item a {
+    /* border: 1px solid red; */
+	color:black;
+    font-size: 10pt;
+}
+.page-link {
+    border: none;
+}
+.page-link:active:hover {
+    border: 1px solid  rgba(0, 0, 0, 0.5);
+}  
+  .page-link:focus {
+    z-index: 3;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(246, 246, 246, 0.25);
+  }
+  
+  .page-item.active .page-link {
+    border-bottom: 1px solid black;
+    z-index: 3;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+

@@ -6,7 +6,8 @@ public class ProductImgVO {
 	 private int fk_productno; 		/* 상품 일련번호 */
 	 private String img; 			/* 이미지 */
 	 
-	 // getter setter 
+	 
+	// getter setter 
 	 public int getProduct_imgno() {
 		return product_imgno;
 	 }

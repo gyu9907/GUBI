@@ -7,6 +7,7 @@ import java.util.Map;
 import category.domain.CategoryVO;
 import collection.domain.CollectionVO;
 import product.domain.OptionVO;
+import product.domain.ProductImgVO;
 import product.domain.ProductVO;
 import review.domain.ReviewVO;
 
@@ -52,6 +53,51 @@ public interface ProductDAO {
 	// 제품상세페이지에서 리뷰조회하는 메소드
 	List<ReviewVO> selectReview(int productno) throws SQLException;
 	
+	/////////////////////////////////////////////////////////////////
 	
+	// 카테고리 대분류 가져오기 
+	List<CategoryVO> selectMajorCategory() throws SQLException;
+
+	// 카테고리 소분류 가져오기 
+	List<CategoryVO> selectSmallCategory(String major_category) throws SQLException;
+
+	// 상품리스트 
+	List<ProductVO> selectProduct(Map<String, String> paraMap) throws SQLException;
+
+	// 총페이지수 가져오기
+	int totalPage(Map<String, String> paraMap) throws SQLException;
+
+	// 상품개수 알아오기 
+	int productCnt(Map<String, String> paraMap) throws SQLException;
+
+	// 상품 삭제하기 
+	int deleteProduct(String deleteproductno) throws SQLException;
+
+	// 상품 재등록하기
+	int recoverProduct(String recoverproductno) throws SQLException;
+
+	// 카테고리 번호 찾기 
+	int searchCategoryNo(Map<String, String> paraMap) throws SQLException;
+
+	// 상품번호 채번하기
+	int getProductNum() throws SQLException;
+	
+	// 상품등록하기
+	int addProduct(Map<String, String> paraMap) throws SQLException;
+
+	// 옵션 등록하기 
+	int addOption(OptionVO ovo, int num) throws SQLException;
+
+	// 이미지 등록하기
+	int addImage(ProductImgVO pvo, int num) throws SQLException;
+
+	// 상품상세보기
+	List<ProductVO> detailProductList(String productno) throws SQLException;
+
+	// 상품 옵션리스트
+	List<OptionVO> optionList(String productno) throws SQLException;
+
+	// 리뷰개수
+	int reviewcnt(String productno) throws SQLException;
 
 }

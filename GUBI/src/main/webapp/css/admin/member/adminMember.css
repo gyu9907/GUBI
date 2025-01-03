@@ -1,0 +1,213 @@
+@charset "UTF-8";
+/* 로고 */
+div#header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);;
+}
+img#logo {
+    /* border: 1px solid red;   */
+    margin:1% ;
+}
+/* 관리자메뉴 */
+div#adminmenu{
+    /* border: solid 1px black; */
+    height: 40px;
+    text-align: center;
+}
+div#adminmenu > ul > li a {
+    color:BLACK;
+    font-size: 10pt;
+}
+/* 본문내용 */
+div#contents{
+    /* border: solid 1px black; */
+    display: flex;
+}
+
+/* 사이드메뉴 */
+div#sidemenu {
+    /* border: solid 1px black; */
+    width: 15%;
+    margin: -2px auto;
+}
+div#sidemenu > h3 {
+    text-align: center;
+    margin: 3% 0 10% 0;
+}
+div#sidemenu ul,
+div#sidemenu li{
+    /* border: solid 1px black; */
+    list-style-type: none;
+    padding: 0;
+    margin:0 ;
+}
+div#menulist > ul > li a {
+    /* border: 1px solid red; */
+    font-size: 14pt;
+    padding: 0;
+    margin: 0;
+}
+#menulist > ul > ul {
+    font-size:10pt;
+    line-height: 30px;
+    /* border: 1px solid blue; */
+}
+#menulist > ul > ul > li a{
+    color: gray;
+    text-decoration: none;
+    margin: 0 auto;
+    padding-left: 3%;
+}
+#menulist > ul > ul > li a:hover {
+    color: black;
+}
+#menulist > ul > ul > li:last-child {
+    margin-bottom: 10%;
+}
+
+/* 본문 */
+div#article {
+    /* border: solid 1px black; */
+    width: 90%;
+}
+table.table { /* 모든 테이블 */
+    font-size: 10pt;
+}
+
+/* 본문상단 */
+div#searchbutton {
+    text-align: center;
+}
+div#searchbutton > button {
+    font-size: 10pt;
+}
+div#membersearch > h6 {
+    border-left: 4px solid #0240b1;
+    font-weight: bold;
+}
+td#radio {
+    display: flex;
+}
+td#radio > label input#t {
+    position: relative;
+    top: 2px;
+}
+button.datebtn {
+    font-size: 8pt;
+}
+table.table > thead > tr > th.th span {
+    /* border: 1px solid red; */
+    position: relative;
+    top: -3px;
+}
+
+/* 본문하단 */
+div#memberlist {
+   /*  border: solid 1px blue; */
+}
+div#memberlist > table.table > thead > tr  th {
+    font-size: 12pt;
+}
+button#addmember {
+	position:relative;
+	top:5px;
+}
+#memberlist > div> table > tbody > tr > td:nth-child(11) > button {
+	height:27px;
+}
+#memberlist > div> table > tbody > tr > td:nth-child(11) > button p {
+	font-size:10pt;
+	position:relative;
+	top:-4px;
+}
+div#pageBar {
+    border: solid 0px red;
+    width: 80%;
+    margin: 3% auto 0 auto;
+    display: flex;
+ }
+ 
+div#pageBar > nav {
+    margin: auto;
+ }
+/* 푸터 */
+div#footer{
+    border: solid 1px black;
+    height: 100px;
+}
+#productupdate > button > p {
+    display: inline-block;
+    position: relative;
+    top: -7px;
+}
+#memberlist > div:nth-child(2) > table > tbody > tr > td:nth-child(12) button {
+/* 	border: 1px solid red; */
+	width: 80px;
+	height:25px;
+	position: relative;
+	left: -10px;
+}
+#memberlist > div:nth-child(2) > table > tbody > tr > td:nth-child(12) p {
+	font-size: 10pt;
+	position: relative;
+	top:-5px;
+	left:-4px;
+}
+
+/* 모달 */
+
+div.modal-body > div.one {
+    display: flex;
+}
+div.one > div:first-child {
+    width:100px;
+    background-color: #eeeeee;
+    font-size: 10pt;
+    padding: 2%;
+    border-bottom: 1px solid white;
+    display : flex;
+    justify-content : center;
+    align-items : center;
+}
+div.modal-body > div div:nth-child(2) {
+    width: 380px;
+    font-size: 10pt;
+    padding: 2%;
+    overflow:hidden;
+    word-wrap:break-word;
+    border-bottom: 1px solid #eeeeee;
+}
+div:nth-child(7) > div.lastragiday {
+    font-size: 9pt;
+}
+/* 페이지바 */
+div#pageBar > nav > ul.pagination > li  {
+    border: none;
+}
+div#pageBar > nav > ul.pagination > li.page-item a {
+    /* border: 1px solid red; */
+	color:black;
+    font-size: 10pt;
+}
+.page-link {
+    border: none;
+}
+  
+.page-link:hover {
+    /* border: 1px solid  rgba(0, 0, 0, 0.5); */
+}
+.page-link:active:hover {
+    border: 1px solid  rgba(0, 0, 0, 0.5);
+}  
+  .page-link:focus {
+    z-index: 3;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(246, 246, 246, 0.25);
+  }
+  
+  .page-item.active .page-link {
+    border-bottom: 1px solid black;
+    z-index: 3;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+  

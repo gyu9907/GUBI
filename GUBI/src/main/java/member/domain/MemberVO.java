@@ -37,11 +37,68 @@ public class MemberVO {
 	private int idle;               // 휴면유무 0 : 활동중 / 1 : 휴면중
 	                                // 마지막으로 로그인 한 날짜시간이 현재시각으로 부터 1년이 지났으면 휴면으로 지정
 	private int point;              // 포인트
+
+
+	// select 
+	private int ordercnt;
+	private int logincnt;
+	private int membercnt;
+	private String loginday;
+	private String fulladdress;
+
 	
-	
-	
-	
-	
+	/*
+	 * public String getDeletemember() { if(userid != null) { return
+	 * String.join(",", userid); // System.out.println(); } else { return ""; } }//
+	 * end of public String getStrFood() ---------------------
+	 */
+
+
+	public String getFulladdress() {
+		return fulladdress;
+	}
+
+
+
+
+
+	public void setFulladdress(String fulladdress) {
+		this.fulladdress = fulladdress;
+	}
+
+
+
+
+
+	public int getMembercnt() {
+		return membercnt;
+	}
+
+
+
+
+
+	public void setMembercnt(int membercnt) {
+		this.membercnt = membercnt;
+	}
+
+
+
+
+
+	public String getLoginday() {
+		return loginday;
+	}
+
+
+
+
+
+	public void setLoginday(String loginday) {
+		this.loginday = loginday;
+	}
+
+
 	private boolean requirePwdChange = false;
 	// 마지막으로 암호를 변경한 날짜가 현재시각으로 부터 3개월이 지났으면 true
 	// 마지막으로 암호를 변경한 날짜가 현재시각으로 부터 3개월이 지나지 않았으면 false
@@ -286,9 +343,24 @@ public class MemberVO {
 		this.requirePwdChange = requirePwdChange;
 	}
 	
+	public int getOrdercnt() {
+		return ordercnt;
+	}
 	
 	
+	public void setOrdercnt(int ordercnt) {
+		this.ordercnt = ordercnt;
+	}
 	
+	
+	public int getLogincnt() {
+		return logincnt;
+	}
+	
+	
+	public void setLogincnt(int logincnt) {
+		this.logincnt = logincnt;
+	}
 	
 	
 

@@ -17,6 +17,7 @@ import javax.sql.DataSource;
 import category.domain.CategoryVO;
 import collection.domain.CollectionVO;
 import product.domain.OptionVO;
+import product.domain.ProductImgVO;
 import product.domain.ProductVO;
 import review.domain.ReviewVO;
 import util.check.Check;
@@ -1210,7 +1211,734 @@ public class ProductDAO_imple implements ProductDAO {
 		return reviewList;
 	}
 
+
+	// 카테고리 대분류 가져오기 
+	@Override
+	public List<CategoryVO> selectMajorCategory() throws SQLException {
+		
+		List<CategoryVO> selectMajorCategory = new ArrayList<>();
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql =  " select distinct major_category "
+						+ " from tbl_category ";
+			
+			pstmt = conn.prepareStatement(sql);
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				CategoryVO pvo = new CategoryVO();
+				
+				pvo.setMajor_category(rs.getString("major_category"));
+				
+				selectMajorCategory.add(pvo);
+			}
+
+		} finally {
+			close();
+		}
+
+		return selectMajorCategory;
+	}
+
+	// 카테고리 소분류 
+	@Override
+	public List<CategoryVO> selectSmallCategory(String major_category) throws SQLException {
+		
+		List<CategoryVO> selectSmallCategory = new ArrayList<>();
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql =  " select major_category, small_category "
+						+ " from tbl_category "
+						+ " where major_category = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, major_category);
+
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				CategoryVO pvo = new CategoryVO();
+				
+				pvo.setSmall_category(rs.getString("small_category"));
+				
+				selectSmallCategory.add(pvo);
+			}
+
+		} finally {
+			close();
+		}
+
+		return selectSmallCategory;
+	}
+
+	// 상품리스트 가져오기 
+	@Override
+	public List<ProductVO> selectProduct(Map<String, String> paraMap) throws SQLException {
+		
+		List<ProductVO> selectProduct = new ArrayList<>();
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql =  " select * "
+						+ " from "
+						+ " ( "
+						+ " 	with "
+						+ " 	a as "
+						+ " 	( "
+						+ " 		select productno, thumbnail_img, fk_categoryno, name, price, delivery_price, cnt, registerday, is_delete "
+						+ " 		from tbl_product "
+						+ " 	), "
+						+ " 	b as "
+						+ " 	( "
+						+ " 		select categoryno, major_category, small_category "
+						+ " 		from tbl_category "
+						+ " 	) "
+						+ " 	select rownum as rno, productno, fk_categoryno, thumbnail_img, name, price, delivery_price, cnt, registerday, a.is_delete, major_category, small_category "
+						+ " 	from a join b  "
+						+ " 	on a.fk_categoryno = b.categoryno "
+						+ "	 	where productno is not null ";
+
+			String searchType = paraMap.get("searchType");
+			String searchWord = paraMap.get("searchWord");
+			String startDate = paraMap.get("startDate");
+			String endDate = paraMap.get("endDate");
+			String is_delete = paraMap.get("is_delete");
+			String startprice = paraMap.get("startprice");
+			String endprice = paraMap.get("endprice");
+			String major_category = paraMap.get("major_category");
+			String small_category = paraMap.get("small_category");
+			
+			if(! searchType.isBlank() && ! searchWord.isBlank() ) { 
+				sql += " and " + searchType + " like '%' || ? || '%' ";
+			}
+			if(! major_category.isBlank() && !small_category.isBlank()) {
+				sql += " and major_category = ? and small_category = ? ";
+			}
+			if(!startDate.isBlank() && !endDate.isBlank()) {
+				sql += " and registerday between to_date(?,'yyyy-mm-dd') "
+					+  "                 and to_date(?,'yyyy-mm-dd') ";
+			}
+			if(!is_delete.isBlank()) {
+				sql += " and a.is_delete = ? ";
+			}
+			if(!startprice.isBlank() && !endprice.isBlank()) {
+				sql += " and price between ? and ? ";
+			}
+			
+			sql  += " order by productno, fk_categoryno  ) "
+				 +  " where rno between ? and ? ";
+			
+			int currentShowPageNo = Integer.parseInt(paraMap.get("currentShowPageNo")); // 현재페이지
+			int sizePerPage = Integer.parseInt(paraMap.get("sizePerPage"));
+			pstmt = conn.prepareStatement(sql);
+
+			int index = 1;
+			
+			if(! searchType.isBlank() && ! searchWord.isBlank() ) {
+				pstmt.setString(index++, searchWord);
+			}
+			if(! major_category.isBlank() && !small_category.isBlank()) {
+				pstmt.setString(index++, major_category);
+				pstmt.setString(index++, small_category);
+			}
+			if(!startDate.isBlank() && !endDate.isBlank()) {
+				pstmt.setString(index++, startDate);
+				pstmt.setString(index++, endDate);
+			}
+			if(!is_delete.isBlank()) {
+				pstmt.setString(index++, is_delete);
+			}
+			if(!startprice.isBlank() && !endprice.isBlank()) {
+				pstmt.setString(index++, startprice);
+				pstmt.setString(index++, endprice);
+			}
+		
+			pstmt.setInt(index++, (currentShowPageNo*sizePerPage)-(sizePerPage-1));
+			pstmt.setInt(index++, (currentShowPageNo*sizePerPage));
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ProductVO pvo = new ProductVO();
+				CategoryVO cvo = new CategoryVO();
+				
+				pvo.setProductno(rs.getInt("productno"));
+				pvo.setFk_categoryno(rs.getInt("fk_categoryno"));
+				pvo.setThumbnail_img(rs.getString("thumbnail_img"));
+				pvo.setName(rs.getString("name"));
+				pvo.setPrice(rs.getInt("price"));
+				pvo.setDelivery_price(rs.getInt("delivery_price"));
+				pvo.setCnt(rs.getInt("cnt"));
+				pvo.setRegisterday(rs.getString("registerday"));
+				pvo.setIs_delete(rs.getInt("is_delete"));
+				cvo.setMajor_category(rs.getString("major_category"));
+				cvo.setSmall_category(rs.getString("small_category"));
+				pvo.setCategoryVO(cvo);
+				
+				selectProduct.add(pvo);
+			}
+			
+		} finally {
+			close();
+		}
+
+		return selectProduct;
+	}
+
+	// 총페이지수 알기
+	@Override
+	public int totalPage(Map<String, String> paraMap) throws SQLException {
+		
+		int result = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " select ceil(count(*)/?) "
+					+ " from "
+					+ " ( "
+					+ " 	with "
+					+ " 	a as "
+					+ " 	( "
+					+ " 		select productno, thumbnail_img, fk_categoryno, name, price, delivery_price, cnt, registerday, is_delete "
+					+ " 		from tbl_product "
+					+ " 	), "
+					+ " 	b as "
+					+ " 	( "
+					+ " 		select categoryno, major_category, small_category "
+					+ " 		from tbl_category "
+					+ " 	) "
+					+ " 	select rownum as rno, productno, fk_categoryno, thumbnail_img, name, price, delivery_price, cnt, registerday, a.is_delete, major_category, small_category "
+					+ " 	from a join b  "
+					+ " 	on a.fk_categoryno = b.categoryno "
+					+ "	 	where productno is not null ";
 	
+			String searchType = paraMap.get("searchType");
+			String searchWord = paraMap.get("searchWord");
+			String startDate = paraMap.get("startDate");
+			String endDate = paraMap.get("endDate");
+			String is_delete = paraMap.get("is_delete");
+			String startprice = paraMap.get("startprice");
+			String endprice = paraMap.get("endprice");
+			String major_category = paraMap.get("major_category");
+			String small_category = paraMap.get("small_category");
+	
+			
+			if(! searchType.isBlank() && ! searchWord.isBlank() ) { 
+				sql += " and " + searchType + " like '%' || ? || '%' ";
+			}
+			if(! major_category.isBlank() && !small_category.isBlank()) {
+				sql += " and major_category = ? and small_category = ? ";
+			}
+			if(!startDate.isBlank() && !endDate.isBlank()) {
+				sql += " and registerday between to_date(?,'yyyy-mm-dd') "
+					+  "                 and to_date(?,'yyyy-mm-dd') ";
+			}
+			if(!is_delete.isBlank()) {
+				sql += " and a.is_delete = ? ";
+			}
+			if(!startprice.isBlank() && !endprice.isBlank()) {
+				sql += " and price between ? and ? ";
+			}
+			
+			sql += " ) ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(paraMap.get("sizePerPage")));
+			int index = 2;
+			
+			if(! searchType.isBlank() && ! searchWord.isBlank() ) {
+				pstmt.setString(index++, searchWord);
+			}
+			if(! major_category.isBlank() && !small_category.isBlank()) {
+				pstmt.setString(index++, major_category);
+				pstmt.setString(index++, small_category);
+			}
+			if(!startDate.isBlank() && !endDate.isBlank()) {
+				pstmt.setString(index++, startDate);
+				pstmt.setString(index++, endDate);
+			}
+			if(!is_delete.isBlank()) {
+				pstmt.setString(index++, is_delete);
+			}
+			if(!startprice.isBlank() && !endprice.isBlank()) {
+				pstmt.setString(index++, startprice);
+				pstmt.setString(index++, endprice);
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			result = rs.getInt(1);
+			
+		} finally {
+			close();
+		}
+			
+		return result;
+	}
+
+	// 총 인원수 
+	@Override
+	public int productCnt(Map<String, String> paraMap) throws SQLException {
+		int result = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " select count(*) "
+						+ " from "
+						+ " ( "
+						+ " 	with "
+						+ " 	a as "
+						+ " 	( "
+						+ " 		select productno, thumbnail_img, fk_categoryno, name, price, delivery_price, cnt, registerday, is_delete "
+						+ " 		from tbl_product "
+						+ " 	), "
+						+ " 	b as "
+						+ " 	( "
+						+ " 		select categoryno, major_category, small_category "
+						+ " 		from tbl_category "
+						+ " 	) "
+						+ " 	select rownum as rno, productno, fk_categoryno, thumbnail_img, name, price, delivery_price, cnt, registerday, a.is_delete, major_category, small_category "
+						+ " 	from a join b  "
+						+ " 	on a.fk_categoryno = b.categoryno "
+						+ "	 	where productno is not null ";
+	
+			String searchType = paraMap.get("searchType");
+			String searchWord = paraMap.get("searchWord");
+			String startDate = paraMap.get("startDate");
+			String endDate = paraMap.get("endDate");
+			String is_delete = paraMap.get("is_delete");
+			String startprice = paraMap.get("startprice");
+			String endprice = paraMap.get("endprice");
+			String major_category = paraMap.get("major_category");
+			String small_category = paraMap.get("small_category");
+	
+			
+			if(! searchType.isBlank() && ! searchWord.isBlank() ) { 
+				sql += " and " + searchType + " like '%' || ? || '%' ";
+			}
+			if(! major_category.isBlank() && !small_category.isBlank()) {
+				sql += " and major_category = ? and small_category = ? ";
+			}
+			if(!startDate.isBlank() && !endDate.isBlank()) {
+				sql += " and registerday between to_date(?,'yyyy-mm-dd') "
+					+  "                 and to_date(?,'yyyy-mm-dd') ";
+			}
+			if(!is_delete.isBlank()) {
+				sql += " and a.is_delete = ? ";
+			}
+			if(!startprice.isBlank() && !endprice.isBlank()) {
+				sql += " and price between ? and ? ";
+			}
+			
+			sql += " ) ";
+			
+			pstmt = conn.prepareStatement(sql);
+
+			int index = 1;
+			
+			if(! searchType.isBlank() && ! searchWord.isBlank() ) {
+				pstmt.setString(index++, searchWord);
+			}
+			if(! major_category.isBlank() && !small_category.isBlank()) {
+				pstmt.setString(index++, major_category);
+				pstmt.setString(index++, small_category);
+			}
+			if(!startDate.isBlank() && !endDate.isBlank()) {
+				pstmt.setString(index++, startDate);
+				pstmt.setString(index++, endDate);
+			}
+			if(!is_delete.isBlank()) {
+				pstmt.setString(index++, is_delete);
+			}
+			if(!startprice.isBlank() && !endprice.isBlank()) {
+				pstmt.setString(index++, startprice);
+				pstmt.setString(index++, endprice);
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			result = rs.getInt(1);
+			
+		} finally {
+			close();
+		}
+			
+		return result;
+	}
+
+	// 상품 삭제하기 
+	@Override
+	public int deleteProduct(String deleteproductno) throws SQLException {
+		
+		int result = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " update tbl_product set is_delete = 1 "
+						+ " where productno = ? "; 
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, deleteproductno);
+
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close();
+		}
+		return result;
+	}
+
+	// 상품재등록
+	@Override
+	public int recoverProduct(String recoverproductno) throws SQLException {
+		
+		int result = 0;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql =  " update tbl_product set is_delete = 0 "
+						+ " where productno = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, recoverproductno);
+
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close();
+		}
+		return result;
+	}
+
+	// 카테고리 번호 찾기 
+	@Override
+	public int searchCategoryNo(Map<String, String> paraMap) throws SQLException {
+		
+		int categoryno = 0;
+
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql  = " select categoryno "
+						+ " from tbl_category "
+						+ " where major_category = ? and small_category = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, paraMap.get("major_category"));
+			pstmt.setString(2, paraMap.get("small_category"));
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				categoryno = rs.getInt("categoryno");
+			}
+		} finally {
+			close();
+		}
+		
+		return categoryno;
+		
+	}
+	
+	
+	
+	// 상품번호 채번하기 
+	@Override
+	public int getProductNum() throws SQLException {
+		
+		int num = 0;
+	      
+		try {
+	         conn = ds.getConnection();
+	         
+	         String sql = " select seq_productno.nextval AS pnum "
+         				+ " from dual ";
+	         
+	         pstmt = conn.prepareStatement(sql);
+	         rs = pstmt.executeQuery();
+	         
+             rs.next();
+             num = rs.getInt(1);
+	         
+		} finally {
+			close();
+		}
+		
+		return num;
+	}
+
+	// 상품등록하기 
+	@Override
+	public int addProduct(Map<String, String> paraMap) throws SQLException {
+	
+		int result = 0;
+		
+		try {
+			
+			conn =ds.getConnection();
+			
+			String sql  = " insert into tbl_product "
+						+ " values(?, ?, ?, ?, ?, "
+						+ " 	   ?, sysdate, ?, ?, ?, 0, ?) ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, paraMap.get("num"));
+			pstmt.setString(2, paraMap.get("categoryno"));
+			pstmt.setString(3, paraMap.get("name"));
+			pstmt.setString(4, paraMap.get("description"));
+			pstmt.setString(5, paraMap.get("price"));
+			pstmt.setString(6, paraMap.get("thumbnail_img"));
+			pstmt.setString(7, paraMap.get("cnt"));
+			pstmt.setString(8, paraMap.get("delivery_price"));
+			pstmt.setString(9, paraMap.get("detail_html"));
+			pstmt.setString(10,  paraMap.get("point_pct"));
+			
+			result = pstmt.executeUpdate();
+			
+		} finally {
+			close();
+		}
+		
+		return result;
+	}
+
+	// 옵션등록 
+	@Override
+	public int addOption(OptionVO ovo, int num) throws SQLException {
+
+		int result = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql  = " insert into tbl_option values(?, fk_productno, ?, ?, ?) ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			
+			pstmt.setInt(1, num);
+			pstmt.setString(2, ovo.getImg());
+			pstmt.setString(3, ovo.getName());
+			pstmt.setString(4, ovo.getColor());
+
+			result = pstmt.executeUpdate();
+
+		} finally {
+			close();
+		}
+
+		return result;
+	}
+
+	// 이미지 등록하기 
+	@Override
+	public int addImage(ProductImgVO pvo, int num) throws SQLException {
+
+		int result = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql = " insert into tbl_product_img values(seq_product_imgno.nextval, ?, ?) ";
+			
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setInt(1, num);
+			pstmt.setString(2, pvo.getImg());
+			
+			result = pstmt.executeUpdate();
+
+		} finally {
+			close();
+		}
+		
+		return result;
+	}
+
+	// 상품상세보기 
+	@Override
+	public List<ProductVO> detailProductList(String productno) throws SQLException {
+		
+		List<ProductVO> detailProductList = new ArrayList<>();
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql =  " with "
+						+ " a as "
+						+ " ( "
+						+ " select productno, fk_categoryno, name, price, thumbnail_img, registerday, cnt, delivery_price, is_delete, point_pct "
+						+ " from tbl_product "
+						+ " ), "
+						+ " b as "
+						+ " ( "
+						+ " select categoryno, major_category, small_category "
+						+ " from tbl_category "
+						+ " ) "
+						+ " select productno, price, a.name as productname, thumbnail_img, registerday, cnt, delivery_price, is_delete, point_pct, "
+						+ "       major_category, small_category "
+						+ " from a join b "
+						+ " on a.fk_categoryno = b.categoryno "
+						+ " where productno = ? "
+						+ " order by productno ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, productno);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ProductVO pvo = new ProductVO();
+				CategoryVO cvo = new CategoryVO();
+				
+				pvo.setProductno(rs.getInt("productno"));
+				pvo.setName(rs.getString("productname"));
+				pvo.setThumbnail_img(rs.getString("thumbnail_img"));
+				pvo.setRegisterday(rs.getString("registerday"));
+				pvo.setCnt(rs.getInt("cnt"));
+				pvo.setDelivery_price(rs.getInt("delivery_price"));
+				pvo.setIs_delete(rs.getInt("is_delete"));
+				pvo.setPoint_pct(rs.getInt("point_pct"));
+				pvo.setPrice(rs.getInt("price"));
+				
+				cvo.setMajor_category(rs.getString("major_category"));
+				cvo.setSmall_category(rs.getString("small_category"));
+				pvo.setCategoryVO(cvo);
+				
+				detailProductList.add(pvo);
+			}
+			
+		} finally {
+			close();
+		}
+		
+		return detailProductList;
+	}
+
+	// 상품 옵션리스트
+	@Override
+	public List<OptionVO> optionList(String productno) throws SQLException {
+		
+		List<OptionVO> optionList = new ArrayList<>();
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " with "
+						+ " a as "
+						+ " ( "
+						+ " 	select color, optionno, fk_productno, name, img "
+						+ " 	from tbl_option "
+						+ " ), "
+						+ " b as "
+						+ " ( "
+						+ " 	select productno "
+						+ " 	from tbl_product "
+						+ " ) "
+						+ " select fk_productno, color, productno, optionno, name, img "
+						+ " from a join b "
+						+ " on a.fk_productno = b.productno "
+						+ " where productno = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, productno);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				OptionVO ovo = new OptionVO();
+				
+				ovo.setFk_productno(rs.getInt("fk_productno"));
+				ovo.setColor(rs.getString("color"));
+				ovo.setOptionno(rs.getInt("optionno"));
+				ovo.setName(rs.getString("name"));
+				ovo.setImg(rs.getString("img"));
+				
+				optionList.add(ovo);
+			}
+			
+		} finally {
+			close();
+		}
+		
+		return optionList;
+	}
+
+	// 후기개수
+	@Override
+	public int reviewcnt(String productno) throws SQLException {
+		
+		int cnt = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " with "
+						+ " a as "
+						+ " ( "
+						+ " select productno "
+						+ " from tbl_product "
+						+ " ), "
+						+ " b as "
+						+ " ( "
+						+ " select fk_productno,optionno "
+						+ " from tbl_option "
+						+ " ), "
+						+ " c as "
+						+ " ( "
+						+ " select reviewno, fk_optionno "
+						+ " from tbl_review "
+						+ " ) "
+						+ " select count(*) as count "
+						+ " from a join b "
+						+ " on a.productno = b.fk_productno "
+						+ " join c "
+						+ " on b.optionno = c.fk_optionno "
+						+ " where fk_productno = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, productno);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				cnt = rs.getInt("count");
+			}
+			
+		} finally {
+			close();
+		}
+		
+		return cnt;
+	}
 
 	
 }

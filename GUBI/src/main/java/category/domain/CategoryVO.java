@@ -6,8 +6,18 @@ public class CategoryVO {
 	private String major_category; 	/* 대분류 */
 	private String small_category; 	/* 소분류 */
 	private int is_delete; 			/* 삭제여부 */
-	private String category_img; 			/* 삭제여부 */
+	private String category_img; 	/* 삭제여부 */
 	
+	
+	// select 용
+	private int productcnt; // 상품개수
+	
+	public int getProductcnt() {
+		return productcnt;
+	}
+	public void setProductcnt(int productcnt) {
+		this.productcnt = productcnt;
+	}
 	// getter settter 
 	public int getCategoryno() {
 		return categoryno;
@@ -39,8 +49,6 @@ public class CategoryVO {
 	public void setCategory_img(String category_img) {
 		this.category_img = category_img;
 	}
-	
-	
 	
 	
 }
