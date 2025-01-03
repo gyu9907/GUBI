@@ -1,5 +1,10 @@
 package common.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import member.domain.MemberVO;
+//import my.util.MyUtil;
+
 public abstract class AbstractController implements InterCommand {
 	/*
 	    === 다음의 나오는 것은 우리끼리한 약속이다. ===
@@ -14,7 +19,7 @@ public abstract class AbstractController implements InterCommand {
 	     ※ URL 주소를 변경하여 페이지 이동시키고자 한다라면
 	        즉, sendRedirect 를 하고자 한다라면    
 	        자식클래스에서는 부모클래스에서 생성해둔 메소드 호출시 아래와 같이 하면 되게끔 한다.
-	          
+	        값 못보낸다!!!!   
 	    super.setRedirect(true);
 	    super.setViewPage("registerMember.up");               
 	*/
@@ -43,7 +48,7 @@ public abstract class AbstractController implements InterCommand {
 		this.viewPage = viewPage;
 	}
 	
-	/*
+	
 	//////////////////////////////////////////////////////
 	// 로그인 유무를 검사해서 로그인 했으면 true 를 리턴해주고
 	// 로그인 안했으면 false 를 리턴해주도록 한다.
@@ -61,5 +66,34 @@ public abstract class AbstractController implements InterCommand {
 			return false;
 		}
 	}// end of public boolean checkLogin(HttpServletRequest request) {}------------------
-	*/
+	
+	
+	
+	
+	
+//	// 로그인 또는 로그아웃을 하면 시작페이지로 가는 것이 아니라 방금 보았던 그 페이지로 그대로 가기 위한 것임.
+//	public void goBackURL(HttpServletRequest request) {
+//
+//		HttpSession session = request.getSession();
+//		session.setAttribute("goBackURL", MyUtil.getCurrentURL(request));
+//
+//	}// end of public void goBackURL() {}...
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

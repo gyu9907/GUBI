@@ -1,0 +1,140 @@
+@charset "UTF-8";
+
+p {
+	font-size: 13pt;
+}
+
+
+ol {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+
+/* ol li:before {
+  content: '.';
+  margin-top:5px;
+  width: 15px;
+  height: 15px;
+  border-radius: 5px;
+  background-color: #eee;
+  position: absolute;
+  margin-left: -12px;
+} */
+
+
+ol li {
+	height: 50px;
+}
+
+
+
+.box {
+	width: 100%;
+/* 	border-top-style: solid; */
+/* 	border-color: gray; */
+	border-top: solid 1px gray;
+	border-bottom-style: 0;
+	border-left-style: 0;
+	border-right-style: 0;
+}
+
+
+input#agreeCheck {
+	margin-top: 20px;
+}
+
+
+.labelMr {
+	margin-right: 15px;
+}
+
+
+.btnstyle {
+    border: solid 1px black;
+    font-size: 11pt;
+    padding: 3px 10px;
+    background-color: white;
+    border-radius: 5px;
+    transition: all 0.3s
+}
+
+.btnstyle:hover {
+    border: solid 1px black;
+    background-color: black;
+    color:white;
+}
+
+
+input.underline {
+    /* width: 100%; */
+    border-color: #ccc;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 1;
+}
+
+
+input:focus {
+    outline: none;
+    border-color: black;
+}
+
+
+.disabled {
+    background-color: #eee;
+
+    /* border: solid 0px black;
+    font-size: 10pt;
+    width: 110px;
+    height: 20px;
+    padding: 0;
+    color: #555; */
+
+    outline: none !important;
+    border-color: black !important; 
+
+    /* color: #8b8b8b; */
+    color: #3f3f3f;
+    cursor: default;
+}
+
+.contents {
+	display: flex;
+	align-items: center;
+}
+
+.spanNum {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 25px;
+	min-width: 25px;
+	height: 25px;
+	background-color: #eee;
+	color: #aaa;
+	border-radius: 5px;
+	font-size: 10pt;
+	margin-right: 10px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

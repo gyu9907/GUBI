@@ -10,7 +10,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import member.domain.MemberVO;
 import member.model.*;
-import my.util.MyUtil;
 
 public class AdminMember extends AbstractController {
 	

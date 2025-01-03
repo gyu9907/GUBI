@@ -501,6 +501,398 @@ public class MemberDAO_imple implements MemberDAO {
 		
 		return result;
 	}
+	
+	
+	
+	
+	
+	// 회원가입을 해주는 메소드(tbl_member 테이블에 insert)
+	@Override
+	public int registerMember(MemberVO member) throws SQLException {
+
+		int n = 0;
+
+		try {
+			conn = ds.getConnection();
+
+			String sql = " INSERT INTO TBL_MEMBER(USERID, PASSWD, NAME, BIRTH, EMAIL, TEL, POSTCODE, ADDRESS, DETAIL_ADDRESS) "
+					   + " VALUES(?, ?, ?, ? ,? ,? ,? ,? ,? ) ";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, member.getUserid());
+			pstmt.setString(2, Sha256.encrypt(member.getPasswd())); // 암호를 SHA256 알고리즘으로 단방향 암호화 시킨다.
+			pstmt.setString(3, member.getName());
+			pstmt.setString(4, member.getBirth());
+			pstmt.setString(5, aes.encrypt(member.getEmail())); // 이메일을 AES256 알고리즘으로 양방향 암호화 시킨다.
+			pstmt.setString(6, aes.encrypt(member.getTel())); // 휴대폰을 AES256 알고리즘으로 양방향 암호화 시킨다.
+			pstmt.setString(7, member.getPostcode());
+			pstmt.setString(8, member.getAddress());
+			pstmt.setString(9, member.getDetail_address());
+
+			n = pstmt.executeUpdate();
+
+		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+			e.printStackTrace(); // 암호화키 catch 문
+		} finally {
+			close();
+		}
+
+		return n;
+
+	}// end of public int registerMember(MemberVO member) throws SQLException { }...
+		
+		
+	// ID 중복검사 (tbl_member 테이블에서 userid 가 존재하면 true 를 리턴해주고, userid 가 존재하지 않으면 false 를 리턴한다)
+	@Override
+	public boolean idDuplicateCheck(String userid) throws SQLException {
+
+		boolean isExists = false;
+
+		try {
+			conn = ds.getConnection();
+
+			String sql = " SELECT USERID " + " FROM tbl_member " + " WHERE USERID = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userid);
+
+			rs = pstmt.executeQuery();
+
+			isExists = rs.next(); // 있으면 true 나온다!
+
+		} finally {
+			close();
+		}
+
+		return isExists;
+
+	}// end of public boolean idDuplicateCheck(String userid) throws SQLException {
+		// }...
+		
+		
+		
+		
+	// Email 중복검사 메소드 (tbl_member 테이블에서 email 가 존재하면 true 를 리턴해주고, email 가 존재하지 않으면 false 를 리턴한다)
+	@Override
+	public boolean emailDuplicateCheck(String email) throws SQLException {
+
+		boolean isExists = false;
+
+		try {
+			conn = ds.getConnection();
+
+			String sql = " SELECT EMAIL " + " FROM tbl_member " + " WHERE EMAIL = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, aes.encrypt(email)); // 넣어줄 때 암호화해서 넣어준다!
+
+			rs = pstmt.executeQuery();
+
+			isExists = rs.next(); // 중복으로 있으면 true 나온다!
+
+		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return isExists;
+
+	}// end of public boolean emailDuplicateCheck(String email) throws SQLException { }...
+		
+		
+		
+		
+		
+	// 로그인 처리 메소드
+	@Override
+	public MemberVO login(Map<String, String> paraMap) throws SQLException {
+
+		MemberVO member = null;
+
+		try {
+			conn = ds.getConnection();
+
+			String sql = " SELECT USERID, PASSWD, NAME, BIRTH, EMAIL, TEL, POSTCODE, ADDRESS, DETAIL_ADDRESS, REGISTERDAY, "
+					   + "       PASSWDUPDATEGAP, "
+					   + "       NVL(lastlogingap, TRUNC(MONTHS_BETWEEN(SYSDATE, REGISTERDAY))) AS lastlogingap, "
+					   + "       STATUS, IDLE, POINT "
+					   + " FROM "
+					   + " (SELECT USERID "
+					   + "       ,PASSWD "
+					   + "       ,NAME "
+					   + "       ,BIRTH "
+					   + "       ,EMAIL "
+					   + "       ,TEL "
+					   + "       ,POSTCODE "
+					   + "       ,ADDRESS "
+					   + "       ,DETAIL_ADDRESS "
+					   + "       ,REGISTERDAY "
+					   + "       ,TRUNC(MONTHS_BETWEEN(SYSDATE, PASSWDUPDATEDAY)) AS passwdupdategap "
+					   + "       ,STATUS "
+					   + "       ,IDLE "
+					   + "       ,POINT "
+					   + " FROM TBL_MEMBER "
+					   + " WHERE STATUS = 0 AND USERID = ? AND PASSWD = ? "
+					   + " ) M "
+					   + " CROSS JOIN "
+					   + " ( "
+					   + " SELECT TRUNC(MONTHS_BETWEEN(SYSDATE, MAX(LOGINDAY))) AS lastlogingap "
+					   + " FROM TBL_LOGIN "
+					   + " WHERE FK_USERID = ? "
+					   + " ) H ";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, paraMap.get("userid"));
+			pstmt.setString(2, Sha256.encrypt(paraMap.get("passwd")));
+			pstmt.setString(3, paraMap.get("userid"));
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				member = new MemberVO();
+				member.setUserid(rs.getString("userid"));
+				member.setName(rs.getString("name"));
+				member.setBirth(rs.getString("BIRTH"));
+				member.setEmail(aes.decrypt(rs.getString("email"))); // 복호화
+				member.setTel(aes.decrypt(rs.getString("tel"))); // 복호화
+				member.setPostcode(rs.getString("postcode")); // 복호화
+				member.setAddress(rs.getString("address"));
+				member.setDetail_address(rs.getString("DETAIL_ADDRESS"));
+//					member.setRegisterday(rs.getString("REGISTERDAY")); // 이거 데이트타입
+				member.setStatus(rs.getInt("status"));
+				member.setPoint(rs.getInt("point"));
+
+				// 오라클에서 idle 자동 갱신 작업을 하면 상관없다.
+				member.setIdle(rs.getInt("IDLE"));
+
+				// 오라클에서 idle 자동 갱신 작업을 하면 상관없다.
+//					if (rs.getInt("lastlogingap") >= 12) {
+//						// 마지막으로 로그인 한 날짜시간이 현재시각으로 부터 1년이 지났으면 휴면으로 지정
+//						member.setIdle(1); // 휴면 지정
+				//
+//						if (rs.getInt("idle") == 0) {
+//							// tbl_member 테이블의 idle 컬럼의 값을 1로 변경하기! ==
+//							sql = " update tbl_member set idle = 1" 
+//								+ " where userid = ? ";
+				//
+//							pstmt = conn.prepareStatement(sql);
+//							pstmt.setString(1, paraMap.get("userid"));
+				//
+//							pstmt.executeUpdate(); // 그냥 돌리면 끝
+//						} // end of if (rs.getInt("idle")== 0) { }...
+				//
+//					} // end of if (rs.getInt("lastlogingap") >= 12) { }...
+
+				// 휴면이 아닌 회원만 tbl_login(로그인기록) 테이블에 insert 하기 시작
+				if (rs.getInt("lastlogingap") < 12) {
+
+					sql = " INSERT INTO TBL_LOGIN(HISTORYNO, FK_USERID, CLIENTIP) "
+						+ " values(SEQ_HISTORYNO.NEXTVAL, ?, ?) ";
+
+					pstmt = conn.prepareStatement(sql);
+					pstmt.setString(1, paraMap.get("userid"));
+					pstmt.setString(2, paraMap.get("clientip"));
+
+					pstmt.executeUpdate();
+
+				} // end of if (rs.getInt("lastlogingap") < 12) { }...
+
+				// 암호가 3개월 지났는지 판별
+				if (rs.getInt("passwdupdategap") >= 3) {
+					// 마지막으로 암호를 변경한 날짜가 현재시각으로 부터 3개월이 지났으면 true
+					// 마지막으로 암호를 변경한 날짜가 현재시각으로 부터 3개월이 지나지 않았으면 false
+
+					member.setRequirePwdChange(true); // 로그인시 암호를 변경해라는 alert 를 띄우도록 할때 사용한다.
+
+				} // end of if (rs.getInt("pwdchangegap") >= 3) { }...
+
+			} // end of if (rs.next())...
+
+		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return member;
+
+	}// end of public MemberVO login(Map<String, String> paraMap) throws
+		// SQLException...
+		
+	// 휴면 회원 복구해주는 메소드
+	@Override
+	public int memberReactivation(Map<String, String> paraMap) throws SQLException {
+
+		int n = 0;
+
+		try {
+			conn = ds.getConnection();
+
+			String sql = " UPDATE TBL_MEMBER SET IDLE = 0 WHERE userid = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, paraMap.get("userid"));
+
+			n = pstmt.executeUpdate(); // 성공하면 1
+
+		} finally {
+			close();
+		}
+
+		return n;
+
+	}// end of public int memberReactivation(Map<String, String> paraMap) throws
+		// SQLException {}...
+		
+		
+	// 기존 비밀번호랑 새 비밀번호가 다른지 확인
+	@Override
+	public boolean passwdExist(Map<String, String> paraMap) throws SQLException {
+
+		boolean isPasswdExist = false;
+
+		try {
+			conn = ds.getConnection();
+
+			String sql = " SELECT PASSWD "
+					   + " FROM TBL_MEMBER "
+					   + " WHERE USERID = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, paraMap.get("userid"));
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) { // 검색성공 시
+				if (rs.getString("passwd").equals(Sha256.encrypt(paraMap.get("new_passwd")))) {
+					isPasswdExist = true;
+				}
+			} //
+
+		} finally {
+			close();
+		}
+
+		return isPasswdExist;
+
+	}// end of public boolean passwdExist(Map<String, String> paraMap) throws SQLException {}...
+		
+	// 회원 비밀번호 변경하는 메소드
+	@Override
+	public int passwdUpdate(Map<String, String> paraMap) throws SQLException {
+
+		int n = 0;
+
+		try {
+			conn = ds.getConnection();
+
+			String sql = " UPDATE TBL_MEMBER SET PASSWD = ?, PASSWDUPDATEDAY = SYSDATE WHERE userid = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, Sha256.encrypt(paraMap.get("new_passwd")));
+			pstmt.setString(2, paraMap.get("userid"));
+
+			n = pstmt.executeUpdate(); // 성공하면 1
+
+		} finally {
+			close();
+		}
+
+		return n;
+
+	}// end of public int passwdUpdate(Map<String, String> paraMap) throws SQLException {}...
+		
+	// 아이디 찾아주는 메소드
+	@Override
+	public String idFind(Map<String, String> paraMap) throws SQLException {
+
+		String userid = null;
+
+		String name = paraMap.get("name");
+		String email = paraMap.get("email");
+
+		try {
+			conn = ds.getConnection();
+
+			String sql = " SELECT USERID "
+					   + " FROM TBL_MEMBER "
+				       + " WHERE EMAIL = ? AND NAME = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, aes.encrypt(email));
+			pstmt.setString(2, name);
+
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				userid = rs.getString("userid");
+			}
+
+		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return userid;
+
+	}// end of public String idFind(Map<String, String> paraMap) {}...
+		
+		
+		
+	// 회원정보 수정 메소드
+	@Override
+	public int memberEdit(MemberVO member) throws SQLException {
+
+		int n = 0;
+
+		try {
+			conn = ds.getConnection();
+
+			String sql = " UPDATE TBL_MEMBER SET PASSWD =?, NAME = ?, EMAIL = ?, TEL = ?, POSTCODE = ?, ADDRESS = ?, DETAIL_ADDRESS = ? "
+					+ " WHERE USERID = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, Sha256.encrypt(member.getPasswd())); // 암호화
+			pstmt.setString(2, member.getName());
+			pstmt.setString(3, aes.encrypt(member.getEmail())); // 암호화
+			pstmt.setString(4, aes.encrypt(member.getTel())); // 암호화
+			pstmt.setString(5, member.getPostcode());
+			pstmt.setString(6, member.getAddress());
+			pstmt.setString(7, member.getDetail_address());
+			pstmt.setString(8, member.getUserid());
+
+			n = pstmt.executeUpdate(); // 성공하면 1
+
+		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return n;
+
+	}// end of public int memberEdit(MemberVO member) throws SQLException {}...
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 
 	
