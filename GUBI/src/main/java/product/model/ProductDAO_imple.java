@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import javax.naming.Context;
 import javax.naming.InitialContext;
@@ -14,8 +15,10 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import category.domain.CategoryVO;
+import collection.domain.CollectionVO;
 import product.domain.OptionVO;
 import product.domain.ProductVO;
+import review.domain.ReviewVO;
 import util.check.Check;
 import util.color.ColorUtil;
 
@@ -61,6 +64,8 @@ public class ProductDAO_imple implements ProductDAO {
 	}// end of private void close()----------------
 	
 	
+	
+	// 검색한 상품 목록을 가져오는 메소드
 	@Override
 	public List<ProductVO> selectProducts(Map<String, String> paraMap) throws SQLException {
 		List<ProductVO> productList = new ArrayList<>();
@@ -669,4 +674,543 @@ public class ProductDAO_imple implements ProductDAO {
 		return optionVOList;
 	}
 
+	
+	
+	// 상품의 전체개수를 알아오기
+	@Override
+	public int totalProductCount(Map<String, String> paraMap) throws SQLException {
+		
+		int totalCount = 0;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " SELECT count(*) "
+					   + " FROM "
+					   + " ( "
+					   + "    SELECT row_number() over(order by productno desc) AS RNO "
+				   	   + "         , productno, name, C.major_category, C.small_category, price, thumbnail_img "
+					   + "    FROM tbl_product P "
+					   + "    JOIN tbl_category C "
+					   + "    ON P.fk_categoryno = C.categoryno ";
+
+			String majorCname = paraMap.get("majorCname");
+			String smallCname = paraMap.get("smallCname");
+			String freeshipping = paraMap.get("freeshipping");
+			
+			boolean is_free = "true".equalsIgnoreCase(freeshipping);
+			
+			
+			
+			if(!Check.isNullOrBlank(majorCname)) {
+				sql += " WHERE fk_categoryno IN ( "
+					 + "            select categoryno "
+					 + "            from tbl_category "
+					 + "            where major_category = ?  ";
+				
+				if(!Check.isNullOrBlank(smallCname)) { 
+					  sql += "              AND small_category = ? "; 
+				}
+				 
+				sql += "            ) ";
+				
+				if(is_free) {	
+					sql += " AND delivery_price = 0 ";
+				}
+			} else if(is_free) {
+				sql += " WHERE delivery_price = 0 ";
+			}
+
+			sql += ") V ";
+
+			System.out.println(" ----------------count[totalProductCount] 조회-----------");
+			System.out.println("majorCname:: " + majorCname);
+			System.out.println("smallCname:: " + smallCname);
+			System.out.println("freeshipping:: " + freeshipping);
+			System.out.println("count[totalProductCount] 조회 sql :: " + sql);
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			if(!Check.isNullOrBlank(majorCname)) {
+				pstmt.setString(1, majorCname);
+				if(!Check.isNullOrBlank(smallCname)) {
+					pstmt.setString(2, smallCname);
+				}
+			}
+			
+			rs = pstmt.executeQuery();
+	         
+	        rs.next();
+	         
+	        totalCount = rs.getInt(1); 
+	        
+		} finally {
+			close();
+		}
+		
+		
+		return totalCount;
+	}
+	
+	
+	
+	
+	
+	// 모든 상품 또는 카테고리별 상품목록을 조회하는 메소드
+	@Override
+	public List<ProductVO> selectCnoProduct(Map<String, String> paraMap) throws SQLException {
+		
+		List<ProductVO> productList = new ArrayList<>();
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " SELECT productno, name, price, thumbnail_img, major_category, small_category, registerday "
+					   + " FROM "
+					   + " ( "
+					   + "    SELECT row_number() over(order by registerday desc) AS RNO "
+				   	   + "         , productno, name, C.major_category, C.small_category, price, thumbnail_img"
+				   	   + "		   , registerday "
+					   + "    FROM tbl_product P "
+					   + "    JOIN tbl_category C "
+					   + "    ON P.fk_categoryno = C.categoryno ";
+					   
+			String majorCname = paraMap.get("majorCname");
+			String smallCname = paraMap.get("smallCname");
+			String freeshipping = paraMap.get("freeshipping");
+			String sortby = paraMap.get("sortby");
+			
+			boolean is_free = "true".equalsIgnoreCase(freeshipping);
+			
+			if(!Check.isNullOrBlank(majorCname)) {
+				sql += " WHERE fk_categoryno IN ( "
+					 + "            select categoryno "
+					 + "            from tbl_category "
+					 + "            where major_category = ?  ";
+				
+				if(!Check.isNullOrBlank(smallCname)) { 
+					  sql += "              AND small_category = ? "; 
+				}
+				 
+				sql += "            ) ";
+				
+				if(is_free) {	
+					sql += " AND delivery_price = 0 ";
+				}
+			} else if(is_free) {
+				sql += " WHERE delivery_price = 0 ";
+			}
+			if("latest".equalsIgnoreCase(sortby)) {
+				sql += " order by registerday desc ";
+				
+			}
+			sql += " ) V "
+			     + " WHERE rno between ? and ? ";
+
+			System.out.println(" ----------------리스트[selectCnoProduct] 조회-----------");
+			System.out.println("majorCname:: " + majorCname);
+			System.out.println("smallCname:: " + smallCname);
+			System.out.println("freeshipping:: " + freeshipping);
+			System.out.println("selectCnoProduct 조회 sql :: " + sql);
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			if(!Check.isNullOrBlank(majorCname)) {
+				pstmt.setString(1, majorCname);
+				pstmt.setString(2, paraMap.get("start"));
+				pstmt.setString(3, paraMap.get("end"));
+				if(!Check.isNullOrBlank(smallCname)) {
+					pstmt.setString(2, smallCname);
+					pstmt.setString(3, paraMap.get("start"));
+					pstmt.setString(4, paraMap.get("end"));
+				}
+			} else {
+				pstmt.setString(1, paraMap.get("start"));
+				pstmt.setString(2, paraMap.get("end"));
+			}
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				ProductVO pvo = new ProductVO();
+				
+				pvo.setProductno(rs.getInt("productno")); 
+				
+				pvo.setName(rs.getString("name"));
+				pvo.setPrice(rs.getInt("price"));
+				pvo.setThumbnail_img(rs.getString("thumbnail_img"));
+				pvo.setRegisterday(rs.getString("registerday"));
+				
+				productList.add(pvo);
+				
+			} // end of while(rs.next()) {}--------------
+			
+		} finally {
+			close();
+		}
+		
+		return productList;
+	}
+
+	
+	// 제품번호로 해당 제품의 상세정보를 조회해오기
+	@Override
+	public ProductVO selectDetailByProductno(String productno) throws SQLException {
+		
+		ProductVO pvo = null;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " SELECT productno, "
+					   + "        P.name AS product_name"
+					   + "      , P.description "
+					   + "      , P.price, P.delivery_price, P.point_pct, P.detail_html "
+					   + "		, C.small_category"
+					   + " FROM tbl_product P "
+					   + " JOIN tbl_option O "
+					   + " ON P.productno = O.fk_productno"
+					   + " JOIN tbl_category C "
+					   + " ON P.fk_categoryno = C.categoryno"
+					   + " WHERE productno = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, productno);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				pvo = new ProductVO();
+		            
+	            pvo.setProductno(rs.getInt("productno"));  // 제품번호
+	            pvo.setName(rs.getString("product_name"));  // 제품명
+	            pvo.setDescription(rs.getString("description")); // 제품상세설명
+	            pvo.setPrice(rs.getInt("price"));   // 제품가격
+	            pvo.setDelivery_price(rs.getInt("delivery_price"));   // 배송비
+	            pvo.setPoint_pct(rs.getInt("point_pct"));   // 포인트적립퍼센티지
+	            pvo.setDetail_html(rs.getString("detail_html"));   // 제품상세html
+	            
+	            CategoryVO cvo = new CategoryVO();
+	            cvo.setSmall_category(rs.getString("small_category"));
+	            pvo.setCategoryVO(cvo);
+	             
+			}
+			
+		} finally {
+			close();
+		}
+		
+		
+		return pvo;
+	}
+
+	
+	// 제품번호로 해당 제품의 옵션별 이미지와 옵션을 조회하는 메소드
+	@Override
+	public List<OptionVO> selectOptionList(String productno) throws SQLException {
+		List<OptionVO> optionList = new ArrayList<>();
+		
+		 try {
+			 conn = ds.getConnection();
+			 
+			 String sql = " SELECT productno, "
+			 		    + " O.img AS option_thumbnail_img, "
+			 		    + " O.color,"
+			 		    + " O.name AS option_cname,"
+			 		    + " O.optionno "
+			 		    + " FROM tbl_product P JOIN tbl_option O "
+			 		    + " ON P.productno = O.fk_productno "
+					    + " WHERE productno = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, productno); 
+			
+			rs = pstmt.executeQuery();
+	         
+	         while(rs.next()) {
+	        	 	OptionVO optvo = new OptionVO();
+	        	 	optvo.setFk_productno(rs.getInt("productno"));
+	        	 	optvo.setImg(rs.getString("option_thumbnail_img"));
+	        	 	optvo.setColor(rs.getString("color"));
+	        	 	optvo.setName(rs.getString("option_cname"));
+	        	 	optvo.setOptionno(rs.getInt("optionno"));
+	            
+	        	 	optionList.add(optvo);
+	         }// end of while-----------------
+	         
+	      } finally {
+	         close();
+	      }
+		
+		return optionList;
+	}
+
+	
+	// 콜렉션 리스트 조회하는 메소드
+	@Override
+	public List<CollectionVO> selectCollectionList() throws SQLException {
+		
+		List<CollectionVO> clist = new ArrayList<>();
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " select collectionno, name "
+					   + " from tbl_collection ";
+			
+			pstmt = conn.prepareStatement(sql);			
+			rs = pstmt.executeQuery();
+		
+			while(rs.next()) {
+				CollectionVO cvo = new CollectionVO();
+				cvo.setCollectionno(rs.getInt(1)); 
+				cvo.setName(rs.getString(2)); 
+				
+				clist.add(cvo);
+			}
+		
+		} finally {
+			close();
+		}
+		return clist;
+	}
+
+	// 콜렉션별 상품 리스트 조회하는 메소드
+	@Override
+	public List<ProductVO> selectProductByCollection(Map<String, String> paraMap) throws SQLException {
+		List<ProductVO> productList = new ArrayList<>();
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " SELECT p.productno, p.name, p.price, p.THUMBNAIL_IMG "
+					   + " FROM tbl_col_product CP "
+					   + " JOIN tbl_collection C "
+					   + " ON CP.fk_collectionno = C.collectionno "
+					   + " JOIN tbl_product P "
+					   + " ON CP.fk_productno = P.productno "
+					   + " JOIN tbl_category CT "
+					   + " ON CT.categoryno = P.fk_categoryno "
+					   + " WHERE C.name = ? " ;
+			
+			
+			String majorCname = paraMap.get("majorCname");
+			String smallCname = paraMap.get("smallCname");
+			String freeshipping = paraMap.get("freeshipping");
+			String collection = paraMap.get("collection");
+
+			if (!Check.isNullOrBlank(majorCname)) {
+				sql += " AND major_category = ? ";
+				if (!Check.isNullOrBlank(smallCname)) {
+					sql += " AND small_category = ? ";
+				}
+			}
+			
+			if (!Check.isNullOrBlank(freeshipping)) {
+				sql += " AND P.delivery_price = 0 ";
+			}
+			
+			sql += " GROUP BY p.productno, p.name, p.price, p.THUMBNAIL_IMG ";
+			
+			System.out.println(sql);
+			
+			pstmt = conn.prepareStatement(sql);
+
+			pstmt.setString(1, collection);
+			
+			if (!Check.isNullOrBlank(majorCname)) {
+				pstmt.setString(2, majorCname);
+				if (!Check.isNullOrBlank(smallCname)) {
+					pstmt.setString(3, smallCname);
+				}
+			} 
+
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				ProductVO pvo = new ProductVO();
+				pvo.setProductno(rs.getInt("productno"));
+				pvo.setName(rs.getString("name"));
+				pvo.setPrice(rs.getInt("price"));
+				pvo.setThumbnail_img(rs.getString("thumbnail_img"));
+				
+				productList.add(pvo);
+				
+			} // end of while(rs.next()) {}--------------
+			
+		} finally {
+			close();
+		}
+		
+		return productList;
+	}
+
+	
+	// 메인페이지에서 사용할 최신순 3개 신상품 조회
+	@Override
+	public List<ProductVO> selectTop3Product() throws SQLException {
+		List<ProductVO> productList = new ArrayList<>();
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql =  " SELECT   p.productno, "
+						+ " 			 p.name, "
+						+ "  		p.description, "
+						+ " ( "
+						+ "  SELECT PI.IMG "
+						+ "   FROM tbl_product_img PI "
+						+ "   WHERE PI.FK_PRODUCTNO = P.PRODUCTNO and ROWNUM = 1 "
+						+ "  ) AS thumbnail_img "
+						+ " FROM tbl_product P  "
+						+ " WHERE ROWNUM <= 3 "
+						+ " ORDER BY P.REGISTERDAY DESC " ;
+			
+
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				ProductVO pvo = new ProductVO();
+				pvo.setProductno(rs.getInt("productno"));
+				pvo.setName(rs.getString("name"));
+				pvo.setDescription(rs.getString("description"));
+				pvo.setThumbnail_img(rs.getString("thumbnail_img"));
+				
+				productList.add(pvo);
+				
+			} // end of while(rs.next()) {}--------------
+			
+		} finally {
+			close();
+		}
+		
+		return productList;
+	}
+
+	
+	
+	// 제품상세페이지에서 장바구니로 insert 하는 메소드
+	@Override
+	public int addCart(Map<String, String> paraMap) throws SQLException {
+
+		int n = 0;
+		
+		try {
+			conn = ds.getConnection();
+			
+			/*
+	           먼저 장바구니 테이블(tbl_cart)에 어떤 회원이 새로운 제품을 넣는 것인지,
+	           아니면 또 다시 제품을 추가로 더 구매하는 것인지를 알아야 한다.
+	           이것을 알기 위해서 어떤 회원이 어떤 제품을 장바구니 테이블(tbl_cart) 넣을때
+	           그 제품이 이미 존재하는지 select 를 통해서 알아와야 한다.
+	           
+	         -------------------------------------------
+	          cartno   fk_userid     fk_pnum   oqty  
+	         -------------------------------------------
+	            1       mjhan          7        12     
+	            2       mjhan          6         3     
+	            3       leess          7         5     
+	        */
+			
+			String sql = " select cartno "
+	                   + " from tbl_cart "
+	                   + " where FK_USERID = ? and FK_OPTIONNO = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+	        pstmt.setString(1, paraMap.get("userid"));
+	        pstmt.setString(2, paraMap.get("optionno"));
+	         
+	        rs = pstmt.executeQuery();
+	        
+	        if(rs.next()) {
+		        	// 어떤 제품을 추가로 장바구니에 넣고자 하는 경우
+		        	
+		        	sql = " update tbl_cart set cnt = cnt + ? "
+		            + " where cartno = ? ";
+		        	
+		        	pstmt = conn.prepareStatement(sql);
+		        	pstmt.setInt(1, Integer.parseInt(paraMap.get("cnt")));
+		        	pstmt.setInt(2, rs.getInt("cartno"));
+		        	
+		        	n = pstmt.executeUpdate();
+		        	
+	        } else {
+		        	// 장바구니에 존재하지 않는 새로운 제품을 넣고자 하는 경우
+		        	sql = " insert into tbl_cart(cartno, fk_optionno, fk_userid, cnt) "
+		            + " values(seq_cartno.nextval, ?, ?, ?) ";
+		                    
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setInt(1, Integer.parseInt(paraMap.get("optionno")));
+                pstmt.setString(2, paraMap.get("userid"));
+                pstmt.setInt(3, Integer.parseInt(paraMap.get("cnt")));
+                 
+                n = pstmt.executeUpdate();
+	        }
+			
+		} finally {
+			close();
+		}
+		
+		return n;
+	}
+
+	
+	// 제품상세페이지에서 리뷰조회하는 메소드
+	@Override
+	public List<ReviewVO> selectReview(int productno) throws SQLException {
+		List<ReviewVO> reviewList = new ArrayList<>();
+		try {
+			conn = ds.getConnection();
+			
+			String sql =  " SELECT reviewno, fk_optionno, content, title, score, r.img "
+						+ " FROM tbl_product P "
+						+ " JOIN tbl_option OPT "
+						+ " ON P.productno = OPT.fk_productno "
+						+ " JOIN tbl_review R "
+						+ " ON OPT.optionno = R.fk_optionno "
+						+ " WHERE productno = ? " ;
+
+			
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, productno);
+			
+//			System.out.println("Product No: " + productno);
+
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				ReviewVO rvo = new ReviewVO();
+				
+				rvo.setReviewno(rs.getInt("reviewno"));
+				rvo.setFk_optionno(rs.getInt("fk_optionno"));
+				rvo.setTitle(rs.getString("title"));
+				rvo.setScore(rs.getInt("score"));
+				rvo.setContent(rs.getString("content"));
+				rvo.setImg(rs.getString("img"));
+				
+				System.out.println(" rs.getInt(\"reviewno\"): " + rs.getInt("reviewno"));
+				
+				reviewList.add(rvo);
+				
+			} // end of while(rs.next()) {}--------------
+			
+			System.out.println("reviewList size: " + reviewList.size());
+			
+		} finally {
+			close();
+		}
+		
+		return reviewList;
+	}
+
+	
+
+	
 }

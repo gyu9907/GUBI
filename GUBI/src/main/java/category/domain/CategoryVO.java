@@ -6,6 +6,7 @@ public class CategoryVO {
 	private String major_category; 	/* 대분류 */
 	private String small_category; 	/* 소분류 */
 	private int is_delete; 			/* 삭제여부 */
+	private String category_img; 			/* 삭제여부 */
 	
 	// getter settter 
 	public int getCategoryno() {
@@ -32,6 +33,14 @@ public class CategoryVO {
 	public void setIs_delete(int is_delete) {
 		this.is_delete = is_delete;
 	}
+	public String getCategory_img() {
+		return category_img;
+	}
+	public void setCategory_img(String category_img) {
+		this.category_img = category_img;
+	}
+	
+	
 	
 	
 }

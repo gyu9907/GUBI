@@ -25,7 +25,10 @@ public class ProductVO {
 	private List<ProductImgVO> productImgList;
 	private int productImgCnt;
 	private CategoryVO categoryVO;
+	private OptionVO optionvo;
 	
+
+
 
 	// getter setter 
 	public int getProductno() {
@@ -130,6 +133,13 @@ public class ProductVO {
 	public void setCategoryVO(CategoryVO categoryVO) {
 		this.categoryVO = categoryVO;
 	}
+	public OptionVO getOptionvo() {
+		return optionvo;
+	}
+	public void setOptionvo(OptionVO optionvo) {
+		this.optionvo = optionvo;
+	}
+	
 	
 	
 }
