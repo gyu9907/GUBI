@@ -13,8 +13,11 @@ import review.domain.ReviewVO;
 
 public interface ProductDAO {
 
-	// 검색한 상품 목록을 가져오는 메소드
+	// 검색한 상품 목록을 가져오는 메소드(페이징)
 	List<ProductVO> selectProducts(Map<String, String> paraMap) throws SQLException;
+
+	// 검색한 상품 목록을 가져오는 메소드(무한 스크롤)
+	List<ProductVO> getProductListWithScroll(Map<String, String> paraMap) throws SQLException;
 
 	// 검색한 상품 목록의 전체 페이지 수를 알아오는 메소드
 	int getTotalPage(Map<String, String> paraMap) throws SQLException;
@@ -22,9 +25,14 @@ public interface ProductDAO {
 	// 상품 옵션의 대표 색상을 추출하기 위한 메소드
 	List<OptionVO> selectAllOptions() throws SQLException;
 	
-	/* >>> 뷰단에서 "페이징 처리시 보여주는 순번 공식" 에서 사용하기 위해 
-    검색이 있는 또는 검색이 없는 상품의 총개수 알아오기 시작 <<< */
+	// 검색이 있는 또는 검색이 없는 상품의 총개수 알아오기 
 	public int getTotalProductCnt(Map<String, String> paraMap) throws SQLException;
+	
+	// 한 컬렉션에 포함된 상품 검색
+	List<ProductVO> selectColProductList(String collectionno) throws SQLException;
+
+	// 주문에 필요한 정보를 가져오기 위한 메소드
+	Map<String, String> getProductForOrder(String optionno) throws SQLException;
 
 	// 상품의 전체개수를 알아오기
 	int totalProductCount(Map<String, String> paraMap) throws SQLException;

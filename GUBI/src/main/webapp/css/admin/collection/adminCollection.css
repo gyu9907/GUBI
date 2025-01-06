@@ -1,0 +1,162 @@
+@charset "UTF-8";
+/* 로고 */
+div#header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);;
+}
+img#logo {
+    /* border: 1px solid red;   */
+    margin:1% ;
+}
+
+/* 관리자메뉴 */
+div#adminmenu{
+    /* border: solid 1px black; */
+    height: 40px;
+    text-align: center;
+}
+div#adminmenu > ul > li a {
+    color:BLACK;
+    font-size: 10pt;
+}
+/* 본문내용 */
+div#contents{
+    /* border: solid 1px black; */
+    display: flex;
+}
+
+/* 사이드메뉴 */
+div#sidemenu {
+    /* border: solid 1px black; */
+    width: 15%;
+    margin: -2px auto;
+}
+div#sidemenu > h3 {
+    text-align: center;
+    margin: 3% 0 10% 0;
+}
+div#sidemenu ul,
+div#sidemenu li{
+    /* border: solid 1px black; */
+    list-style-type: none;
+    padding: 0;
+    margin:0;
+}
+div#menulist > ul > li > a {
+    /* border: 1px solid red; */
+    font-size: 14pt;
+    padding: 0;
+    margin: 0;
+}
+div#menulist > ul > li > ul {
+    font-size:10pt;
+    line-height: 30px;
+    /* border: 1px solid blue; */
+}
+div#menulist > ul > li > ul > li a {
+    color: gray;
+    text-decoration: none;
+    margin: 0 auto;
+    display: inline-block;
+    /* border: 1px solid black; */
+    padding-left: 3%;
+}
+div#menulist > ul > li > ul > li a:hover {
+    color: black;
+}
+div#menulist > ul > li > ul > li a.selected {
+    color: black;
+}
+div#menulist > ul > li > ul > li button.btn {
+    font-size: 8pt;
+    height: 15px;
+    position: relative;
+}
+div#menulist > ul > li > ul > li button.btn span {
+    position: relative;
+    top: -6px;
+}
+div#menulist > ul > li > ul > li:last-child {
+    margin-bottom: 10%;
+}
+
+/* 본문 */
+div#article {
+    /* border: solid 1px black; */
+    width: 90%;
+}
+table.table { /* 모든 테이블 */
+    font-size: 10pt;
+}
+/* 본문상단 */
+div#searchbutton {
+    text-align: center;
+}
+div#searchbutton > button {
+    font-size: 10pt;
+}
+td#radio > label input#t {
+    position: relative;
+    top: 2px;
+}
+button.datebtn {
+    font-size: 8pt;
+}
+table.table > thead > tr > th.th span {
+    /* border: 1px solid red; */
+    position: relative;
+    top: -3px;
+}
+div#searchContainer > h6 {
+    border-left: 4px solid #0240b1;
+    font-weight: bold;
+}
+/* 본문하단 */
+div#memberlist {
+    /* border: solid 1px blue; */
+    height: 600px;
+}
+div#top {
+    display: flex;
+}
+div#memberlist > table.table > thead > tr  th {
+    font-size: 12pt;
+}
+div#productupdate > button {
+    padding-left: 10px;
+    padding-right: 10px;
+    height: 25px;
+    font-size: 8pt;
+    font-weight: bold;
+    position: relative;
+    top: 10px;
+}
+div#productupdate > button span {
+    position: relative;
+    top: -2.9px;
+}
+table.table > tbody > tr > td button.update {
+    width: 70px;
+    height: 20px;
+    font-size: 8pt;
+    position: relative;
+    left: -7px;
+}
+table.table > tbody > tr > td span {
+    position: relative;
+    top: -5px;
+}
+/* 푸터 */
+div#footer{
+    border: solid 1px black;
+    height: 100px;
+}
+
+/* 검색결과 */
+#searchResult .image img {
+	aspect-ratio: 4/5;
+	width: 80px;
+    object-fit: cover;
+}
+#searchResult a {
+	color: black;
+}
