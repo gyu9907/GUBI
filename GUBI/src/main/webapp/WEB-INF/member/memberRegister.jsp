@@ -24,7 +24,8 @@ console.log('${pageContext.request.servletPath}');  // 파일명       /WEB-INF/
 
 
 
-<jsp:include page="/WEB-INF/common/header1.jsp" />
+<jsp:include page="/WEB-INF/common/header.jsp" />
+<jsp:include page="/WEB-INF/common/bootstrap.jsp" />
 
 
 
@@ -218,6 +219,6 @@ console.log('${pageContext.request.servletPath}');  // 파일명       /WEB-INF/
 
 
 
-<jsp:include page="/WEB-INF/common/footer1.jsp" />
+<jsp:include page="/WEB-INF/common/footer.jsp" />
 
 

@@ -5,7 +5,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 
 
-<jsp:include page="/WEB-INF/common/header1.jsp" />
+<jsp:include page="/WEB-INF/common/header.jsp" />
+<jsp:include page="/WEB-INF/common/bootstrap.jsp" />
 
 
 <%-- 직접 만든 CSS --%>
@@ -166,7 +167,7 @@
 
 
 
-<jsp:include page="/WEB-INF/common/footer1.jsp" />
+<jsp:include page="/WEB-INF/common/footer.jsp" />
 
 
 

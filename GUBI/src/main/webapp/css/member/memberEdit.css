@@ -82,6 +82,13 @@ span.star {
     height: 39px;
     border-radius: 13px;
     margin-bottom: 3%;
+    transition: all 0.3s
+}
+
+.btnstyle:hover {
+    border: solid 1px black;
+    background-color: black;
+    color:white;
 }
 
 /* 
