@@ -511,9 +511,13 @@ public class MemberDAO_imple implements MemberDAO {
 	public int registerMember(MemberVO member) throws SQLException {
 
 		int n = 0;
+		int n2 = 0;
+		int isSuccess = 0;
 
 		try {
 			conn = ds.getConnection();
+			
+			conn.setAutoCommit(false); // 수동전환
 
 			String sql = " INSERT INTO TBL_MEMBER(USERID, PASSWD, NAME, BIRTH, EMAIL, TEL, POSTCODE, ADDRESS, DETAIL_ADDRESS) "
 					   + " VALUES(?, ?, ?, ? ,? ,? ,? ,? ,? ) ";
@@ -531,14 +535,44 @@ public class MemberDAO_imple implements MemberDAO {
 			pstmt.setString(9, member.getDetail_address());
 
 			n = pstmt.executeUpdate();
-
+			
+			if (n == 1) {
+				sql = " INSERT INTO TBL_DELIVERY "
+					+ " (DELIVERYNO, FK_USERID, IS_DEFAULT, DELIVERY_NAME, RECEIVER, RECEIVER_TEL, POSTCODE, ADDRESS, DETAIL_ADDRESS) "
+					+ " VALUES "
+					+ " (SEQ_DELIVERYNO.NEXTVAL, ?, 1, ?, ?, ?, ?, ?, ?); ";
+				
+				pstmt.setString(1, member.getUserid());
+				pstmt.setString(2, member.getName());
+				pstmt.setString(3, member.getName());
+				pstmt.setString(4, aes.encrypt(member.getTel()));
+				pstmt.setString(5, member.getPostcode());
+				pstmt.setString(6, member.getAddress());
+				pstmt.setString(7, member.getDetail_address());
+				
+				n2 = pstmt.executeUpdate();
+				
+			}//end of if (n == 1) {}...
+			
+			if (n2 == 1) {
+				conn.commit(); // 커밋
+				conn.setAutoCommit(true); // 자동 전환
+			} else { // 그냥 실패한 경우
+				conn.rollback(); // 롤백
+				conn.setAutoCommit(true); // 자동 전환
+			}
+			
 		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
 			e.printStackTrace(); // 암호화키 catch 문
+		} catch (SQLException e) {
+			e.printStackTrace();
+			conn.rollback(); // 롤백
+			conn.setAutoCommit(true); // 자동 전환
 		} finally {
 			close();
 		}
 
-		return n;
+		return isSuccess;
 
 	}// end of public int registerMember(MemberVO member) throws SQLException { }...
 		
@@ -877,6 +911,43 @@ public class MemberDAO_imple implements MemberDAO {
 		return n;
 
 	}// end of public int memberEdit(MemberVO member) throws SQLException {}...
+
+	
+	
+	
+	
+	// 회원이 존재하는지 검색하는 메소드
+	@Override
+	public boolean memberIsExist(MemberVO member) throws SQLException {
+		
+		boolean isExist = false;
+		String userid = member.getUserid();
+		String passwd = member.getPasswd();
+		
+		try {
+			conn = ds.getConnection();
+
+			String sql = " SELECT USERID "
+					   + " FROM TBL_MEMBER "
+				       + " WHERE USERID = ? AND PASSWD = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userid);
+			pstmt.setString(2, Sha256.encrypt(passwd));
+			
+			rs = pstmt.executeQuery();
+
+			if (rs.next()) {
+				isExist = true;
+			}
+			
+		} finally {
+			close();
+		}
+		
+		return isExist;
+		
+	}//end of public boolean memberIsExist(MemberVO member) throws SQLException {}...
 	
 	
 	

@@ -6,7 +6,6 @@ import common.controller.AbstractController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import jakarta.websocket.Session;
 import member.domain.MemberVO;
 import member.model.MemberDAO;
 import member.model.MemberDAO_imple;
@@ -89,7 +88,7 @@ public class MemberRegister extends AbstractController {
 					
 					super.setRedirect(false);
 					super.setViewPage("/WEB-INF/common/memberRegister_after_autoLogin.jsp");
-
+					return;
 				}
 				
 			} catch (SQLException e) {
@@ -106,18 +105,6 @@ public class MemberRegister extends AbstractController {
 			
 				
 		}//end of if else..
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 		
 		
 

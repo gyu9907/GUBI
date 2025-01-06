@@ -64,7 +64,6 @@ span.star {
     background-color: #ccc; /* 나중에 다른 곳도 추가해주자*/
 }
 
-
 .btnstyle {
     border: solid 1px black;
     background-color: white;
@@ -72,12 +71,14 @@ span.star {
     height: 39px;
     border-radius: 13px;
     margin-bottom: 3%;
+    transition: all 0.3s
 }
 
-/* 
-img#idcheck, img#zipcodeSearch {
-    cursor: pointer;
- } */
+.btnstyle:hover {
+    border: solid 1px black;
+    background-color: black;
+    color:white;
+}
 
 
 

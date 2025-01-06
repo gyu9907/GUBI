@@ -28,23 +28,25 @@ public class Logout extends AbstractController {
 		
 		// 두번째 방법 : WAS 메모리 상에서 세션에 저장된 모든 데이터를 삭제하는 것
 		// 이게 더 많이 쓰임
+
 		
-		// 관리자가 아닌 일반 사용자로 들어와서 돌아갈 페이지가 있다라면 돌아갈 페이지로 돌아간다.
+		
+		// 관리자로 들어와서 돌아갈 페이지가 있다라면 돌아갈 페이지로 돌아간다.
 		// 돌아갈 페이지가 없거나 또는 관리자로 로그아웃을 하면 무조건 /MyMVC/index.up 페이지로 돌아간다.
-		AdminVO loginadmin = (AdminVO)session.getAttribute("loginadmin");
+		MemberVO loginuser = (MemberVO)session.getAttribute("loginuser");
 		
-		if (session.getAttribute("goBackURL") != null && "admin".equals(loginadmin.getAdminid())) {
+		if (session.getAttribute("goBackURL") != null && loginuser != null) {
 			super.setRedirect(true);
-			super.setViewPage(request.getContextPath() + (String) session.getAttribute("goBackURL"));
-//			System.out.println("~~~ 확인용 goBackURL => " + request.getContextPath() + (String)session.getAttribute("goBackURL"));
-			session.removeAttribute("goBackURL"); //
+			super.setViewPage(request.getContextPath() + (String)session.getAttribute("goBackURL"));
+//			session.removeAttribute("goBackURL"); //
+			session.invalidate();
 			return;
 		} // end of if...
 		
 		
-		
 		session.invalidate();
 		
+		// 관리자는 무조건 메인페이지로
 		super.setRedirect(true);
 		super.setViewPage(request.getContextPath()+"/index.gu");
 		

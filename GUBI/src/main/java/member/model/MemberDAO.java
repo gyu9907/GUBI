@@ -56,6 +56,9 @@ public interface MemberDAO {
 
 	// 회원정보 수정 메소드
 	int memberEdit(MemberVO member) throws SQLException;
+
+	// 회원이 존재하는지 검색하는 메소드
+	boolean memberIsExist(MemberVO member) throws SQLException;
 	
 	
 	
