@@ -1,4 +1,4 @@
-package product.controller;
+package collection.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,10 +13,10 @@ import product.model.ProductDAO_imple;
 import util.color.ColorUtil;
 import util.color.KMeans;
 
-public class ProductSearch extends AbstractController {
+public class AdminCollection extends AbstractController {
 
 	private ProductDAO pdao = new ProductDAO_imple();
-
+	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		// === 색상 분류하기 === //
@@ -41,15 +41,14 @@ public class ProductSearch extends AbstractController {
         }
         
         request.setAttribute("colorList", colorList);
-        
-        // ----------------- 카테고리 대분류 소분류 가져오기 ---------------- // 
+
+		// ----------------- 카테고리 대분류 소분류 가져오기 ---------------- //
 		List<CategoryVO> selectMajorCategory = pdao.selectMajorCategory();
 		request.setAttribute("selectMajorCategory", selectMajorCategory);
-        // ----------------- 카테고리 대분류 소분류 가져오기 ---------------- // 
+		// ----------------- 카테고리 대분류 소분류 가져오기 ---------------- //
         
 		super.setRedirect(false);
-		super.setViewPage("/WEB-INF/product/productSearch.jsp");
-
+		super.setViewPage("/WEB-INF/admin/collection/adminCollection.jsp");
 	}
 
 }
