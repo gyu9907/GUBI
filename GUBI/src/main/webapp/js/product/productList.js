@@ -19,11 +19,13 @@ $(document).ready(function(){
 		
 		if(collection == "") {
 			if( $(window).scrollTop() + 1 >= $(document).height() - $(window).height() ) { 
-	        		if( $("span#totalProductCount").text() != $("span#countProduct").text() ) {  
+				const totalCount = $("span#totalProductCount").text();
+				const countProduct = $("span#countProduct").text();
+	        		if(totalCount != countProduct) {  
 	                start += len; // start 값에 +16 씩 누적하여 더해준다.
 	                displayProduct(start);
 	            }
-        		}
+        	}
 		}
 		
 		
@@ -44,8 +46,7 @@ const oneWeekAgo = new Date();
 oneWeekAgo.setDate(new Date().getDate() - 21);
 
 function displayProduct(start) {
-
-
+	
 	const freeshipping = $("input[name='freeShipping']").is(":checked");
 
 	const sortby = $("select[name='sortby']").val();
@@ -63,6 +64,7 @@ function displayProduct(start) {
 				"len" : len
 			},
 		dataType : "json",
+		async: false,
 		success : function(json) {
 			
            let v_html = ``;

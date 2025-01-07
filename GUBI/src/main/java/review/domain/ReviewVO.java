@@ -1,5 +1,9 @@
 package review.domain;
 
+import java.util.List;
+
+import product.domain.OptionVO;
+
 public class ReviewVO {
 
 	private int reviewno; /* 리뷰 일련번호 */
@@ -11,7 +15,10 @@ public class ReviewVO {
 	private String registerday; /* 등록일자 */
 	private String img;
 	
+	// select 용 field
+	private OptionVO optionvo;
 	
+
 	public int getReviewno() {
 		return reviewno;
 	}
@@ -59,6 +66,12 @@ public class ReviewVO {
 	}
 	public void setImg(String img) {
 		this.img = img;
+	}
+	public OptionVO getOptionvo() {
+		return optionvo;
+	}
+	public void setOptionvo(OptionVO optionvo) {
+		this.optionvo = optionvo;
 	}
 	
 }

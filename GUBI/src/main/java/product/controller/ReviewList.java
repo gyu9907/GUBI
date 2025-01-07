@@ -34,10 +34,14 @@ public class ReviewList extends AbstractController {
 		    	for(ReviewVO rvo : reviewList) {
 		    		
 		    		JSONObject jsonObj = new JSONObject();
-		    		jsonObj.put("title", rvo.getTitle());    
+		    		jsonObj.put("fk_userid", rvo.getFk_userid());    
 		    		jsonObj.put("score", rvo.getScore());    
+		    		jsonObj.put("name", rvo.getOptionvo().getName());    
+		    		jsonObj.put("title", rvo.getTitle());    
 		    		jsonObj.put("content", rvo.getContent());    
 		    		jsonObj.put("img", rvo.getImg());    
+		    		jsonObj.put("registerday", rvo.getRegisterday());    
+		    		jsonObj.put("reviewno", rvo.getReviewno());    
 
 	            jsonArr.put(jsonObj);
 			}
