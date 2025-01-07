@@ -1,0 +1,193 @@
+@charset "UTF-8";
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 100;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Thin.otf) format('opentype');}
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 300;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Light.otf) format('opentype');}
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 400;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Regular.otf) format('opentype');}
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 500;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Medium.otf) format('opentype');}
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 700;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');}
+
+@font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 900;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');}
+
+body, h1, h2, h3, h4, h5, h6, input, textarea, select {
+	font-family: 'Noto Sans KR', sans-serif;
+}
+
+body{
+    font-weight: 400;
+}
+
+[type="checkbox"] {
+    appearance: none; /* 기본(네이티브) 모양을 제거 */
+    box-sizing: border-box;
+    background-clip: content-box;
+    padding: 2px !important;
+    height: 15px;
+    aspect-ratio: 1;
+    border: 1px solid gray;
+    cursor: pointer;
+}
+[type="checkbox"]:checked {
+    border-color: black;
+    background-color: black;
+}
+
+ul {
+    padding: 0;
+}
+
+li {
+    list-style-type: none;
+}
+
+ul label {
+    display: block;
+    margin: 0;
+    font-size: 11pt;
+    color: rgb(85, 85, 85);
+}
+
+.checkbox {
+    display: inline-block !important;
+}
+
+form input[type="text"] {
+    margin: 0;
+    border: 0;
+    border-bottom: solid 1px #ccc;
+    border-color: #ccc;
+    width: 100%;
+    font-size: 11pt;
+}
+
+input:focus[type="text"] {
+    outline: none;
+    border-color: black;
+}
+
+.Cart-container li {
+    display: flex;
+}
+
+.Product-container {
+    background-color: rgb(242, 240, 235);
+    padding: 20px;
+}
+
+div.ProductImg-container > img {
+    width: 130px;
+    height: 130px;
+    object-fit: contain;
+}
+
+.ProductInfo-container {
+    width: calc(100% - 130px);
+    margin: auto 0;
+}
+
+/* 좌우 정렬 */
+.flex {
+    display: flex;
+    justify-content: space-between;
+}
+.flex > span {
+    display: inline-block;
+}
+
+.ProductName {
+    width: 100%;
+    font-size: 11pt;
+    font-weight: 400;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    word-break: break-word;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* 원하는 라인수 */
+    -webkit-box-orient: vertical;
+}
+
+/* 상품 삭제 버튼 */
+button.delete-product-btn {
+    background: 0;
+    border: 0;
+    line-height: 1;
+    margin-top: -20px;
+    color: rgb(85, 85, 85);
+}
+
+
+/* 상품 개수 조절 버튼 */
+button.ProductPlusBtn,
+button.ProductMinusBtn {
+    background: 0;
+    border: 0;
+    padding: 0, 30px;
+    font-size: 9pt;
+}
+
+.ProductOption {
+    font-size: 10pt;
+    color: rgb(85, 85, 85);
+    font-weight: 300;
+}
+
+.Point {
+    color: rgb(85, 85, 85);
+    font-size: 10pt;
+    font-weight: 400;
+}
+
+.ProductCnt {
+    font-size: 10pt;
+    font-weight: 400;
+}
+
+.inStock {
+    font-size: 8pt;
+    font-weight: 400;
+}
+
+.ProductPrice {
+    font-weight: 400;
+}
+
+/* Secure Checkout 버튼 */
+button#goCheckoutBtn {
+    display: block;
+    width: 100%;
+    margin: 10px 0;
+    border: solid 1px black;
+    border-radius: 5px;
+    color: white;
+    background-color: black;
+    padding: 12px 45px;
+    font-size: 10pt;
+    transition: 0.3s;
+}
+
+button#goCheckoutBtn:hover {
+    color: black;
+    background-color: white;
+}
+
+/* Continue shopping 버튼 */
+button#goProductsBtn {
+    display: block;
+    width: 100%;
+    border: solid 1px black;
+    border-radius: 5px;
+    color: black;
+    background-color: white;
+    padding: 12px 45px;
+    font-size: 10pt;
+    transition: 0.3s;
+}
+
+button#goProductsBtn:hover {
+    color: white;
+    background-color: black;
+}
