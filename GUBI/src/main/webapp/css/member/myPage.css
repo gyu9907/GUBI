@@ -1,0 +1,322 @@
+
+
+/* 네비게이션 바 */
+.nav-bar {
+    display: flex;
+    justify-content: left;
+    padding: 10px 20px;
+    background-color: white;
+  }
+  
+  .logo {
+    font-size: 30px;
+    font-weight: bold;
+  }
+  
+  .menu {
+    font-weight: normal;
+    list-style: none;
+    display: flex;
+    gap: 15px;
+  }
+  
+
+  
+ /* 사이드바 스타일 */
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: -300px; /* 숨겨진 상태 */
+  width: 300px;
+  height: 100%;
+  background-color: #f4f4f4;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  transition: right 0.3s ease;
+  overflow-y: auto; /* 스크롤 가능 */
+}
+
+/* 사이드바 열렸을 때 */
+.sidebar.open {
+  right: 0; /* 화면에 보이도록 이동 */
+  width: 500px;
+}
+
+/* 장바구니 버튼 스타일 */
+.cart-button {
+  background-color: black; /* 버튼 배경색 */
+  color: black; /* 텍스트 색상 */
+  border: none; /* 테두리 제거 */
+  padding: 10px 20px;  /* 내부 여백 */
+  text-align: center; /* 텍스트 정렬 */
+  font-size: 16px; /* 글자 크기 */
+  cursor: pointer; /* 마우스 포인터 */
+  border-radius: 5px; /* 모서리 둥글게 */
+  display: flex; /* 아이콘과 텍스트 정렬 */
+  background-color: transparent;
+  align-items: center;
+  gap: 8px; /* 아이콘과 텍스트 간격 */
+  margin-left: 64%; /* 아이콘은 왼쪽으로 부터 60%만큼 띄워놓기  */
+}
+
+  
+.cart-button:hover {
+  background-color: #C9C9C9; /* 호버 시 색상 */
+}  
+
+/* 닫기 버튼 스타일 */
+.close-button {
+  position: absolute; /* 위치를 절대값으로 설정 */
+  top: 10px; /* 위에서 10px 떨어짐 */
+  right: 10px; /* 오른쪽에서 10px 떨어짐 */
+  background-color: transparent; /* 배경 투명하게 */
+  color: black;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+}
+  
+  
+.wrap {
+    display: flex; /* 플렉스 박스 사용 */
+    justify-content: center; /* 수평 중앙 정렬 */
+    align-items: flex-start; /* 수직 정렬 */
+    padding: 20px; /* 패딩 */
+}
+
+.main-content {
+    flex-grow: 1; /* 남은 공간을 차지 */
+    padding: 20px; /* 패딩 */
+    background-color: #ffffff; /* 메인 콘텐츠 배경색 */
+    max-width: 90% ; /* 메인 콘텐츠 최대 너비 */
+}
+
+
+/* 블랙배경 */
+.blackContainer {
+    border: solid 0px red;
+    height: 132px;
+    background-color: white;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center; /* 가운데 정렬 */
+    padding: 16px;
+    margin: auto;
+    width: 50%;
+}
+
+.blackContainer .name {
+    border: solid 0px red;
+    font-size: 30px;
+    font-weight: bold;
+    color: #000000; /* 검정색으로 변경 */
+    height: 80px; 
+    text-align: left; /* 텍스트 가운데 정렬 */
+}
+
+
+.custom-hr {
+    border: 1px solid black; /* 수평선 스타일 */
+    margin: 10px 0; /* 위아래 여백 */
+    height: 0.1px; /* 줄 두께 */
+    background-color: black; /* 색상 */
+    width: 500%; /* 페이지 너비에 맞춤 */
+    margin-right: 50px; /* 여백 */
+    text-align:center;
+}
+
+
+/* 단골상점 , 상품후기 , 적립금 박스 */
+.summaryContainer {
+    background-color: white;
+    display: flex;
+    padding: auto;
+    height: 90px;
+    margin-top: 50px;
+    width: 50%;
+    margin: 50px auto 50px;
+}
+
+/* 단골상점 , 상품후기 , 적립금 */
+.summaryContainer .item {
+    flex-grow: 1;
+}
+
+/* 녹색 숫자 */
+.summaryContainer .number {
+    font-size: 19px;
+    font-weight: bold;
+    color: black;
+}
+
+/* 텍스트 */
+.summaryContainer .item > div:nth-child(2) {
+    font-size: 13px;
+}
+
+/* ================== 주문/배송조회 박스 시작 ==================== */
+.shippingStatusContainer {
+    padding:  21px 16px;  
+    background-color: #F9F9F9;
+    margin-bottom: 10px;
+    width: 53%;
+    margin: auto;
+    text-align:center;
+}
+
+/* 주문/배송조회 타이틀 */
+.shippingStatusContainer .title {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+/* 입금대기 상품배송&준비중 배송중 배송 완료 [로우] */
+.shippingStatusContainer .status {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 21px;
+}
+
+/* 입금대기 상품배송&준비중 배송중 배송 완료 [아이템맞나..?]  */
+.shippingStatusContainer .item {
+    display: flex;
+    margin: 24px;
+}
+
+.shippingStatusContainer .number {
+    font-size: 31px;
+    font-weight: 500;
+    text-align: center;
+}
+
+.shippingStatusContainer .text {
+    font-size: 12px;
+    font-weight: normal;
+    color: #c2c2c2;
+    text-align: center;
+}
+
+.shippingStatusContainer .icon {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+    width: 16px;
+    height: 16px;
+}
+
+/*=================== 최근 주문 내역 ==================*/
+.recent-orders {
+	border: none;
+    background-color: white; /* 배경색 */
+    padding: 20px; /* 패딩 */
+    margin: 20px 0; /* 위아래 여백 */
+    border-radius: 8px; /* 모서리 둥글기 */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    align-items:center;
+}
+
+.recent-orders h3 {
+    font-size: 24px; /* 제목 크기 */
+    margin-bottom: 15px; /* 제목 아래 여백 */
+    color: #333; /* 제목 색상 */
+  
+}
+
+.recent-orders table {
+    width: 100%; /* 테이블 너비 100% */
+    border-collapse: collapse; /* 경계가 겹치지 않도록 */
+}
+
+.recent-orders th,
+.recent-orders td {
+    border: 1px solid #ddd; /* 경계선 */
+    padding: 12px; /* 셀 패딩 */
+    text-align: left; /* 텍스트 왼쪽 정렬 */
+}
+
+.recent-orders th {
+    background-color: #f2f2f2; /* 헤더 배경색 */
+    font-weight: bold; /* 헤더 글씨 두껍게 */
+}
+
+.recent-orders tr:hover {
+    background-color: #f5f5f5; /* 마우스 오버 시 배경색 */
+}
+
+.recent-orders a {
+    color: #007bff; /* 링크 색상 */
+    text-decoration: none; /* 밑줄 제거 */
+}
+
+.recent-orders a:hover {
+    text-decoration: underline; /* 마우스 오버 시 밑줄 효과를 준다. */
+}
+
+
+.infoContainer .item > div:first-child {
+    margin-bottom: 2px;
+}
+
+/* 사이드 바 메뉴*/
+
+
+div.sidebar2 {
+ 
+    border: none; /* 테두리 제거 */
+    width: 170px; /* 사이드바 너비 */
+    background-color: white; /* 배경색 */
+    padding: 20px; /* 패딩 */
+    float: left; 
+    margin-top: 44px;
+    margin-left: 5px; 
+   
+}
+
+.sidebar2 h2 {
+    font-size: 14px; /* 제목 크기 */
+    margin-bottom: 10px; /* 아래 여백 */
+    font-weight:bolder;
+}
+
+.custom3-hr {
+    border: px solid black; /* 수평선 스타일 */
+    margin: 10px 0; /* 위아래 여백 */
+    height: 0.1px; /* 줄 두께 */
+    background-color: black; /* 색상 */
+    width: 100%; /* 페이지 너비에 맞춤 */
+    margin: 20px 0; /* 여백 */
+}
+
+.section {
+    margin-bottom: 20px; /* 섹션 간 여백 */
+}
+
+.section h3 {
+	font-weight:bold;
+    font-size: 12px; /* 섹션 제목 크기 */
+    margin-bottom: 10px; /* 아래 여백 */
+}
+
+.section ul {
+    list-style-type: none; /* 리스트 스타일 제거 */
+    font-size: 12px; /* 섹션 제목 크기 */
+    padding: 0; /* 패딩 제거 */
+}
+
+.section li {
+    margin: 5px 0; /* 항목 간 여백 */
+}
+
+.section a {
+    text-decoration: none; /* 링크 밑줄 제거 */
+    color: #333; /* 링크 색상 */
+}
+
+.section a:hover {
+    text-decoration: underline; /* 마우스 오버 시 밑줄 효과를 준다*/
+}
+
+ 
+
