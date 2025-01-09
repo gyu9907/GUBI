@@ -109,11 +109,9 @@ a:hover, a:visited, a:link, a:active {
   color: #000;
 }
 
-.product-card img {
-  display: inline-block;
-  min-width: 100%;
-  width: 100%;
-  height: 100%;
+p {
+	padding: 0;
+	margin: 0;
 }
 
 /* header */
@@ -129,15 +127,6 @@ transition: 0.5s;
     
   /* overflow: hidden; */
 }
-
-/* .header_wrapper:hover .menu_container {
-	top: 0px;
-	max-height: 100vh;
-	background-color: #fff;
-
-  overflow: hidden;
-} */
-
 
 .main_container .header_wrapper.bg_main {
   background-color: transparent;
@@ -161,7 +150,6 @@ transition: 0.5s;
   align-items: center;
   height: 100%;
   padding: 0 22px;
-  /* background-color: #fff; */
 
   z-index: 999;
 }
@@ -258,6 +246,14 @@ transition: 0.5s;
   
   z-index: 10;
 }
+
+.header_wrapper .menu_container img {
+  display: inline-block;
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;	
+}
  @keyframes fadeInDown {
 	0% {
 		opacity: 0;
@@ -306,6 +302,10 @@ transition: 0.5s;
 .header_wrapper .menu_container .product-image {
   height: 480px;
 }
+
+.header_wrapper .menu_container .product-image:hover img {
+  transform: none;
+}
 .header_wrapper .menu_container .product-info {
   display: flex;
   flex-direction: column;
@@ -329,3 +329,67 @@ transition: 0.5s;
 }
 
 /* 반응형 레이아웃 *//*# sourceMappingURL=common.css.map */
+
+
+
+/*  */
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.product-card {
+  background-color: #fff;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.product-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #f2f0eb;
+  width: 100%;
+  height: 430px;
+  cursor: pointer;
+}
+.product-image:hover img {
+  transform: scale(1.07);
+}
+.product-image img {
+  display: inline-block;
+  min-width: 280px;
+  width: 280px;
+  height: initial;
+  transition: transform 0.5s ease;
+}
+
+.new-tag {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #fff;
+  color: black;
+  padding: 0 8px;
+  font-size: 11px;
+  border-radius: 5px;
+  z-index: 1;
+}
+
+.product-info {
+  display: flex;
+  justify-content: space-between;
+  color: black;
+  padding: 8px 3px;
+  font-size: 16px;
+}
+.product-info p {
+  width: 60%;
+  margin: 0;
+}
+.product-info .price {
+  font-weight: 600;
+}

@@ -30,7 +30,7 @@ public class CartAdd extends AbstractController {
 	         */
 	         
 	         request.setAttribute("message", "장바구니에 담으려면 먼저 로그인 부터 하세요!! ");
-	         request.setAttribute("loc", "javascript:history.back()");
+	         request.setAttribute("loc", request.getContextPath()+"/login/login.gu");
 	         
 	         super.setRedirect(false);
 	         super.setViewPage("/WEB-INF/common/msg.jsp");
@@ -70,7 +70,7 @@ public class CartAdd extends AbstractController {
 	                
 	                if(n==1) {
 	                   super.setRedirect(true);
-	                   super.setViewPage(request.getContextPath()+"/product/productList.gu");
+	                   super.setViewPage(request.getContextPath()+"/cart/cart.gu");
 	                }
 	             } catch(SQLException e) {
 	                request.setAttribute("message", "장바구니 담기 실패!!");

@@ -1076,10 +1076,11 @@ public class ProductDAO_imple implements ProductDAO {
 				   	   + "		   , registerday,P.is_delete "
 					   + "    FROM tbl_product P "
 					   + "    JOIN tbl_category C "
-					   + "    ON P.fk_categoryno = C.categoryno ";
+					   + "    ON P.fk_categoryno = C.categoryno "
+					   + "    WHERE P.is_delete = 0 ";
 			
 			if(!Check.isNullOrBlank(majorCname)) {
-				sql += " WHERE fk_categoryno IN ( "
+				sql += " AND fk_categoryno IN ( "
 					 + "            select categoryno "
 					 + "            from tbl_category "
 					 + "            where major_category = ?  ";
@@ -1098,7 +1099,7 @@ public class ProductDAO_imple implements ProductDAO {
 			}
 			sql += " ORDER BY RNO "
 				 + " ) V "
-			     + " WHERE rno between ? and ? and is_delete = 0 ";
+			     + " WHERE rno between ? and ? ";
 			
 			System.out.println("sql ::: " + sql);
 
@@ -1402,7 +1403,7 @@ public class ProductDAO_imple implements ProductDAO {
 			
 			
 			String sql = " select productno, P.name, P.price, P.thumbnail_img, sum(OD.cnt) AS salesCount "
-					   + "from tbl_option O "
+					   + " from tbl_option O "
 				 	   + " JOIN tbl_order_detail OD "
 					   + " ON O.optionno = OD.fk_optionno "
 					   + " JOIN tbl_product P "

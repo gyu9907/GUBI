@@ -24,13 +24,19 @@ body {
   display: flex;
   float: left;
   width: 50%;
-  margin-right: 5%;
+  margin-right: 9%;
   align-items: center;
+  background-color: transparent;
+  cursor: default;
 }
 .product-image img {
   width: 90%;
   height: auto;
   border-radius: 8px;
+}
+
+.product-image:hover img {
+  transform: none;
 }
 
 .product-details {

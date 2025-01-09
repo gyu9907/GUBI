@@ -94,47 +94,22 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
             </li>
         </ul>
         <div class="menu_container" id="header_dropdown_menu">
-            <ul class="major_categry_list">
+            <ul id="major_categry_list" class="major_categry_list">
                 <li>
-                	<a href="<%= ctxPath%>/product/productList.gu?major_category=SEATING">SEATING</a>
-                	<ul class="small_categry_list" id="seating_list"></ul>
+	                	<a href="<%= ctxPath%>/product/productList.gu?major_category=SEATING">SEATING</a>
+	                	<ul class="small_categry_list" id="seating_list"></ul>
                 </li>
                 <li>
-                	<a href="<%= ctxPath%>/product/productList.gu?major_category=LIGHTING">LIGHTING</a>
-                	<ul class="small_categry_list" id="lighting_list"></ul>
+	                	<a href="<%= ctxPath%>/product/productList.gu?major_category=LIGHTING">LIGHTING</a>
+	                	<ul class="small_categry_list" id="lighting_list"></ul>
                 </li>
                 <li>
-                	<a href="<%= ctxPath%>/product/productList.gu?major_category=TABLES">TABLES</a>
-                	<ul class="small_categry_list" id="tables_list"></ul>
+	                	<a href="<%= ctxPath%>/product/productList.gu?major_category=TABLES">TABLES</a>
+	                	<ul class="small_categry_list" id="tables_list"></ul>
                 </li>
             </ul>
            
-            <div class="product-grid">
-                <!-- 제품 카드 1 -->
-                <a href="#">
-                    <div class="product-card">
-                        <div class="product-image"> 
-                            <img src="<%= ctxPath%>/images/main/collection2.png">
-                        </div>
-                        <div class="product-info">
-                            <p>COPPIA TABLE LAMP</p>
-                            <div class="price">A new sculptural twin-bulb table lamp designed for GUBI by Vibeke Fonnesberg Schmidt. Featuring two discs of Fonnesberg Schmidt’s signature plexiglass housed in a curving metal case, the elegantly industrial design represents both a new material and a new designer for GUBI.</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 제품 카드 2 -->
-                <a href="#">
-                    <div class="product-card">
-                        <div class="product-image"> 
-                            <img src="<%= ctxPath%>/images/main/collection2.png">
-                        </div>
-                        <div class="product-info">
-                            <p>COPPIA TABLE LAMP</p>
-                            <div class="price">A new sculptural twin-bulb table lamp designed for GUBI by Vibeke Fonnesberg Schmidt. Featuring two discs of Fonnesberg Schmidt’s signature plexiglass housed in a curving metal case, the elegantly industrial design represents both a new material and a new designer for GUBI.</div>
-                        </div>
-                    </div>
-                </a>
+            <div id="collection-section" class="product-grid">
                 
             </div>
         </div>

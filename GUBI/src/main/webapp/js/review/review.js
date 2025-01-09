@@ -70,7 +70,7 @@ $(document).ready(function() {
 			if (val == "") {
 				$(elmt).next().show();
 
-				return false;
+				is_infoData_OK = false;
 			}
 		});
 
