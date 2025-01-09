@@ -124,12 +124,12 @@ public class MemberDAO_imple implements MemberDAO {
 						+ "   		select rank() over(partition by fk_userid order by loginday desc) as rank, loginday , fk_userid "
 						+ "    		from tbl_login "
 						+ " 	) "
-						+ " 	select rownum as rno, b.name, b.userid, b.tel, b.registerday, loginday, b.status, a.ordercnt, c.logincnt, b.point, email, fulladdress, idle "
+						+ " 	select rownum as rno, b.name, b.userid, b.tel, registerday, loginday, b.status, a.ordercnt, c.logincnt, b.point, email, fulladdress, idle "
 						+ " 	from a join b "
 						+ " 	on a.userid = b.userid "
-						+ " 	join c "
+						+ " 	left join c "
 						+ " 	on a.userid = c.fk_userid "
-						+ " 	join d "
+						+ " 	left join d "
 						+ " 	on a.userid = d.fk_userid and rank = 1 "
 						+ " 	where a.userid != 'admin' "; 
 
@@ -231,7 +231,7 @@ public class MemberDAO_imple implements MemberDAO {
 				
 				mvo.setName(rs.getString("name"));
 				mvo.setUserid(rs.getString("userid"));
-				mvo.setTel(rs.getString("tel"));
+				mvo.setTel(aes.decrypt(rs.getString("tel")));
 				mvo.setRegisterday(rs.getString("registerday"));
 				mvo.setStatus(rs.getInt("status"));
 				mvo.setPoint(rs.getInt("point"));
@@ -239,11 +239,13 @@ public class MemberDAO_imple implements MemberDAO {
 				mvo.setLogincnt(rs.getInt("logincnt"));
 				mvo.setLoginday(rs.getString("loginday"));
 				mvo.setFulladdress(rs.getString("fulladdress"));
-				mvo.setEmail(rs.getString("email"));
+				mvo.setEmail(aes.decrypt(rs.getString("email")));
 				mvo.setIdle(rs.getInt("idle"));
 				// 회원 삭제하고 aes.decrypt 로 복호화하기
 				optionMemberList.add(mvo);
 			}
+		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+			e.printStackTrace();
 		} finally {
 			close();
 		}
@@ -287,7 +289,7 @@ public class MemberDAO_imple implements MemberDAO {
 						+ "    select rank() over(partition by fk_userid order by loginday desc) as rank, loginday , fk_userid "
 						+ "    from tbl_login "
 						+ " ) "
-						+ " select b.name, b.userid, b.tel, b.registerday, loginday, b.status, a.ordercnt, c.logincnt, b.point "
+						+ " select b.name, b.userid, b.tel, registerday, loginday, b.status, a.ordercnt, c.logincnt, b.point "
 						+ " from a join b "
 						+ " on a.userid = b.userid "
 						+ " join c "
@@ -387,7 +389,7 @@ public class MemberDAO_imple implements MemberDAO {
 						+ "    select rank() over(partition by fk_userid order by loginday desc) as rank, loginday , fk_userid "
 						+ "    from tbl_login "
 						+ " ) "
-						+ " select b.name, b.userid, b.tel, b.registerday, loginday, b.status, a.ordercnt, c.logincnt, b.point "
+						+ " select b.name, b.userid, b.tel, registerday, loginday, b.status, a.ordercnt, c.logincnt, b.point "
 						+ " from a join b "
 						+ " on a.userid = b.userid "
 						+ " join c "

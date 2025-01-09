@@ -40,4 +40,7 @@ public interface CategoryDAO {
 
 	// 카테고리 수정하기
 	int updateCategory(Map<String, String> paraMap) throws SQLException;
+
+	// 카테고리등록의 카테고리개수
+	List<String> categorycnt(String categoryno) throws SQLException;
 }

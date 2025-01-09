@@ -8,7 +8,7 @@ $(document).ready(function(){
 
 	$("tr#tr").on("click", function(){
 
-		const productNo = $(this).data("id"); // tr의 dataid 
+		const productNo = $(this).data("id"); // tr의 dataid
 		
 		$.ajax({
 			url:"detailProduct.gu",
@@ -45,8 +45,12 @@ $(document).ready(function(){
 
 				html +=  `</div>
 						 <div class='info mt-4'>등록여부 : ${item.is_delete == 0 ? '등록' : '삭제'} <span>(재고 ${item.cnt}개)</span></div>
-						 <div class='info mt-2'>구매수 : </div>
+						 <div class='info mt-2'>구매수 : ${response.productSalesCnt}</div>
 						 <div class='info mt-2'>후기수 : ${response.reviewcnt == 0 ? '후기없음' : response.reviewcnt+'개'}</div>
+						 <button type="button" class="productPage btn btn-dark mt-2" style="width:95px; height:30px;">
+							<a href="/GUBI/product/productDetail.gu?productno=${item.productno}">Product Page</a></button>
+						 <button type="button" class="updateProduct btn btn-light mt-2" style="width:95px; height:30px;">
+						 <a href="/GUBI/admin/productUpdate.gu?productno=${item.productno}">상품수정</a></button>
 						 <div class="delivery_price">배송비 ${item.delivery_price.toLocaleString()} 원</div>
 						 <div class="product_price">상품가격 ${item.price.toLocaleString()} 원</div>
 						 <div class="price">${(item.price+item.delivery_price).toLocaleString()}원</div>	

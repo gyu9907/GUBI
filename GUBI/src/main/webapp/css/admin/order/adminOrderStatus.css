@@ -83,21 +83,19 @@ div#menulist > ul > ul > li:last-child {
 
 /* 본문 */
 div#article {
-   /*  border: solid 1px black; */
+/*     border: solid 1px black;  */
     width: 90%;
+    height:900px;
 }
 table.table { /* 모든 테이블 */
     font-size: 10pt;
 }
 /* 본문 */
-div#orderlist {
-   border: solid 1px blue;
-}
 div#top {
     display: flex;
 }
 div#top > span:last-child {
-    color: red;
+    color: black;
 }
 div#orderlist > table.table > thead > tr th {
     font-size: 12pt;
@@ -106,6 +104,9 @@ tr#ordertr:hover {
     background-color: rgb(253, 253, 253);
     cursor: pointer;
 }
+li a:active {
+	color:black;
+}
 /* 페이지바 */
 div#pageBar > nav > ul.pagination {
 	/* border: 1px solid blue; */
@@ -113,9 +114,7 @@ div#pageBar > nav > ul.pagination {
     justify-content: center;
 	text-align: center;
 }
-div#pageBar > nav > ul.pagination > li  {
-    /* border: 1px solid red; */
-}
+
 div#pageBar > nav > ul.pagination > li.page-item a {
     /* border: 1px solid red; */
 	color:black;
@@ -123,9 +122,6 @@ div#pageBar > nav > ul.pagination > li.page-item a {
 }
 .page-link {
     border: none;
-}
-.page-link:hover {
-    /* border: 1px solid  rgba(0, 0, 0, 0.5); */
 }
 .page-link:active:hover {
     border: 1px solid  rgba(0, 0, 0, 0.5);
@@ -143,87 +139,17 @@ div#pageBar > nav > ul.pagination > li.page-item a {
     background-color: rgba(255, 255, 255, 0.25);
   }
 /* 모달 */
-#orderhead {
-    /* border: 1px solid black; */
-    height: 35px;
-    display: flex;
-    background-color: rgb(235, 237, 236);
-    padding: 1%;
-    font-size:11pt;
-    
-}
-#orderhead > div {
-	position:relative;
-	top:-2px;
-}
-#orderhead > div:last-child {
-    /* border: 1px solid skyblue; */
-    display: block;
-    margin: 0 0 0 auto;
-}
-#orderbody {
-    border: 1px solid rgba(0, 0, 0, 0.2);
-    height: 160px;
-    display: flex;
-    padding: 1%;
-}
-#orderbody > div.productimage {
-    width: 112px;
-    aspect-ratio: 4/5;
-    object-fit: cover;
-}
-#orderbody > div.productimage > img {
-    width: 112px;
-}
-#orderbody > div.productoption {
-    width:350px;
-    padding-left: 2%;
-    display: flex;
-    flex-direction: column;
-}
-#orderbody > div.productoption div:first-child {
-    font-size: 14pt;
-}
-#orderbody > div.productoption div:nth-child(2) {
-    color: gray;
-}
-#orderbody > div.productoption div:nth-child(3) {
-    margin-top: auto;
-}
-#orderbody > div.productprice {
-   margin: auto 0 0 auto;
-   display: flex;
-   flex-direction: column; 
-}
-#orderbody > div.productprice div:first-child {
-    font-size: 12pt;
-    margin-left: auto;
-    color: gray;
-}
-#orderbody > div.productprice div:nth-child(2) {
-    font-size: 12pt;
-    margin-left: auto;
-    color: gray;
-}
-#orderbody > div.productprice div:last-child {
-    font-size: 16pt;
+div.head {
+    font-size: 18pt;
     font-weight: bold;
 }
-div#totalprice {
-	/* border: 1px solid rgba(0, 0, 0, 0.2); */
-	font-size: 16pt;
-	display: flex;
-	flex-direction: column;
-	margin-right: 1%;
+div.first {
+    /* border-top: 1px solid gray; */
+    font-size: 10pt;
+    margin-bottom: 1%;
 }
-div#totalprice div:first-child {
-/* 	border: 1px solid red; */
-	font-size:12pt;
-	margin-left: auto;
-}
-div#totalprice div:last-child {
-	/* border: 1px solid red; */
-	margin-left: auto;
-	font-size:20pt;
-	font-weight:bold;
+div.second {
+    border-bottom: 1px solid gray;
+    margin-bottom: 3%;
+    padding-bottom: 1%;
 }

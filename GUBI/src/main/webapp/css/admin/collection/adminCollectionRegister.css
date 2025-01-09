@@ -127,12 +127,6 @@ div#productupdate > button {
     font-size: 8pt;
     font-weight: bold;
 }
-/* 푸터 */
-div#footer{
-    border: solid 1px black;
-    height: 100px;
-}
-
 #article label {
     margin: 0;
 }
@@ -272,3 +266,32 @@ table.table input.datepicker {
     margin: 0;
 }
 /*** 상품 추가 모달 끝 ***/
+
+/* 페이지바 */
+div#pageBar > nav > ul.pagination > li  {
+    border: none;
+}
+div#pageBar > nav > ul.pagination > li.page-item a {
+    /* border: 1px solid red; */
+	color:black;
+    font-size: 10pt;
+}
+.page-link {
+    border: none;
+}
+.page-link:active:hover {
+    border: 1px solid  rgba(0, 0, 0, 0.5);
+}  
+  .page-link:focus {
+    z-index: 3;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(246, 246, 246, 0.25);
+  }
+  
+  .page-item.active .page-link {
+    border-bottom: 1px solid black;
+    z-index: 3;
+    color: #fff;
+    background-color: rgba(255, 255, 255, 0.25);
+  }
+  

@@ -1,5 +1,8 @@
 package review.domain;
 
+import member.domain.MemberVO;
+import product.domain.ProductVO;
+
 public class ReviewVO {
 
 	private int reviewno; /* 리뷰 일련번호 */
@@ -11,6 +14,25 @@ public class ReviewVO {
 	private String registerday; /* 등록일자 */
 	private String img;
 	
+	// join
+	MemberVO mvo;
+	ProductVO pvo;
+	
+	/////////////////////////////
+	public MemberVO getMvo() {
+		return mvo;
+	}
+	public ProductVO getPvo() {
+		return pvo;
+	}
+	
+	public void setPvo(ProductVO pvo) {
+		this.pvo = pvo;
+	}
+	public void setMvo(MemberVO mvo) {
+		this.mvo = mvo;
+	}
+	////////////////////////////////////
 	
 	public int getReviewno() {
 		return reviewno;

@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
+
 import common.controller.AbstractController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -77,9 +79,8 @@ public class AdminOrderStatus extends AbstractController {
 	           	 pageBar += "<li class='page-item active'><a class='page-link' href='#'>"+pageNo+"</a></li>";
 	       	}
 	       	else {
-	           	 pageBar += "<li class='page-item'><a class='page-link' href='member.gu?&status="+status+"&sizePerPage="+sizePerPage+"&currentShowPageNo="+pageNo+"'>"+pageNo+"</a></li>";
+	           	 pageBar += "<li class='page-item'><a class='page-link' href='orderStatus.gu?&status="+status+"&sizePerPage="+sizePerPage+"&currentShowPageNo="+pageNo+"'>"+pageNo+"</a></li>";
 	       	}
-	       	 
 		       	 loop++; 		 
 		       	 pageNo++;	
 	        }// end of while()-----------------------------
@@ -94,7 +95,8 @@ public class AdminOrderStatus extends AbstractController {
 			try {
 				// 상태별 주문목록
 				List<OrderVO> statusList = odao.statusList(paraMap);
-				System.out.println("statusList.size()"+statusList.size());
+				// 주문상태별 회원수
+				int statusOrderCnt = odao.statusOrderCnt(status);
 				// status
 				List<OrderVO> statusCnt = odao.statusCnt();
 				
@@ -103,6 +105,7 @@ public class AdminOrderStatus extends AbstractController {
 				request.setAttribute("currentShowPageNo", currentShowPageNo);
 				request.setAttribute("statusCnt", statusCnt);
 				request.setAttribute("pageBar", pageBar);
+				request.setAttribute("statusOrderCnt", statusOrderCnt);
 				
 			
 				super.setRedirect(false);
@@ -113,7 +116,24 @@ public class AdminOrderStatus extends AbstractController {
 				e.printStackTrace();
 			}
 
-		} else {
+		} else { // post 수정할 경우
+
+			String status = request.getParameter("currentStatus");
+			String orderno = request.getParameter("orderno");
+			// System.out.println("수정할status"+status);
+			
+			int n = odao.updateStatus(status, orderno);
+			System.out.println("n"+ n);
+			
+			JSONObject jsonObj = new JSONObject();  // {}
+            jsonObj.put("result", n);
+          
+            String json = jsonObj.toString(); // 문자열로 변환 
+            request.setAttribute("json", json);
+          
+            super.setRedirect(false);
+            super.setViewPage("/WEB-INF/common/jsonview.jsp");
+			
 			
 		}
 

@@ -6,6 +6,9 @@ import java.util.Map;
 
 import admin.domain.AdminVO;
 import admin.domain.StatisticsVO;
+import member.domain.MemberVO;
+import order.domain.OrderVO;
+import review.domain.ReviewVO;
 
 public interface AdminDAO {
 
@@ -20,6 +23,35 @@ public interface AdminDAO {
 
 	// 접속자수 통계
 	List<StatisticsVO> getLoginStat(String date) throws SQLException;
+
+	// 방문자통계
+	List<String> visitorCnt() throws SQLException;
+
+	// 회원가입통계
+	List<String> registerCnt() throws SQLException;
+
+	// 구매수통계
+	List<String> purchaseCnt() throws SQLException;
+
+	// 판매금액통계
+	List<String> salesCnt() throws SQLException;
+
+	// 페이징 주문목록
+	List<OrderVO> orderlist(Map<String, String> paraMap) throws SQLException;
+
+	// 주문리스트페이지수
+	int orderTotalPage(Map<String, String> paraMap) throws SQLException;
+
+	// 리뷰목록 
+	List<ReviewVO> reviewList() throws SQLException;
+
+	// 회원가입페이지수
+	int registerTotalPage(Map<String, String> paraMap2) throws SQLException;
+
+	// 회원가입리스트
+	List<MemberVO> registerlist(Map<String, String> paraMap2) throws SQLException;
+	
+	
 
 	
 	

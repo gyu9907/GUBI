@@ -172,5 +172,4 @@ $(document).ready(function() {
 
 		</div> <!-- end article -->
 	</div>
-</body>
-</html>
+<jsp:include page="/WEB-INF/admin/adminFooter.jsp" />  

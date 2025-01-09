@@ -1,0 +1,179 @@
+@charset "UTF-8";
+/* 로고 */
+div#header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);;
+}
+img#logo {
+    /* border: 1px solid red;   */
+    margin:1% ;
+}
+
+/* 관리자메뉴 */
+div#adminmenu{
+    /* border: solid 1px black; */
+    height: 40px;
+    text-align: center;
+}
+div#adminmenu > ul > li a {
+    color:BLACK;
+    font-size: 10pt;
+}
+/* 본문내용 */
+div#contents{
+    /* border: solid 1px black; */
+    display: flex;
+}
+
+/* 사이드메뉴 */
+div#sidemenu {
+    /* border: solid 1px black; */
+    width: 15%;
+    margin: -2px auto;
+}
+div#sidemenu > h3 {
+    text-align: center;
+    margin: 3% 0 10% 0;
+}
+div#sidemenu ul,
+div#sidemenu li{
+    /* border: solid 1px black; */
+    list-style-type: none;
+    padding: 0;
+    margin:0;
+}
+div#menulist > ul > li a {
+    /* border: 1px solid red; */
+    font-size: 14pt;
+    padding: 0;
+    margin: 0;
+}
+div#menulist > ul > ul {
+    font-size:10pt;
+    line-height: 30px;
+    /* border: 1px solid blue; */
+}
+div#menulist > ul > ul > li a {
+    color: gray;
+    text-decoration: none;
+    margin: 0 auto;
+    display: inline-block;
+    /* border: 1px solid black; */
+    width: 70px;
+    padding-left: 3%;
+}
+#menulist > ul > ul:nth-child(2) > li:nth-child(1) a {
+    /* border: 1px solid red; */
+    width: 200px;
+}
+div#menulist > ul > ul > li a:hover {
+    color: black;
+}
+div#menulist > ul > ul > li button.btn {
+    font-size: 8pt;
+    height: 15px;
+    position: relative;
+}
+div#menulist > ul > ul > li button.btn span {
+    position: relative;
+    top: -6px;
+}
+div#menulist > ul > ul > li:last-child {
+    margin-bottom: 10%;
+}
+
+/* 본문 */
+#table > thead > tr:nth-child(1) > td > span {
+    display: inline-block;
+    position: relative;
+    bottom:5px;
+    margin-left: 1%;
+    color: rgb(187, 0, 0);
+}
+span.error {
+    margin-left: 1%;
+    color: rgb(187, 0, 0);
+}
+div#article {
+    /* border: solid 1px black; */
+    width: 90%;
+}
+table.table { /* 모든 테이블 */
+    font-size: 10pt;
+}
+/* 본문상단 */
+div#searchbutton {
+    text-align: center;
+}
+div#searchbutton > button {
+    font-size: 10pt;
+}
+select#major_category {
+	height:30px;
+	width:100px;
+    position: relative;
+    bottom: 5px;
+}
+select#small_category {
+	height:30px;
+	width:130px;
+    position: relative;
+    bottom: 5px;
+}
+table.table > thead > tr > th {
+    width:170px; 
+    height:30px;
+    text-align : center;
+  	vertical-align : middle;
+}
+#addProduct > table:nth-child(5) > thead > tr:nth-child(1) > td {
+    position:relative;
+    top:5px;
+}
+table.table:first-child > thead > tr:nth-child(2) > td input {
+    height: 35px;
+    width: 370px;
+    border: 1px solid lightgrey;
+}
+table.table > thead > tr > td input {
+    height: 35px;
+    width: 200px;
+    border: 1px solid lightgrey;
+}
+table.table:first-child > thead > tr > td > textarea {
+    border: 1px solid lightgrey;
+}
+input#thumbnail_img {
+    position: relative;
+    top: 5px;
+    border: none;
+}
+td.preview {
+	height:200px;
+}
+td.preview > img {
+	width:200px;
+    aspect-ratio: 4/5;
+    object-fit: cover;
+}
+#cnt {
+	border: none;
+	width:50px;
+	height:30px;
+}
+div#addProduct > h6 {
+    border-left: 4px solid #0240b1;
+    font-weight: bold;
+}
+div#regibutton {
+    text-align: center;
+}
+
+/* input number 화살표 숨기기 */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+input[type='number'] {
+  -moz-appearance: textfield;
+}

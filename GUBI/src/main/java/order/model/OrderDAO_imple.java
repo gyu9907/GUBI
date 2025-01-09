@@ -1,6 +1,7 @@
 package order.model;
 
 import java.io.UnsupportedEncodingException;
+import java.security.GeneralSecurityException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -30,6 +31,7 @@ public class OrderDAO_imple implements OrderDAO {
 	private ResultSet rs;
 
 	private AES256 aes;
+	
 
 	// 생성자
 	public OrderDAO_imple() {
@@ -83,30 +85,11 @@ public class OrderDAO_imple implements OrderDAO {
 			String sql =  " select * "
 						+ " from "
 						+ " ( "
-						+ " with "
-						+ " a as "
-						+ " ( "
-						+ " select rownum as rno, b.orderno, a.userid, a.name, a.tel, total_price, total_cnt, orderday, b.status, delivery_end_day "
-						+ " from tbl_member a join tbl_order b "
-						+ " on a.userid = b.fk_userid "
-						+ " ), "
-						+ " b as "
-						+ " (  "
-						+ " select a.name as productname, a.productno, b.name as optionname, b.optionno "
-						+ " from tbl_product a join tbl_option b "
-						+ " on a.productno = b.fk_productno "
-						+ " ), "
-						+ " c as "
-						+ " (  "
-						+ " select cart_productno, fk_optionno, fk_orderno, price "
-						+ " from tbl_order_detail "
-						+ " ) "
-						+ " select distinct rno, a.orderno, a.orderday, a.total_cnt, a.status, a.userid, a.name, a.tel, a.total_price"
-						+ " from a join c "
-						+ " on a.orderno = c.fk_orderno "
-						+ " join b "
-						+ " on b.optionno = c.fk_optionno "
+						+ " select rownum as rno, orderno, orderday, total_cnt, a.status, fk_userid, total_price, name, tel "
+						+ " from tbl_order a join tbl_member b "
+						+ " on a.fk_userid = b.userid "
 						+ " where userid != 'admin' ";
+
 			
 			String searchType = paraMap.get("searchType");
 			String searchWord = paraMap.get("searchWord");
@@ -115,13 +98,13 @@ public class OrderDAO_imple implements OrderDAO {
 			String orderStatus = paraMap.get("orderStatus");
 			
 			if(! searchType.isBlank() && ! searchWord.isBlank() ) {
-				sql += " and a." + searchType + " like '%'|| ? ||'%' ";
+				sql += " and " + searchType + " like '%'|| ? ||'%' ";
 			}
 			if(!startDate.isBlank() && !endDate.isBlank()) {
-				sql +=  " and a.orderday BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') ";
+				sql +=  " and orderday BETWEEN TO_DATE(?, 'YYYY-MM-DD') AND TO_DATE(?, 'YYYY-MM-DD') ";
 			}
 			if(! orderStatus.isBlank() ) {
-				sql += " and status = ? ";
+				sql += " and a.status = ? ";
 			}
 
 			sql += " ) where rno between ? and ? ";
@@ -154,19 +137,20 @@ public class OrderDAO_imple implements OrderDAO {
 				MemberVO mvo = new MemberVO();
 				
 				ovo.setOrderday(rs.getString("orderday"));
-				ovo.setFk_userid(rs.getString("userid"));
+				ovo.setFk_userid(rs.getString("fk_userid"));
 				ovo.setTotal_price(rs.getInt("total_price"));
 				ovo.setTotal_cnt(rs.getInt("total_cnt"));
 				ovo.setStatus(rs.getString("status"));
 				ovo.setOrderno(rs.getInt("orderno"));
 				
 				mvo.setName(rs.getString("name"));
-				mvo.setTel(rs.getString("tel"));
+				mvo.setTel(aes.decrypt(rs.getString("tel")));
 				ovo.setMvo(mvo);
 				
 				selectOrderList.add(ovo);
 			}
-			
+		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+			e.printStackTrace();
 		} finally {
 			close();
 		}
@@ -184,34 +168,14 @@ public class OrderDAO_imple implements OrderDAO {
 			
 			conn = ds.getConnection();
 			
-			String sql =  " select count(*) as cnt "
-						+ " from "
-						+ " ( "
-						+ " with "
-						+ " a as "
-						+ " ( "
-						+ " select rownum as rno, b.orderno, a.userid, a.name, a.tel, total_price, total_cnt, orderday, b.status, delivery_end_day "
-						+ " from tbl_member a join tbl_order b "
-						+ " on a.userid = b.fk_userid "
-						+ " ), "
-						+ " b as "
-						+ " ( "
-						+ " select a.name as productname, a.productno, b.name as optionname, b.optionno "
-						+ " from tbl_product a join tbl_option b "
-						+ " on a.productno = b.fk_productno "
-						+ " ), "
-						+ " c as "
-						+ " ( "
-						+ " select cart_productno, fk_optionno, fk_orderno, price "
-						+ " from tbl_order_detail "
-						+ " ) "
-						+ " select distinct a.orderno, a.orderday, a.total_cnt, a.status, a.userid, a.name, a.tel, a.total_price "
-						+ " from a join c "
-						+ " on a.orderno = c.fk_orderno "
-						+ " join b "
-						+ " on b.optionno = c.fk_optionno "
-						+ " where userid != 'admin' ";
-			
+			String sql =   " select count(*) as cnt"
+						 + " from "
+						 + " ( "
+						 + " select rownum as rno, orderno, orderday, total_cnt, a.status, fk_userid, total_price, name, tel "
+						 + " from tbl_order a join tbl_member b "
+						 + " on a.fk_userid = b.userid "
+						 + " where userid != 'admin' ";
+			 
 			String searchType = paraMap.get("searchType");
 			String searchWord = paraMap.get("searchWord");
 			String startDate = paraMap.get("startDate");
@@ -219,14 +183,14 @@ public class OrderDAO_imple implements OrderDAO {
 			String orderStatus = paraMap.get("orderStatus");
 			
 			if(! searchType.isBlank() && ! searchWord.isBlank() ) {
-				sql += " and a." + searchType + " like '%'|| ? ||'%' ";
+				sql += " and " + searchType + " like '%'|| ? ||'%' ";
 			}
 			if(!startDate.isBlank() && !endDate.isBlank()) {
-				sql +=  " and a.orderday BETWEEN TO_DATE(?, 'YYYY-MM-DD') "
+				sql +=  " and orderday BETWEEN TO_DATE(?, 'YYYY-MM-DD') "
 					  + " AND TO_DATE(?, 'YYYY-MM-DD')" ;
 			}
 			if(! orderStatus.isBlank()) {
-				sql += " and status = ? ";
+				sql += " and a.status = ? ";
 			}
 			
 			sql += " ) ";
@@ -267,33 +231,14 @@ public class OrderDAO_imple implements OrderDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql =  " select ceil(count(*)/?) "
-						+ " from "
-						+ " ( "
-						+ " with "
-						+ " a as "
-						+ " ( "
-						+ " 	select rownum as rno, b.orderno, a.userid, a.name, a.tel, total_price, total_cnt, orderday, b.status, delivery_end_day "
-						+ " 	from tbl_member a join tbl_order b "
-						+ " 	on a.userid = b.fk_userid "
-						+ " ), "
-						+ " b as "
-						+ " (  "
-						+ " 	select a.name as productname, a.productno, b.name as optionname, b.optionno "
-						+ " 	from tbl_product a join tbl_option b "
-						+ " 	on a.productno = b.fk_productno "
-						+ " ), "
-						+ " c as "
-						+ " ( "
-						+ " 	select cart_productno, fk_optionno, fk_orderno, price "
-						+ " 	from tbl_order_detail "
-						+ " ) "
-						+ " select distinct a.orderno, a.orderday, a.total_cnt, a.status, a.userid, a.name, a.tel, a.total_price "
-						+ " from a join c "
-						+ " on a.orderno = c.fk_orderno "
-						+ " join b "
-						+ " on b.optionno = c.fk_optionno "
-						+ " where a.userid != 'admin' ";
+
+			String sql =   " select ceil(count(*)/?) "
+						 + " from "
+						 + " ( "
+						 + " select rownum as rno, orderno, orderday, total_cnt, a.status, fk_userid, total_price, name, tel "
+						 + " from tbl_order a join tbl_member b "
+						 + " on a.fk_userid = b.userid "
+						 + " where userid != 'admin' ";
 			
 			String searchType = paraMap.get("searchType");
 			String searchWord = paraMap.get("searchWord");
@@ -302,14 +247,14 @@ public class OrderDAO_imple implements OrderDAO {
 			String orderStatus = paraMap.get("orderStatus");
 			
 			if(! searchType.isBlank() && ! searchWord.isBlank() ) {
-				sql += " and a." + searchType + " like '%'|| ? ||'%' ";
+				sql += " and " + searchType + " like '%'|| ? ||'%' ";
 			}
 			if(!startDate.isBlank() && !endDate.isBlank()) {
-				sql +=  " and a.orderday BETWEEN TO_DATE(?, 'YYYY-MM-DD') "
+				sql +=  " and orderday BETWEEN TO_DATE(?, 'YYYY-MM-DD') "
 					  + " AND TO_DATE(?, 'YYYY-MM-DD') " ;	
 			}
 			if(! orderStatus.isBlank()) {
-				sql += " and status = ? ";
+				sql += " and a.status = ? ";
 			}
 			
 			sql += " ) ";
@@ -420,7 +365,7 @@ public class OrderDAO_imple implements OrderDAO {
 						+ "    select productno, name, price, thumbnail_img, delivery_price "
 						+ "    from tbl_product "
 						+ " ) "
-						+ " select orderno, a.fk_userid, d.name as username, cnt, e.price as price, total_price, total_cnt, orderday, status, delivery_price, "
+						+ " select orderno, productno, a.fk_userid, d.name as username, cnt, e.price as price, total_price, total_cnt, orderday, status, delivery_price, "
 						+ "       fk_optionno, c.name as optionname, color, c.img as optionimg, "
 						+ "       e.name as productname, thumbnail_img  "
 						+ " from a join b "
@@ -464,6 +409,7 @@ public class OrderDAO_imple implements OrderDAO {
 				pvo.setThumbnail_img(rs.getString("thumbnail_img"));
 				pvo.setPrice(rs.getInt("price"));
 				pvo.setDelivery_price(rs.getInt("delivery_price"));
+				pvo.setProductno(rs.getInt("productno"));
 				ovo.setPvo(pvo);
 				
 				odvo.setCnt(rs.getInt("cnt"));
@@ -473,7 +419,6 @@ public class OrderDAO_imple implements OrderDAO {
 				ovo.setMvo(mvo);
 				
 				detailOrderList.add(ovo);
-				System.out.println(detailOrderList+"detailOrderList");
 			}
 			
 		} finally {
@@ -499,33 +444,18 @@ public class OrderDAO_imple implements OrderDAO {
 						+ " with "
 						+ " a as "
 						+ " ( "
-						+ " select rownum as rno, b.orderno, a.userid, a.name, a.tel, total_price, total_cnt, orderday, b.status, delivery_end_day "
-						+ " from tbl_member a join tbl_order b "
-						+ " on a.userid = b.fk_userid "
-						+ " ), "
-						+ " b as "
-						+ " ( "
-						+ " select a.name as productname, a.productno, b.name as optionname, b.optionno "
-						+ " from tbl_product a join tbl_option b "
-						+ " on a.productno = b.fk_productno "
-						+ " ), "
-						+ " c as "
-						+ " ( "
-						+ " select cart_productno, fk_optionno, fk_orderno, price "
-						+ " from tbl_order_detail "
+						+ " select rownum as rno, orderno, b.name, fk_userid, tel, fk_deliveryno, total_price, total_cnt, orderday, delivery_end_day, a.status "
+						+ " from tbl_order a join tbl_member b "
+						+ " on a.fk_userid = b.userid "
 						+ " ) "
-						+ " select distinct rno, a.orderno, a.orderday, a.total_cnt, a.status, a.userid, a.name, a.tel, a.total_price "
-						+ " from a join c "
-						+ " on a.orderno = c.fk_orderno "
-						+ " join b "
-						+ " on b.optionno = c.fk_optionno  "
-						+ " where userid != 'admin' "
-						+ " and status = ? "
-						+ " ) ";
+						+ " select  orderno, name, fk_userid, tel,fk_deliveryno, total_price, total_cnt, orderday, delivery_end_day, status "
+						+ " from a "
+						+ " where status = ? "
+						+ " ) " ;
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, paraMap.get("currentShowPageNo"));
+			pstmt.setInt(1, Integer.parseInt(paraMap.get("sizePerPage")));
 			pstmt.setString(2, paraMap.get("status"));
 				
 			rs = pstmt.executeQuery();
@@ -552,34 +482,17 @@ public class OrderDAO_imple implements OrderDAO {
 			
 			conn = ds.getConnection();
 			
-			String sql =  " select * "
-						+ " from "
-						+ " ( "
-						+ " with "
+			String sql =  " with "
 						+ " a as "
 						+ " ( "
-						+ " select rownum as rno, b.orderno, a.userid, a.name, a.tel, total_price, total_cnt, orderday, b.status, delivery_end_day "
-						+ " from tbl_member a join tbl_order b "
-						+ " on a.userid = b.fk_userid "
-						+ " ), "
-						+ " b as "
-						+ " (  "
-						+ " select a.name as productname, a.productno, b.name as optionname, b.optionno "
-						+ " from tbl_product a join tbl_option b "
-						+ " on a.productno = b.fk_productno "
-						+ " ), "
-						+ " c as "
-						+ " ( "
-						+ " select cart_productno, fk_optionno, fk_orderno, price "
-						+ " from tbl_order_detail "
+						+ " select rownum as rno, orderno, b.name, fk_userid, tel, fk_deliveryno, total_price, total_cnt, orderday, delivery_end_day, a.status "
+						+ " from tbl_order a join tbl_member b "
+						+ " on a.fk_userid = b.userid "
 						+ " ) "
-						+ " select distinct rno, a.orderno, a.orderday, a.total_cnt, a.status, a.userid, a.name, a.tel, a.total_price "
-						+ " from a join c "
-						+ " on a.orderno = c.fk_orderno "
-						+ " join b "
-						+ " on b.optionno = c.fk_optionno "
-						+ " where userid != 'admin' and status = ? "
-						+ " ) where rno between ? and ? ";
+						+ " select rno, orderno, name, fk_userid, tel, total_price, total_cnt, orderday, delivery_end_day, status "
+						+ " from a "
+						+ " where status = ? "
+						+ " and rno between ? and ? ";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -597,24 +510,95 @@ public class OrderDAO_imple implements OrderDAO {
 				OrderVO ovo = new OrderVO();
 				MemberVO mvo = new MemberVO();
 				
-				ovo.setOrderday(rs.getString("orderday"));
-				ovo.setFk_userid(rs.getString("userid"));
+				ovo.setOrderno(rs.getInt("orderno"));
+				ovo.setFk_userid(rs.getString("fk_userid"));
 				ovo.setTotal_price(rs.getInt("total_price"));
 				ovo.setTotal_cnt(rs.getInt("total_cnt"));
+				ovo.setOrderday(rs.getString("orderday"));
+				ovo.setDelivery_end_day(rs.getString("delivery_end_day"));
 				ovo.setStatus(rs.getString("status"));
-				ovo.setOrderno(rs.getInt("orderno"));
 				
 				mvo.setName(rs.getString("name"));
-				mvo.setTel(rs.getString("tel"));
+				mvo.setTel(aes.decrypt(rs.getString("tel")));
 				ovo.setMvo(mvo);
 				
 				statusList.add(ovo);
 			}
+		} catch (UnsupportedEncodingException | GeneralSecurityException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+		return statusList;
+	}
+
+	// 주문상태별 회원수 
+	@Override
+	public int statusOrderCnt(String status) throws SQLException {
+		
+		int cnt = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " select count(*) "
+						+ " from "
+						+ " ( "
+						+ " with "
+						+ " a as "
+						+ " ( "
+						+ " select rownum as rno, orderno, b.name, fk_userid, tel, fk_deliveryno, total_price, total_cnt, orderday, delivery_end_day, a.status "
+						+ " from tbl_order a join tbl_member b "
+						+ " on a.fk_userid = b.userid "
+						+ " ) "
+						+ " select  orderno, name, fk_userid, tel,fk_deliveryno, total_price, total_cnt, orderday, delivery_end_day, status "
+						+ " from a "
+						+ " where status = ? "
+						+ " ) ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, status);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				cnt = rs.getInt(1);
+			}
+			
+		} finally {
+			close();
+		}
+		
+		
+		return cnt;
+	}
+
+	// status 수정하기
+	@Override
+	public int updateStatus(String status, String orderno) throws SQLException {
+		
+		int n = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql = " update tbl_order set status = ? where orderno = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, status);
+			pstmt.setString(2, orderno);
+			
+			n = pstmt.executeUpdate();
+	
 		} finally {
 			close();
 		}
 
-		return statusList;
+		return n;
 	}
 
 }
