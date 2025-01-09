@@ -36,5 +36,10 @@ public interface OrderDAO {
 
 	// status 수정하기
 	int updateStatus(String status, String orderno) throws SQLException;
+	
+	// 밑에서부턴 이진호멤버가 추가함 //
+	
+	// 마이페이지에서 주문 상태 가져오는 메소드 
+	Map<String, Integer> getOrderStatusByUserId(String userid) throws SQLException;
 
 }
