@@ -1,18 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
 	String ctxPath = request.getContextPath();
 	//	   /GUBI
 %>   
 <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/main/main.css">
-
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/product/productListJSON.js"></script>
-
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css"/>
+<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 <div class="common_container">
 	<div class="main_container">
 		<jsp:include page="header.jsp" />
+			<script type="text/javascript" src="${pageContext.request.contextPath}/js/main/main.js"></script>
 			<div class="main_wrapper">
 				<div class="banner_wrapper">
 					<div class="banner_video_wrapper">
@@ -22,7 +22,7 @@
 						<div class="text_box">
 							<p class="headline1">BAGDAD PORTABLE LAMP</p>
 							<p class="headline2">By Mathieu Matégot</p>
-							<a href="#"> <span>explore</span>
+							<a href="<%= ctxPath%>/product/productDetail.gu?productno=109"> <span>explore</span>
 							</a>
 						</div>
 					</div>
@@ -40,149 +40,31 @@
 							<img src="images/main/main_arrow_left4.svg">
 						</button>
 					</div>
+					<div class="pridGridContainer">
 	
-					<!-- 제품 목록 -->
-					<div class="container">
-	
-						<div class="product-grid">
-							<!-- 제품 카드 1 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="new-tag">New</div>
-									<div class="product-image"
-										style="background-image: url('https://media.gubi.com/73c82377c09a3b32010440746a08d8be/640.webp');"></div>
-									<div class="product-info">
-										<p>Copacabana Lounge Chair</p>
-										<div class="price">USD 1,999</div>
-									</div>
-								</div>
-							</a>
-	
-							<!-- 제품 카드 2 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="new-tag">New</div>
-									<div class="product-image"
-										style="background-image: url('https://media.gubi.com/73c82377c09a3b32010440746a08d8be/640.webp');"></div>
-									<div class="product-info">
-										<p>IOI Coffee Table</p>
-										<div class="price">USD 1,799</div>
-									</div>
-								</div>
-							</a>
-	
-							<!-- 제품 카드 3 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="new-tag">New</div>
-									<div class="product-image"
-										style="background-image: url('https://media.gubi.com/73c82377c09a3b32010440746a08d8be/640.webp');"></div>
-									<div class="product-info">
-										<p>GUBI X PIERRE FREY</p>
-										<div class="price">USD 1,999</div>
-									</div>
-								</div>
-							</a>
-	
-							<!-- 제품 카드 4 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="new-tag">New</div>
-									<div class="product-image"
-										style="background-image: url('https://media.gubi.com/73c82377c09a3b32010440746a08d8be/640.webp');"></div>
-									<div class="product-info">
-										<p>Daumiller Armchair</p>
-										<div class="price">USD 899</div>
-									</div>
-								</div>
-							</a>
-	
-							<!-- 제품 카드 4 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="new-tag">New</div>
-									<div class="product-image"
-										style="background-image: url('https://media.gubi.com/73c82377c09a3b32010440746a08d8be/640.webp');"></div>
-									<div class="product-info">
-										<p>Daumiller Armchair</p>
-										<div class="price">USD 899</div>
-									</div>
-								</div>
-							</a>
-	
-							<!-- 제품 카드 4 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="new-tag">New</div>
-									<div class="product-image"
-										style="background-image: url('https://media.gubi.com/73c82377c09a3b32010440746a08d8be/640.webp');"></div>
-									<div class="product-info">
-										<p>Daumiller Armchair</p>
-										<div class="price">USD 899</div>
-									</div>
-								</div>
-							</a>
-	
-							<!-- 제품 카드 4 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="new-tag">New</div>
-									<div class="product-image"
-										style="background-image: url('https://media.gubi.com/73c82377c09a3b32010440746a08d8be/640.webp');"></div>
-									<div class="product-info">
-										<p>Daumiller Armchair</p>
-										<div class="price">USD 899</div>
-									</div>
-								</div>
-							</a>
-	
-							<!-- 제품 카드 4 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="new-tag">New</div>
-									<div class="product-image"
-										style="background-image: url('https://media.gubi.com/73c82377c09a3b32010440746a08d8be/640.webp');"></div>
-									<div class="product-info">
-										<p>Daumiller Armchair</p>
-										<div class="price">USD 899</div>
-									</div>
-								</div>
-							</a>
-	
-							<!-- 제품 카드 4 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="new-tag">New</div>
-									<div class="product-image"
-										style="background-image: url('https://media.gubi.com/73c82377c09a3b32010440746a08d8be/640.webp');"></div>
-									<div class="product-info">
-										<p>Daumiller Armchair</p>
-										<div class="price">USD 899</div>
-									</div>
-								</div>
-							</a>
-	
-							<!-- 제품 카드 4 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="new-tag">New</div>
-									<div class="product-image"
-										style="background-image: url('https://media.gubi.com/73c82377c09a3b32010440746a08d8be/640.webp');"></div>
-									<div class="product-info">
-										<p>Daumiller Armchair</p>
-										<div class="price">USD 899</div>
-									</div>
-								</div>
-							</a>
+						<div id="best-prod-list" class="product-grid">
+						
+							 <c:forEach var="bestprod" items="${requestScope.bestProductlist}">
+								<a href="<%= ctxPath%>/product/productDetail.gu?productno=${bestprod.productno}">
+									<div class="product-card">
+										<div class="product-image">
+										  <img src="/GUBI/data/images/${bestprod.thumbnail_img}" />
+										</div>
+									    <div class="product-info">
+									      <p>${bestprod.name}</p>
+									     <div class="price">&#8361;<fmt:formatNumber value="${bestprod.price}" pattern="#,###"/></div>
+									    </div>
+									  </div>
+									</a>
+							
+							</c:forEach>
 						</div>
 					</div>
 	
 				</div>
 				<div class="main_contents_wrapper newitem">
 					<p>SPRING 2025 LAUNCHES</p>
-	
 					<div class="product-grid">
-						<!-- 제품 카드 1 -->
 						<c:forEach var="newprod" items="${requestScope.productList}">
 						
 							<a href="<%= ctxPath%>/product/productDetail.gu?productno=${newprod.productno}">
@@ -204,7 +86,6 @@
 				</div>
 				<div class="main_contents_wrapper category">
 					<div class="product-grid">
-						<!-- 제품 카드 1 -->
 						<a href="<%= ctxPath%>/product/productList.gu?major_category=LIGHTING">
 							<div class="product-card">
 								<div class="product-image" style="background-image: url('https://media.gubi.com/6cebba8c-22f8-4540-8eed-3fdba678b4df-640.webp');"></div>
@@ -213,8 +94,6 @@
 								</div>
 							</div>
 						</a>
-	
-						<!-- 제품 카드 1 -->
 						<a href="<%= ctxPath%>/product/productList.gu?major_category=SEATING">
 							<div class="product-card">
 	
@@ -228,8 +107,6 @@
 								</div>
 							</div>
 						</a>
-	
-						<!-- 제품 카드 1 -->
 						<a href="<%= ctxPath%>/product/productList.gu?major_category=TABLES">
 							<div class="product-card">
 								<div class="product-image"
@@ -246,72 +123,25 @@
 				<div class="main_contents_wrapper collection">
 					<p class="title">COLLECTION</p>
 					<ul class="category_tab_list">
-						<li>SEATING</li>
-						<li>LIGHTING</li>
-						<li>TABLES</li>
+						<li onclick="selectCollectionByCategory('SEATING')">SEATING</li>
+						<li onclick="selectCollectionByCategory('LIGHTING')">LIGHTING</li>
+						<li onclick="selectCollectionByCategory('TABLES')">TABLES</li>
 					</ul>
-					<div class="container swiper">
-						<div class="product-grid swiper-wrapper" id="product-grid">
-							<!-- 제품 카드 1 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="product-image">
-										<img src="images/main/collection.png">
-									</div>
-								</div>
-							</a>
-	
-							<!-- 제품 카드 2 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="product-image active">
-										<img src="images/main/collection2.png">
-									</div>
-								</div>
-							</a>
-	
-							<!-- 제품 카드 3 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="product-image">
-										<img src="images/main/collection3.png">
-									</div>
-								</div>
-							</a>
-							<!-- 제품 카드 3 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="product-image">
-										<img src="images/main/collection.png">
-									</div>
-								</div>
-							</a>
-							<!-- 제품 카드 3 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="product-image">
-										<img src="images/main/collection2.png">
-									</div>
-								</div>
-							</a>
-							<!-- 제품 카드 3 -->
-							<a href="#">
-								<div class="product-card">
-									<div class="product-image">
-										<img src="images/main/collection3.png">
-									</div>
-								</div>
-							</a>
-						</div>
-						<div class="arrow_wrapper">
-							<button type="button" class="arrow" id="previous">
+					<div class="gallery">
+			              <div class="swiper-container gallery-thumbs" >
+			                 <div class="swiper-wrapper"  id="product-grid"></div>
+							<button type="button" class="arrow" id="col_previous">
 								<img src="images/main/main_arrow_left4.svg">
 							</button>
-							<button type="button" class="arrow" id="next">
+							<button type="button" class="arrow" id="col_next">
 								<img src="images/main/main_arrow_left4.svg">
 							</button>
-	
-						</div>
+			              </div>
+			          </div>
+			          
+					<div class="container swiper swiper-container">
+              			
+						
 					</div>
 				</div>
 	

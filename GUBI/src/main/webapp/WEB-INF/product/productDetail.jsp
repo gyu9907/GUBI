@@ -7,10 +7,10 @@
 	String ctxPath = request.getContextPath();
 	//	   /GUBI
 %>   
+<jsp:include page="../common/header.jsp" />	
+<jsp:include page="../common/bootstrap.jsp" />	
 <link rel="stylesheet" href="<%= ctxPath%>/css/product/product_detail.css">
 <link rel="stylesheet" href="<%= ctxPath%>/css/review/review.css">
-<jsp:include page="../common/bootstrap.jsp" />	
-<jsp:include page="../common/header.jsp" />	
 
 <%-- 직접 만든 JS --%>
 <script>

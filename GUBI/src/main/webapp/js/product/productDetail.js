@@ -129,22 +129,15 @@ function goOrderPage() {
 	
 	var optionno = $("input[name='optionno']").val();
 	var cnt = $("input[name='cnt']").val();
-	is
+	
 
 	if (loginuser != "null") {
-		//console.log(loginuser + "로그인중")
 
-		$.ajax({
-			url: "/GUBI/order/order.gu",
-			type: "post",
-			data: {
-				"optionno": optionno,
-				"cnt": cnt
-			},
-			error: function() {
-				alert('잘못된 요청입니다.');
-			}
-		});
+		const frm = document.addCartFrm;
+
+		frm.method = "POST";
+		frm.action = "/GUBI/order/order.gu";
+		frm.submit();
 
 
 	} else {

@@ -62,7 +62,7 @@ function displayProduct(start) {
 	const collection = $("select[name='collection']").val();
 	
 	$.ajax({
-		url: "productDisplayJSON.gu",
+		url: "/GUBI/product/productDisplayJSON.gu",
 		data : {"majorCname" : param_major_category, 
 				"smallCname" : param_small_category,
 				"freeshipping" :freeshipping,
