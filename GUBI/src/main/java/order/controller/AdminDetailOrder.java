@@ -45,6 +45,7 @@ public class AdminDetailOrder extends AbstractController {
 			jsonObj.put("cnt", ovo.getOdvo().getCnt());
 			jsonObj.put("username", ovo.getMvo().getName());
 			jsonObj.put("delivery_price", ovo.getPvo().getDelivery_price());
+			jsonObj.put("productno", ovo.getPvo().getProductno());
 			
 			jsonArr.put(jsonObj);
 		}

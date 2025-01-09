@@ -36,12 +36,12 @@ $(document).ready(function(){
 							status = '배송완료';
 						}
 						else if(item.status == 6) {
-							status = '주문완료';
+							status = '구매확정';
 						}
 						else if(item.status == 7) {
 							status = '환불접수';
 						}
-						else if(item.status == 7) {
+						else if(item.status == 8) {
 							status = '환불완료';
 						}
 
@@ -63,7 +63,7 @@ $(document).ready(function(){
 	 								<img src='/GUBI/data/images/${item.thumbnail_img}'/>
 	 							</div>
 	 							<div class="productoption">
-	 								<div>${item.productname}</div>
+	 								<div>${item.productno} ${item.productname}</div>
 	 								<div>${item.optionno}${item.optionname}</div>
 	 								<div><span style='font-size: 10pt;'>주문수량</span>  ${item.cnt}</div>
 	 							</div>	

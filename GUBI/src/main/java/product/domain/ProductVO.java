@@ -3,6 +3,7 @@ package product.domain;
 import java.util.List;
 
 import category.domain.CategoryVO;
+import review.domain.ReviewVO;
 
 public class ProductVO {
 	
@@ -26,10 +27,17 @@ public class ProductVO {
 	private int productImgCnt;
 	private CategoryVO categoryVO;
 	private OptionVO optionvo;
+	private ReviewVO rvo;
 	
 
 
 
+	public ReviewVO getRvo() {
+		return rvo;
+	}
+	public void setRvo(ReviewVO rvo) {
+		this.rvo = rvo;
+	}
 	// getter setter 
 	public int getProductno() {
 		return productno;

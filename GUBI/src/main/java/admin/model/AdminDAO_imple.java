@@ -16,6 +16,10 @@ import javax.sql.DataSource;
 
 import admin.domain.AdminVO;
 import admin.domain.StatisticsVO;
+import member.domain.MemberVO;
+import order.domain.OrderVO;
+import product.domain.ProductVO;
+import review.domain.ReviewVO;
 import util.security.AES256;
 import util.security.SecretMyKey;
 import util.security.Sha256;
@@ -260,18 +264,409 @@ public class AdminDAO_imple implements AdminDAO {
 	}
 
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// 방문자통계
+	@Override
+	public List<String> visitorCnt() throws SQLException {
+		
+		List<String> visitorCnt = new ArrayList<>();
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			
+			String sql =  " select count(*) cnt "
+						+ " from tbl_member "
+						+ " where registerday = sysdate "
+						+ " union all "
+						+ " select count(*) "
+						+ " from tbl_member "
+						+ " where registerday >= trunc(sysdate) - 7 "
+						+ " and registerday < trunc(sysdate) + 1 "
+						+ " union all "
+						+ " select count(*) "
+						+ " from tbl_member "
+						+ " where registerday >= trunc(sysdate) - 30 "
+						+ " and registerday < trunc(sysdate) + 1 ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				visitorCnt.add(rs.getString(1));
+			}
+			
+		} finally {
+			close();
+		}
+		
+		return visitorCnt;
+	}
+
+	// 회원가입통계
+	@Override
+	public List<String> registerCnt() throws SQLException {
+		
+		List<String> registerCnt = new ArrayList<>();
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			
+			String sql =  " select count(*) cnt "
+						+ " from tbl_member "
+						+ " where registerday = sysdate "
+						+ " union all "
+						+ " select count(*) "
+						+ " from tbl_member "
+						+ " where registerday >= trunc(sysdate) - 7  "
+						+ " and registerday < trunc(sysdate) + 1 "
+						+ " union all "
+						+ " select count(*) "
+						+ " from tbl_member "
+						+ " where registerday >= trunc(sysdate) - 30 "
+						+ " and registerday < trunc(sysdate) + 1 ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				registerCnt.add(rs.getString(1));
+			}
+			
+		} finally {
+			close();
+		}
+		
+		return registerCnt;
+	}
+
+	// 구매수통계 
+	@Override
+	public List<String> purchaseCnt() throws SQLException {
+		
+		List<String> purchaseCnt = new ArrayList<>();
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			
+			String sql =  " select count(*) "
+						+ " from tbl_order "
+						+ " where orderday = sysdate "
+						+ " union all "
+						+ " select count(*) "
+						+ " from tbl_order "
+						+ " where orderday >= trunc(sysdate) - 7 "
+						+ " and orderday < trunc(sysdate) + 1 "
+						+ " union all "
+						+ " select count(*) "
+						+ " from tbl_order "
+						+ " where orderday >= trunc(sysdate) - 30  "
+						+ " and orderday < trunc(sysdate) + 1 ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				purchaseCnt.add(rs.getString(1));
+			}
+			
+		} finally {
+			close();
+		}
+		
+		return purchaseCnt;
+	}
+
+	// 구매금액 통계
+	@Override
+	public List<String> salesCnt() throws SQLException {
+		
+		List<String> salesCnt = new ArrayList<>();
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			
+			String sql =  " select nvl(sum(total_price), 0) "
+						+ " from tbl_order "
+						+ " where orderday = sysdate "
+						+ " union all "
+						+ " select nvl(sum(total_price), 0) "
+						+ " from tbl_order "
+						+ " where orderday >= trunc(sysdate) - 7 "
+						+ " and orderday < trunc(sysdate) + 1 "
+						+ " union all "
+						+ " select nvl(sum(total_price), 0) "
+						+ " from tbl_order "
+						+ " where orderday >= trunc(sysdate) - 30 "
+						+ " and orderday < trunc(sysdate) + 1 ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				salesCnt.add(rs.getString(1));
+			}
+			
+		} finally {
+			close();
+		}
+		
+		return salesCnt;
+	}
+
+	// 최근 주문목록 
+	@Override
+	public List<OrderVO> orderlist(Map<String, String> paraMap) throws SQLException {
+		
+		List<OrderVO> orderlist = new ArrayList<>();
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " with "
+						+ " a as "
+						+ " ( "
+						+ " select rownum as rno, orderno, fk_userid, total_cnt, total_price, orderday "
+						+ " from tbl_order "
+						+ " ) "
+						+ " select rno, orderno, fk_userid, total_cnt, total_price, orderday "
+						+ " from a "
+						+ " where rno between ? and ?";
+			
+			
+			int currentShowPageNo = Integer.parseInt(paraMap.get("currentShowPageNo")); // 현재페이지
+			int sizePerPage = Integer.parseInt(paraMap.get("sizePerPage"));
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, (currentShowPageNo*sizePerPage)-(sizePerPage-1));
+			pstmt.setInt(2, (currentShowPageNo*sizePerPage));
+			
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				OrderVO ovo = new OrderVO();
+				
+				ovo.setOrderno(rs.getInt("orderno"));
+				ovo.setFk_userid(rs.getString("fk_userid"));
+				ovo.setTotal_cnt(rs.getInt("total_cnt"));
+				ovo.setTotal_price(rs.getInt("total_price"));
+				ovo.setOrderday(rs.getString("orderday"));
+				
+				orderlist.add(ovo);
+			}
+			
+		} finally {
+			close();
+		}
+
+		return orderlist;
+	}
+
+	// 주문목록페이징수
+	@Override
+	public int orderTotalPage(Map<String, String> paraMap) throws SQLException {
+		
+		int n = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " select ceil(count(*)/?) "
+						+ " from "
+						+ " ( "
+						+ " with "
+						+ " a as "
+						+ " ( "
+						+ " select rownum as rno, orderno, fk_userid, total_cnt, total_price, orderday "
+						+ " from tbl_order "
+						+ " ) "
+						+ " select orderno, fk_userid, total_cnt, total_price, orderday "
+						+ " from a "
+						+ " ) ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(paraMap.get("sizePerPage")));
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			n = rs.getInt(1);
+			
+		} finally {
+			close();
+		}
+		
+		return n;
+	}
+
+	// 리뷰리스트
+	@Override
+	public List<ReviewVO> reviewList() throws SQLException {
+		
+		List<ReviewVO> reviewList = new ArrayList<>();
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " with "
+						+ " a as ( "
+						+ " select reviewno, fk_userid, fk_productno, "
+						+ " case "
+						+ " when length(title) > 10 then substr(title, 1, 10) || ' ...' "
+						+ " else title end as title, "	
+						+ " registerday "	
+						+ " from tbl_review a join tbl_option b "
+						+ " on a.fk_optionno = b.optionno "
+						+ " ), "
+						+ " b as ( "
+						+ " select productno, "
+						+ " case "
+						+ " when length(name) > 12 then substr(name, 1, 12) || ' ...' "
+						+ " else name end as name "	
+						+ " from tbl_product "
+						+ " ) "
+						+ " select reviewno, fk_userid, name, title, registerday "
+						+ " from a join b "
+						+ " on a.fk_productno = b.productno "
+						+ " where registerday between to_date(add_months(sysdate, -1)) and sysdate ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ReviewVO rvo = new ReviewVO();
+				ProductVO pvo = new ProductVO();
+				
+				rvo.setReviewno(rs.getInt("reviewno"));
+				rvo.setFk_userid(rs.getString("fk_userid"));
+				pvo.setName(rs.getString("name"));
+				rvo.setPvo(pvo);
+				rvo.setTitle(rs.getString("title"));
+				rvo.setRegisterday(rs.getString("registerday"));
+				
+				reviewList.add(rvo);
+			}
+			
+		} finally {
+			close();
+		}
+		return reviewList;
+	}
+
+	// 회원가입페이지수
+	@Override
+	public int registerTotalPage(Map<String, String> paraMap2) throws SQLException {
+		
+		int n = 0;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql =  " select ceil(count(*)/?) "
+						+ " from "
+						+ " ("
+						+ " with "
+						+ " a as ( "
+						+ " select rownum as rno, userid, name, registerday "
+						+ " from tbl_member "
+						+ " ), "
+						+ " b as "
+						+ " ( "
+						+ " select fk_userid, count(*) as logincnt "
+						+ " from tbl_login "
+						+ " group by fk_userid "
+						+ " ) "
+						+ " select rno, userid, name, logincnt, registerday "
+						+ " from a join b "
+						+ " on a.userid = b.fk_userid "
+						+ " ) ";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, Integer.parseInt(paraMap2.get("sizePerpage")));
+			
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+			
+			n = rs.getInt(1);
+			
+		} finally {
+			close();
+		}		
+		return n;
+	}
+
+	// 회원가입리스트
+	@Override
+	public List<MemberVO> registerlist(Map<String, String> paraMap2) throws SQLException {
+		
+		List<MemberVO> registerlist = new ArrayList<>();
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " with "
+						+ " a as ( "
+						+ " select rownum as rno, userid, name, registerday "
+						+ " from tbl_member "
+						+ " ), "
+						+ " b as "
+						+ " ( "
+						+ " select fk_userid, count(*) as logincnt "
+						+ " from tbl_login "
+						+ " group by fk_userid "
+						+ " ) "
+						+ " select rno, userid, name, logincnt, registerday "
+						+ " from a join b "
+						+ " on a.userid = b.fk_userid"
+						+ " where rno between ? and ? ";
+			
+			int currentShowPageno = Integer.parseInt(paraMap2.get("currentShowPageno")); // 현재페이지
+			int sizePerpage = Integer.parseInt(paraMap2.get("sizePerpage"));
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, (currentShowPageno*sizePerpage)-(sizePerpage-1));
+			pstmt.setInt(2, (currentShowPageno*sizePerpage));
+			
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				MemberVO mvo = new MemberVO();
+				
+				mvo.setUserid(rs.getString("userid"));
+				mvo.setName(rs.getString("name"));
+				mvo.setLogincnt(rs.getInt("logincnt"));
+				mvo.setRegisterday(rs.getString("registerday"));
+				
+				registerlist.add(mvo);
+			}
+
+		} finally {
+			close();
+		}
+		
+		return registerlist;
+	}
+
+
 }//end of class..
 
 

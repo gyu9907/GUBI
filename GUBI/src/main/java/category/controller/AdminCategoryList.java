@@ -22,13 +22,14 @@ public class AdminCategoryList extends AbstractController {
 		String method = request.getMethod();
 		
 		if("GET".equalsIgnoreCase(method)) {
+			
 			String major_category = request.getParameter("major_category");
 			String categoryStatus = request.getParameter("categoryStatus");
 			
 			if(major_category == null &&
-				!"seating".equalsIgnoreCase(major_category) &&
-				!"lighting".equalsIgnoreCase(major_category) &&
-				!"tables".equalsIgnoreCase(major_category) ) {
+				!"SEATING".equalsIgnoreCase(major_category) &&
+				!"LIGHTING".equalsIgnoreCase(major_category) &&
+				!"TABLES".equalsIgnoreCase(major_category) ) {
 				major_category = "";
 			}
 			if(categoryStatus == null) {
@@ -57,15 +58,7 @@ public class AdminCategoryList extends AbstractController {
 				e.printStackTrace();
 			}
 
-		} else {
-			
-		}
-			
-			
-			
-		
-
-		
+		} 
 	}
 
 }

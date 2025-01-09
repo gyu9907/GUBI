@@ -3,6 +3,8 @@ package review.domain;
 import java.util.List;
 
 import product.domain.OptionVO;
+import member.domain.MemberVO;
+import product.domain.ProductVO;
 
 public class ReviewVO {
 
@@ -17,6 +19,25 @@ public class ReviewVO {
 	
 	// select 용 field
 	private OptionVO optionvo;
+	// join
+	MemberVO mvo;
+	ProductVO pvo;
+	
+	/////////////////////////////
+	public MemberVO getMvo() {
+		return mvo;
+	}
+	public ProductVO getPvo() {
+		return pvo;
+	}
+	
+	public void setPvo(ProductVO pvo) {
+		this.pvo = pvo;
+	}
+	public void setMvo(MemberVO mvo) {
+		this.mvo = mvo;
+	}
+	////////////////////////////////////
 	
 
 	public int getReviewno() {
