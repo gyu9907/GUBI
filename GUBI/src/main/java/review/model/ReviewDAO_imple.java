@@ -588,6 +588,41 @@ public class ReviewDAO_imple implements ReviewDAO {
 	}
 
 	
+	
+	// 내 리뷰 개수 
+	@Override
+	public int selectReviewCount(Map<String, String> paraMap) throws SQLException {
+		
+		int count = 0;
+
+		try {
+			conn = ds.getConnection();
+			
+			String sql = "SELECT COUNT(*) "
+	                   + " FROM tbl_product P "
+	                   + " JOIN tbl_option OPT ON P.productno = OPT.fk_productno "
+	                   + " JOIN tbl_review R ON OPT.optionno = R.fk_optionno "
+	                   + " WHERE r.fk_userid = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, paraMap.get("userId"));
+
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+	         
+	        count = rs.getInt(1); 
+	        
+		} finally {
+			close();
+		}
+		
+		return count;
+	}
+	
+	
+	
+	
 	// 내 리뷰 조회  
 	@Override
 	public List<ReviewVO> selectReviewList(Map<String, String> paraMap) throws SQLException {
