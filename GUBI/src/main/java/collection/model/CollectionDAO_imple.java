@@ -349,10 +349,13 @@ public class CollectionDAO_imple implements CollectionDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " SELECT collectionno, name, designer, thumbnail_img, fullscreen_img, is_delete, registerday, product_cnt "
+			String sql = " SELECT * "
 					   + " FROM "
 					   + " ( "
-					   + " select rownum AS rno, collectionno, name, designer, thumbnail_img, fullscreen_img, is_delete, to_char(registerday, 'yyyy-mm-dd') as registerday, product_cnt "
+					   + " SELECT rownum AS rno, collectionno, name, designer, thumbnail_img, fullscreen_img, is_delete, registerday, product_cnt "
+					   + " FROM "
+					   + " ( "
+					   + " select collectionno, name, designer, thumbnail_img, fullscreen_img, is_delete, to_char(registerday, 'yyyy-mm-dd') as registerday, product_cnt "
 					   + " from tbl_collection c "
 					   + " join  "
 					   + " ( "
@@ -389,7 +392,9 @@ public class CollectionDAO_imple implements CollectionDAO {
 				sql += "AND registerday <= to_date(?, 'yyyy-mm-dd') + 1 ";
 			}
 			
-			sql += " ) "
+			sql += " ORDER BY registerday DESC "
+				 + " ) "
+				 + " ) "
 			     + " WHERE RNO BETWEEN ? AND ? ";
 			
 			pstmt = conn.prepareStatement(sql);
