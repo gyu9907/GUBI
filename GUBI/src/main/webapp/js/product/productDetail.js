@@ -3,8 +3,6 @@ const param = new URLSearchParams(query);
 
 const param_productno = param.get('productno');
 
-/* 전역변수 리뷰리스트 */
-let reviewList = [];
 
 $(document).ready(function() {
 	selectReviewList();
@@ -56,7 +54,7 @@ $(document).ready(function() {
 			alert('수량은 1개 이상 선택해야 합니다.')
 			$('input.product-cnt').val(1);  // 최소 수량 1으로 설정
 		}
-	})
+	});
 })
 
 function addCart() {
@@ -89,17 +87,17 @@ function selectReviewList() {
 				html += `<div class="review-item">
 							  <div class="review_title_wrapper">
 								<span class="review_title">${item.title}</span>
-							  <button data-toggle="modal" data-target="#addReviewModal" onclick="editReview('${index}')">
-							  	수정
-							  </button>
-							  <button onclick="deleteReview('${item.reviewno}','${item.img}')">
-							    삭제
-							  </button>
 								<span class="review_registerday">${item.registerday.substring(0, 10)}</span>
 							  </div>
 							  <p class="review-rating">${score}<span class="review_font_s">${item.fk_userid}</span></p>
 							  <p class="review_font_s" style="font-size: 11px;">${item.name}</p>`
 
+			  /*<button data-toggle="modal" data-target="#addReviewModal" onclick="editReview('${index}')">
+			  	수정
+			  </button>
+			  <button onclick="deleteReview('${item.reviewno}','${item.img}')">
+			    삭제
+			  </button>*/
 				if (item.img != null) {
 					html += `<div class="review_img">
 								<img src="/GUBI/data/images/${item.img}" />
@@ -131,9 +129,7 @@ function goOrderPage() {
 	
 	var optionno = $("input[name='optionno']").val();
 	var cnt = $("input[name='cnt']").val();
-	
-	//console.log("optionno :: " + optionno);
-	//console.log("cnt :: " + cnt);
+	is
 
 	if (loginuser != "null") {
 		//console.log(loginuser + "로그인중")

@@ -4,6 +4,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.naming.Context;
@@ -11,6 +13,8 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import product.domain.OptionVO;
+import review.domain.ReviewVO;
 import util.check.Check;
 
 public class ReviewDAO_imple implements ReviewDAO {
@@ -53,7 +57,117 @@ public class ReviewDAO_imple implements ReviewDAO {
 			e.printStackTrace();
 		}
 	}// end of private void close()----------------
+	
+	// 내 리뷰 개수 
 
+	@Override
+	public int selectReviewCount(Map<String, String> paraMap) throws SQLException {
+		
+		int count = 0;
+
+		try {
+			conn = ds.getConnection();
+			
+			String sql = "SELECT COUNT(*) "
+	                   + " FROM tbl_product P "
+	                   + " JOIN tbl_option OPT ON P.productno = OPT.fk_productno "
+	                   + " JOIN tbl_review R ON OPT.optionno = R.fk_optionno "
+	                   + " WHERE r.fk_userid = ? ";
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, paraMap.get("userId"));
+
+			rs = pstmt.executeQuery();
+			
+			rs.next();
+	         
+	        count = rs.getInt(1); 
+	        
+		} finally {
+			close();
+		}
+		
+		return count;
+		
+	}
+
+
+	// 내 리뷰 조회  
+	@Override
+	public List<ReviewVO> selectReviewList(Map<String, String> paraMap) throws SQLException {
+		List<ReviewVO> reviewList = new ArrayList<>();
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " WITH ReviewCTE AS ( "
+					+ "    SELECT row_number() over(order by reviewno desc) AS RNO , "
+					+ "        r.reviewno,  "
+					+ "        r.fk_optionno,  "
+					+ "        r.fk_userid,  "
+					+ "        r.score,  "
+					+ "        OPT.name,  "
+					+ "        p.productno,  "
+					+ "        r.title,  "
+					+ "        r.content,  "
+					+ "        r.img,  "
+					+ "        r.registerday "
+					+ "         "
+					+ "    FROM tbl_option OPT  "
+					+ "    JOIN tbl_review r ON OPT.optionno = r.fk_optionno    "
+					+ "    JOIN tbl_product p ON p.productno = OPT.fk_productno "
+					+ "    WHERE r.fk_userid = ? "
+					+ " ) "
+					+ " SELECT  "
+					+ "    reviewno,  "
+					+ "    fk_optionno,  "
+					+ "    fk_userid,  "
+					+ "    score,  "
+					+ "    name,  "
+					+ "    productno,  "
+					+ "    title,  "
+					+ "    content,  "
+					+ "    img,  "
+					+ "    registerday "
+					+ " FROM ReviewCTE "
+					+ " WHERE rownum BETWEEN ? AND ? ";
+
+
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, paraMap.get("userId"));
+			pstmt.setString(2, paraMap.get("start"));
+			pstmt.setString(3, paraMap.get("end"));
+
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				
+				ReviewVO rvo = new ReviewVO();
+				
+				rvo.setReviewno(rs.getInt("reviewno"));
+				rvo.setFk_optionno(rs.getInt("fk_optionno"));
+				rvo.setFk_userid(rs.getString("fk_userid"));
+				rvo.setScore(rs.getInt("score"));
+				
+				OptionVO otpvo = new OptionVO();
+				otpvo.setName(rs.getString("name"));
+				otpvo.setFk_productno(rs.getInt("productno"));
+				rvo.setOptionvo(otpvo);
+				
+				rvo.setTitle(rs.getString("title"));
+				rvo.setContent(rs.getString("content"));
+				rvo.setImg(rs.getString("img"));
+				rvo.setRegisterday(rs.getString("registerday"));
+				
+				reviewList.add(rvo);
+				
+			}
+			
+		} finally {
+			close();
+		}
+		
+		return reviewList;
+	}
 	
 	// 리뷰를 작성하여 insert 하는 메소드 
 	@Override

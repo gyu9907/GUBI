@@ -1004,7 +1004,7 @@ public class ProductDAO_imple implements ProductDAO {
 				sql += " WHERE delivery_price = 0 ";
 			}
 
-			sql += ") V ";
+			sql += " ) V ";
 
 			System.out.println(" ----------------count[totalProductCount] 조회-----------");
 			System.out.println("majorCname:: " + majorCname);
@@ -1387,6 +1387,52 @@ public class ProductDAO_imple implements ProductDAO {
 		
 		return productList;
 	}
+	
+	
+	
+	
+	
+	// 메인페이지에서 사용할 인기상품목록 조회
+	@Override
+	public List<ProductVO> selectBestProd() throws SQLException {
+		
+		List<ProductVO> bestProdList = new ArrayList<>();
+		try {
+			conn = ds.getConnection();
+			
+			
+			String sql = " select productno, P.name, P.price, P.thumbnail_img, sum(OD.cnt) AS salesCount "
+					   + "from tbl_option O "
+				 	   + " JOIN tbl_order_detail OD "
+					   + " ON O.optionno = OD.fk_optionno "
+					   + " JOIN tbl_product P "
+					   + " ON O.fk_productno = P.productno "
+					   + " group by productno, P.name, P.price, P.thumbnail_img "
+					   + " order by salesCount desc ";
+			
+			pstmt = conn.prepareStatement(sql);
+			rs= pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ProductVO pvo  = new ProductVO();
+				pvo.setProductno(rs.getInt("productno"));
+				pvo.setName(rs.getString("name"));
+				pvo.setPrice(rs.getInt("price"));
+				pvo.setThumbnail_img(rs.getString("thumbnail_img"));
+				
+				bestProdList.add(pvo);
+			}
+		} finally {
+			close();
+		}
+		
+		return bestProdList;
+	}
+	
+	
+	
+	
+	
 
 	
 	
@@ -1487,7 +1533,7 @@ public class ProductDAO_imple implements ProductDAO {
 				rvo.setFk_userid(rs.getString("fk_userid"));
 				rvo.setScore(rs.getInt("score"));
 				
-				OptionVO  otpvo = new OptionVO();
+				OptionVO otpvo = new OptionVO();
 				otpvo.setName(rs.getString("name"));
 				rvo.setOptionvo(otpvo);
 				
@@ -2376,4 +2422,6 @@ public class ProductDAO_imple implements ProductDAO {
 		}
 		return resultMap;
 	}
+
+
 }

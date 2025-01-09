@@ -3,7 +3,6 @@ let file = ""; // 첨부되어진 파일 정보를 담아둘 변수
 var is_edit = false;
 
 $(document).ready(function() {
-
 	$("span.error").hide();
 
 	// 모달 창에서 입력된 값 초기화 시키기 //
@@ -47,13 +46,23 @@ $(document).ready(function() {
 		//////////////////////////////////////////////////////////////////
 	});
 	// ==>> 리뷰이미지 파일선택을 선택하면 화면에 이미지를 미리 보여주기 끝 <<== //
+	
 
+	/* 별점 */
+	const stars = document.querySelectorAll(".star");
+	const ratingValueDisplay = document.getElementById("score");
+	
+	stars.forEach((star) => {
+	  star.addEventListener("click", () => {
+	    const rating = star.getAttribute("data-value");
+	    ratingValueDisplay.value = rating;
+	    fillStars(rating)
+	  });
+	});
 
 	// 리뷰등록 및 수정하기
 	$("button[name='addReview']").click(function() {
 		let is_infoData_OK = true;
-
-		console.log(is_edit ? '수정할겨' : '추가할겨')
 
 		//유효성검사
 		$(".infoData").each(function(index, elmt) {
@@ -126,7 +135,7 @@ $(document).ready(function() {
 
 			if (is_edit) {
 				url = "/GUBI/review/reviewEdit.gu";
-				
+
 				// file 수정 안했으면 formData에서 제거
 				if (file.name == '') {
 					formData.delete("img")
@@ -142,7 +151,6 @@ $(document).ready(function() {
 				dataType: "json",
 				success: function(json) {
 					console.log("~~~ 확인용 : " + JSON.stringify(json));
-					// ~~~ 확인용 : {"result":1}
 					if (json.result == 1) {
 						location.href = location.href;
 					}
@@ -180,7 +188,7 @@ $(document).ready(function() {
 	// 취소하기
 	$("input[type='reset']").click(function() {
 		$("span.error").hide();
-		file = ""; // 첨부되어진 파일 정보를 담아 둘 배열 초기화
+		file = ""; // 첨부되어진 파일 정보를 담아 둘 변수 초기화
 		$("img#previewImg").hide();
 	});
 
@@ -219,26 +227,48 @@ function deleteReview(reviewno, img) {
 
 }// end of function goDel(cartno)---------------------------
 
-// === 리뷰수정하기 === //
+// === 리뷰수정하기 버튼 누를 때 실행 === //
 function editReview(index) {
-	// 전역 변수(리뷰리스트)에서 index로 target review 값을 가져온다.
+	// 해당 button의 data- 인 것들
 	const targetReview = reviewList[index];
+	console.log(reviewList, targetReview);
+	if (!targetReview) {
+	    console.error("Invalid review target.");
+	    return;
+	}
 	is_edit = true;
 
+	
 	// 수정 타겟 리뷰 데이터 세팅
-	document.getElementById("reviewno").value = targetReview.reviewno;
-	document.getElementById("optionno").value = targetReview.optionno;
+	document.querySelector("input[name='reviewno']").value = targetReview.reviewno;
+	document.querySelector("input[name='optionno']").value = targetReview.optionno;
 	document.querySelector("input[name='title']").value = targetReview.title;
-	document.querySelector("select[name='score']").value = targetReview.score;
+	document.querySelector("input[name='score']").value = targetReview.score;
+	fillStars(targetReview.score);
 	document.querySelector("textarea[name='content']").value = targetReview.content;
 	// document.querySelector("input[name='img']").value = targetReview.img;
 
+
+	// title 영역
+	console.log(document.getElementsByClassName('modal-header'))
+	document.getElementById('modal-title').textContent = `Review Edit For ${targetReview.optionname}`;
+	
 	if (targetReview.img) {
 		const imageTag = document.getElementById("imgPreview");
 		imageTag.src = `/GUBI/data/images/${targetReview.img}`;
 		imageTag.style = "width:150px; min-width:150px; height:150px;";
 	}
 
+}
+
+// 별 채우기
+function fillStars(count) {
+	const stars = document.querySelectorAll(".star");
+	stars.forEach((s) => s.classList.remove("filled"));
+	
+    for (let i = 0; i < count; i++) {
+      stars[i].classList.add("filled");
+    }
 }
 
 // 리뷰 폼 모두 리셋

@@ -8,7 +8,7 @@
 	//	   /GUBI
 %>   
 <link rel="stylesheet" href="<%= ctxPath%>/css/product/product_detail.css">
-
+<link rel="stylesheet" href="<%= ctxPath%>/css/review/review.css">
 <jsp:include page="../common/bootstrap.jsp" />	
 <jsp:include page="../common/header.jsp" />	
 
@@ -109,16 +109,16 @@
 		
 		
 		<!-- 리뷰 작성 버튼 -->
-		<c:forEach var="option" items="${requestScope.optionList}">
+		<%-- <c:forEach var="option" items="${requestScope.optionList}">
 			<div class="button-wrapper">
 				<button type="button" class="reviewBtn" data-toggle="modal" data-target="#addReviewModal" data-value="${option.optionno}">
 					리뷰 작성하기 ${option.optionno}
 				</button>
 			</div>
-		</c:forEach>
+		</c:forEach> --%>
 		
 		<!-- 리뷰 작성 모달 -->
-		<jsp:include page="../review/reviewRegister.jsp" />	
+		<%-- <jsp:include page="../review/reviewRegister.jsp" /> --%>
 	</div>
 </div>
 <jsp:include page="../common/footer.jsp" />

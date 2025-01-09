@@ -4,11 +4,12 @@
 	String ctxPath = request.getContextPath();
 	//	   /GUBI
 %>   
-	<script src="../js/jquery-3.7.1.min.js" type="text/javascript"></script>
-	<script src="../bootstrap-4.6.2-dist/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="../js/review/review.js" type="text/javascript"></script>
+<script type="text/javascript" src="<%= ctxPath%>/js/jquery-3.7.1.min.js"></script>
+<script src="../js/jquery-3.7.1.min.js" type="text/javascript"></script>
+<script src="../bootstrap-4.6.2-dist/js/bootstrap.min.js" type="text/javascript"></script>
+<script src="../js/review/review.js" type="text/javascript"></script>
 
-	<link rel="stylesheet" href="<%= ctxPath%>/css/review/review.css">
+<link rel="stylesheet" href="<%= ctxPath%>/css/review/review.css">
 	    
 	  <!-- Modal -->
 	<div class="modal fade" id="addReviewModal" data-backdrop="static">
@@ -17,7 +18,7 @@
 	      
 	      <!-- Modal header -->
 	      <div class="modal-header">
-	        <h5 class="modal-title">Review 작성</h5>
+	        <h5 id="modal-title" class="modal-title">Review 작성</h5>
 	        <button type="button" id="closeBtn" class="close" data-dismiss="modal" aria-label="Close" onclick="reset()">&times;</button> 
 	      </div>
 	      
@@ -33,13 +34,14 @@
 		        </div>
 		        <div class="form-group">
 		          <label for="review-rating">Rating</label>
-		          <select id="review-rating" name="score" class="infoData">
-		            <option value="5">★★★★★</option>
-		            <option value="4">★★★★☆</option>
-		            <option value="3">★★★☆☆</option>
-		            <option value="2">★★☆☆☆</option>
-		            <option value="1">★☆☆☆☆</option>
-		          </select>
+		        <div class="star-rating">
+	              <input type="hidden" name="score" id="score" value="" />
+	              <span class="star" data-value="1">★</span>
+	              <span class="star" data-value="2">★</span>
+	              <span class="star" data-value="3">★</span>
+	              <span class="star" data-value="4">★</span>
+	              <span class="star" data-value="5">★</span>
+	            </div>
 		          <span class="error">필수입력</span>
 		        </div>
 		        <div class="form-group">

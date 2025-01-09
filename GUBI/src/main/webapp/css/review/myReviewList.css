@@ -1,0 +1,140 @@
+@charset "UTF-8";
+
+/* 리뷰 리스트 컨테이너 */
+.reviews-container {
+	max-width: 70%;
+	margin: 100px auto;
+	/* margin-top: 60px; */
+	padding: 20px;
+}
+
+/* 타이틀 */
+.title {
+	text-align: center;
+	font-size: 28px;
+	color: #333;
+	margin-bottom: 30px;
+}
+
+/* 리뷰 항목 */
+.review-item {
+	border-bottom: 1px solid #ddd;
+	padding: 15px 0;
+}
+
+/* 리뷰 헤더 */
+.review-header {
+	display: flex;
+	justify-content: space-between;
+	font-size: 16px;
+	color: #666;
+	margin-bottom: 10px;
+}
+
+.review-author {
+	font-weight: bold;
+	color: #333;
+}
+
+.review-date {
+	color: #aaa;
+}
+
+/* 별점 스타일 */
+.review-rating .stars {
+	color: gold;
+	font-size: 18px;
+}
+
+/* 리뷰 텍스트 */
+.review-text {
+	font-size: 16px;
+	color: #444;
+	line-height: 1.5;
+	margin-top: 10px;
+}
+
+/* 리뷰 작업 버튼 */
+.review-actions {
+	display: flex;
+	gap: 8px;
+	margin-top: 10px;
+	justify-content: space-between;
+	justify-content: flex-end; /* 버튼을 오른쪽 끝으로 정렬 */
+}
+
+.review-actions button {
+	padding: 6px 12px;
+	font-size: 14px;
+	background-color: #fff;
+	color: black;
+	border: 1px solid black !important;
+	border-radius: 4px;
+	cursor: pointer;
+	transition: background-color 0.3s ease;
+}
+
+.review-actions button:hover {
+	color: white;
+	background-color: black;
+}
+
+.review-actions button:last-child:hover {
+	color: white;
+	background-color: #e04d31;
+	border: none;
+}
+
+/* Button wrapper */
+.button-wrapper {
+	margin-top: 20px;
+	width: 100%;
+	display: flex;
+	justify-content: space-between;
+	gap: 8px;
+}
+
+.button-wrapper button {
+	background-color: #fff;
+	color: black;
+	border: 1px solid black;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	font-size: 16px;
+	transition: background-color 0.3s ease;
+	width: 100%;
+	height: 65px;
+}
+
+.button-wrapper button:hover {
+	background-color: #333;
+	color: #fff;
+}
+
+.detail_container {
+	width: 100%;
+	max-width: 100%;
+	min-width: 100%;
+	padding: 0px 20%;
+}
+
+.review_img {
+	width: 80px; 
+	min-width: 80px; 
+	height: 70px;
+	border-radius: 10px;
+	margin-top: 10px;
+}
+
+.review_img #imgPreview {
+	border-radius: 10px;
+    width: 100%;
+    min-width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.star-rating {
+  color: #ffcc00;
+}

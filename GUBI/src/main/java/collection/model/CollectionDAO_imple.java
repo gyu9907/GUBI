@@ -13,6 +13,7 @@ import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.sql.DataSource;
 
+import category.domain.CategoryVO;
 import collection.domain.CollectionImgVO;
 import collection.domain.CollectionVO;
 import util.check.Check;
@@ -1080,6 +1081,48 @@ public class CollectionDAO_imple implements CollectionDAO {
 		}
 		
 		return result;
+	}
+
+	
+	
+	// 메인페이지 카테고리별 컬렉션 목록을 가져오는 메소드
+	@Override
+	public List<CollectionVO> selectCollectionProd(String majorCategory) throws SQLException {
+	
+		List<CollectionVO> collectionList = new ArrayList<>();
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql = " select col.collectionno, c.major_category, col.thumbnail_img "
+					   + " from tbl_product P JOIN tbl_category C "
+					   + " ON P.fk_categoryno = C.categoryno "
+					   + " JOIN tbl_col_product CP "
+					   + " ON P.productno = CP.fk_productno "
+					   + " JOIN tbl_collection COL "
+					   + " ON COL.collectionno = CP.fk_collectionno "
+					   + " WHERE c.major_category = '' "
+					   + " GROUP BY col.collectionno, c.major_category, col.thumbnail_img ";
+			
+			pstmt = conn.prepareStatement(sql);
+			//pstmt.setString(1, '');
+			
+			rs = pstmt.executeQuery();
+			while(rs.next()) {
+				CollectionVO cvo = new CollectionVO();
+				cvo.setThumbnail_img(rs.getString("thumbnail_img"));
+				
+				CategoryVO ctgrvo = new CategoryVO();
+				ctgrvo.setMajor_category(rs.getString("major_category"));
+				cvo.setCtgrvo(ctgrvo);
+				
+				collectionList.add(cvo);
+			}
+		} finally {
+			close();
+		}
+		
+		return collectionList;
 	}
 
 }

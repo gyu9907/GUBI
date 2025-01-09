@@ -1,4 +1,5 @@
 let start = 1;
+let requestLock = false;
 
 $(document).ready(function(){
 
@@ -25,7 +26,7 @@ $(document).ready(function(){
 	                start += len; // start 값에 +16 씩 누적하여 더해준다.
 	                displayProduct(start);
 	            }
-        	}
+        		}
 		}
 		
 		
@@ -46,6 +47,13 @@ const oneWeekAgo = new Date();
 oneWeekAgo.setDate(new Date().getDate() - 21);
 
 function displayProduct(start) {
+	
+		if(requestLock == true) {
+			return;
+		}
+		
+		requestLock = true;
+	
 	
 	const freeshipping = $("input[name='freeShipping']").is(":checked");
 
@@ -114,9 +122,13 @@ function displayProduct(start) {
 			   
 
            } // end of else if(json.length > 0) {}--------------
+		   
+		   requestLock = false;
+		   
 		} ,
         error: function(request, status, error){
             alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+			requestLock = false;
         }
 	});	
 }
