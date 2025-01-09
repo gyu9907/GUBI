@@ -4,7 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<jsp:include page="../common/header.jsp" />	
+<jsp:include page="/WEB-INF/common/header.jsp" />	
 
 
 <!-- Bootstrap CSS -->
@@ -14,9 +14,9 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/collection/collectionDetail.css">
 
 <!-- Bentham 폰트 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bentham&display=swap" rel="stylesheet">
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+<!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+<!-- <link href="https://fonts.googleapis.com/css2?family=Bentham&display=swap" rel="stylesheet"> -->
 
 <!-- HelveticaNeueLTStd-Roman 폰트 -->
 <link href="https://db.onlinewebfonts.com/c/66e796dac9aff5a6967ebdd5e021db01?family=HelveticaNeueLTStd-Roman" rel="stylesheet">
@@ -43,7 +43,7 @@ $(document).ready(function() {
         		</c:otherwise>
         	</c:choose>
         </div>
-        <div class="ColDetailTitle bentham-regular">
+        <div class="ColDetailTitle">
         	<p class="title">${requestScope.collectionVO.name}</p>
         	<p class="sub-title">BY ${requestScope.collectionVO.designer}</p>
         </div>
@@ -62,7 +62,7 @@ $(document).ready(function() {
         </div>
 
         <div class="ColDetailProductList_container">
-            <div class="ColDetailProductListTitle bentham-regular">EXPLORE MORE ${requestScope.collectionVO.name}</div>
+            <div class="ColDetailProductListTitle">EXPLORE MORE ${requestScope.collectionVO.name}</div>
 
             <div class="ColDetailProductList row" style="display:flex; margin:0 auto;">
             	<%-- 상품 목록 표시 --%>
@@ -75,7 +75,7 @@ $(document).ready(function() {
 		                        <div class="ProductImg_container">
 		                            <img class="option" src="${pageContext.request.contextPath}/data/images/${optionVO.img}"/>
 		                        </div>
-		                        <div class="ProductName my-2 bentham-regular">
+		                        <div class="ProductName my-2">
 		                        	<p>${productVO.name}</p>
 		                        	<p class="price">₩&nbsp;<fmt:formatNumber value="${productVO.price}"  pattern="#,###"/></p>
 		                        </div>
@@ -94,7 +94,7 @@ $(document).ready(function() {
 	                            <img src="${pageContext.request.contextPath}/data/images/${productVO.thumbnail_img}"/>
 	                            <img class="hoverImg" src="${pageContext.request.contextPath}/data/images/${productVO.productImgList[0].img}"/>
 	                        </div>
-	                        <div class="ProductName my-2 bentham-regular">
+	                        <div class="ProductName my-2">
 	                        	<p>${productVO.name}</p>
 	                        	<p class="price">₩&nbsp;<fmt:formatNumber value="${productVO.price}"  pattern="#,###"/></p>
 	                        </div>

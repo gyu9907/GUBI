@@ -1,4 +1,16 @@
+function openSidebar() {
+        document.getElementById("cartSidebar").classList.add("open");
+        document.getElementById("content").classList.add("blur");  // 내용에 블러 추가
+       // document.getElementById("header").classList.add("blur"); // 헤더 블러 추가
+    }
 
+    function closeSidebar() {
+        document.getElementById("cartSidebar").classList.remove("open");
+        document.getElementById("content").classList.remove("blur");  // 블러 제거
+      //  document.getElementById("header").classList.add("blur"); //헤더 블러 제거
+    }
+    
+    
 $(document).ready(function(){
 
 	
@@ -115,7 +127,7 @@ $(document).ready(function(){
         });// 아이디가 hp3 인 것은 포커스를 잃어버렸을 경우(blur) 이벤트를 처리해주는 것이다. 
 
 
-        $("input#postcode").on("blur", (e) => { 
+        $("input#postcode").blur((e) => { 
 
             const regExp_postcode = /^\d{5}$/;
             // 숫자 5자리만 들어오도록 검사해주는 정규표현식 객체 생성
@@ -164,7 +176,7 @@ $(document).ready(function(){
         // $("input#extraAddress").attr("readonly", true); // 참고항목은 세미 플젝에서 사용안함!!
 
         // ==== "우편번호찾기"를 클릭했을 때 이벤트 처리하기 ==== //
-   $("img#zipcodeSearch").click(function(){
+   $("button#zipcodeSearch").click(function(){
     new daum.Postcode({
         oncomplete: function(data) {
             // 팝업에서 검색결과 항목을 클릭했을 때 실행할 코드를 작성하는 부분.
@@ -225,7 +237,7 @@ $(document).ready(function(){
          // 참고항목을 활성화 시키기
         //  $("input#extraAddress").removeAttr("disabled");    
 
-        });// end of $("img#zipcodeSearch").click(function(){})--------
+        });// end of $("button#zipcodeSearch").click(function(){})--------
 
 
 
@@ -233,94 +245,99 @@ $(document).ready(function(){
 
 
 // Function Declaration
-// "등록하기" 버튼 클릭시 호출되는 함수
+// 수정하기 버튼 클릭시 호출되는 함수
 function goSubmit() {
 
     // *** 필수입력사항에 모두 입력이 되었는지 검사하기 시작 *** //
     let b_requiredInfo = true;
 
-/*    
-    $("input.requiredInfo").each(function(index, elmt){
-        const data = $(elmt).val().trim();
-        if(data == "") {
-            alert("*표시된 필수입력사항은 모두 입력하셔야 합니다.");
-            b_requiredInfo = false;
-            return false; // break; 라는 뜻이다. 
-        }
-    });
-*/
-//  또는
     const requiredInfo_list = document.querySelectorAll("input.requiredInfo"); 
-    for(let i=0; i<requiredInfo_list.length; i++){
+    for (let i = 0; i < requiredInfo_list.length; i++) {
         const val = requiredInfo_list[i].value.trim();
-        if(val == ""){
+        if (val == "") {
             alert("* 표시된 필수입력사항은 모두 입력하셔야 합니다.");
             b_requiredInfo = false;
             break;
         }
-    }// end of for-------------
-    
-    if(!b_requiredInfo) {
-        return; // goSubmit() 함수를 종료한다.
-    }   
-    // *** 필수입력사항에 모두 입력이 되었는지 검사하기 끝 *** //
-	
-
-    // *** 우편번호 및 주소에 값을 입력했는지 검사하기 시작 *** //
-    let b_addressInfo = true;
-
-    const arr_addressInfo = [];
-    arr_addressInfo.push($("input#postcode").val());
-    arr_addressInfo.push($("input#address").val());
-    arr_addressInfo.push($("input#detail_address").val());
-   // arr_addressInfo.push($("input#extraAddress").val());
-
-    for(let i=0; i<arr_addressInfo.length; i++) {
-        if( arr_addressInfo[i].trim() == "" ) {
-            alert("우편번호 및 주소를 입력하셔야 합니다.");
-            b_addressInfo = false;
-            break; 
-        }
-    }// end of for------------------------
-    
-    if(!b_addressInfo) {
-        return; // goSubmit() 함수를 종료한다.
     }
-    // *** 우편번호 및 주소에 값을 입력했는지 검사하기 끝 *** //
- 
-	// 배송지 수정 처리 AJAX 요청
-	$.ajax({
-		url: ctxPath+'/delivery/deliveryRegister.gu', // 서버에 요청할 URL
-		type: 'POST',
-		data: {
-			delivery_name: $("#delivery_name").val(),
-			receiver: $("#receiver").val(),
-			hp1: $("#hp1").val(),
-			hp2: $("#hp2").val(),
-			hp3: $("#hp3").val(),
-			postcode: $("#postcode").val(),
-			address: $("#address").val(),
-			detail_address: $("#detail_address").val(),
-			memo: $("#memo").val(),
-			is_default: $("#is_default").prop('checked') // 체크박스 상태 확인
-		},
-		success: function(response) {
-			if (confirm("등록이 완료되었습니다. 배송지목록으로 이동하시겠습니까?")) {
-				// 확인을 클릭하면 배송지목록으로 이동
-				window.location.href = ctxPath+'/delivery/deliveryList.gu';
-			} 
-		},
-		error: function(xhr, status, error) {
-			alert("전송 중 오류가 발생했습니다. 다시 시도해주세요.");
-		}
-	});
+    if (!b_requiredInfo) {
+        return;
+    }   
+    // *** 필수입력사항에 모두 입력되었는지 검사 끝 *** //
 	
+    // *** 우편번호 및 주소 입력 여부 검사 시작 *** //
+    const arr_addressInfo = [
+        $("#postcode").val(),
+        $("#address").val(),
+        $("#detail_address").val()
+    ];
+
+    for (let i = 0; i < arr_addressInfo.length; i++) {
+        if (arr_addressInfo[i].trim() == "") {
+            alert("우편번호 및 주소를 입력하셔야 합니다.");
+            return; 
+        }
+    }
+    // *** 우편번호 및 주소 입력 여부 검사 끝 *** //
+
+    // 배송지 수정 요청
+    $.ajax({
+        url: ctxPath + '/delivery/deliveryModify.gu', // 서버 요청 URL
+        type: 'POST',
+        data: {
+            deliveryno: $("#deliveryno").val(),			
+            delivery_name: $("#delivery_name").val(),
+            receiver: $("#receiver").val(),
+            hp1: $("#hp1").val(),
+            hp2: $("#hp2").val(),
+            hp3: $("#hp3").val(),
+            postcode: $("#postcode").val(),
+            address: $("#address").val(),
+            detail_address: $("#detail_address").val(),
+            memo: $("#memo").val(),
+            is_default: $("#is_default").prop('checked') // 체크박스 상태
+        },
+        success: function(response) {
+            if (confirm("수정이 완료되었습니다. 배송지 목록으로 이동하시겠습니까?")) {
+                window.location.href = ctxPath + '/delivery/deliveryListPopup.gu';
+            } 
+        },
+        error: function(xhr, status, error) {
+            alert("전송 중 오류가 발생했습니다. 다시 시도해주세요.");
+        }
+    });
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const isDefaultCheckbox = document.getElementById("is_default"); // 기본 배송지 체크박스
+    
+    if (isDefaultCheckbox) {
+        isDefaultCheckbox.addEventListener("change", function () {
+            if (this.checked) {
+                // 기본 배송지 변경 여부 확인
+                fetch("/checkDefaultDelivery", {
+                    method: "GET",
+                })
+                .then((response) => response.json())
+                .then((data) => {
+                    if (data.hasDefault) {
+                        if (!confirm("기본 배송지가 이미 있습니다. 기본 배송지를 바꾸시겠습니까?")) {
+                            this.checked = false; // 취소 시 체크박스 상태 초기화
+                        }
+                    }
+                })
+                .catch((error) => console.error("기본 배송지 확인 요청 중 오류 발생:", error));
+            }
+        });
+    }
+});
+
 	
 
-}// end of gosubmit
+
 	// 취소 함수: 배송지 등록 취소 확인 후, 마이페이지로 돌아가는 처리
 	function goResist() {
-		const isCancelled = confirm("정말 배송지 수정을 취소하고 배송지 목록으로 돌아가겠습니까?");
+		const isCancelled = confirm("배송지 수정을 취소하시겠습니까?");
 
 		if (isCancelled) { // 취소 확인 후
 			// 폼 초기화
@@ -329,7 +346,7 @@ function goSubmit() {
 			$("#delivery_name").prop("disabled", false);  // 폼 요소 활성화
 			$("#is_default").prop("checked", false);  // 기본값 체크 해제
 
-			// 마이페이지로 이동          
-			window.location.href = ctxPath+'/delivery/deliveryList.gu';
+			// 배송지 목록으로 이동          
+			window.location.href = ctxPath+'/delivery/deliveryListPopup.gu';
 		}
 	}

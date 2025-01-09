@@ -29,8 +29,10 @@ public class EmailAuth extends AbstractController {
 			// 맞으면 바꿔줌
 			if (certification_code.equals(email_auth_text)) {
 				isExists = true;
-				session.setAttribute("emailCheckOk", true); 
+				session.setAttribute("emailCheckOk", "true"); 
 				// 유효성 검사에서, 정말로 이메일인증이 확실한지 체크하는 용도로 넣어줌
+				
+				System.out.println(session.getAttribute("emailCheckOk"));
 				
 				// !!!! 중요 !!!! //
 		        // !!!! 세션에 저장된 인증코드 삭제하기 !!!! //

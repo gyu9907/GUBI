@@ -115,35 +115,35 @@ $(document).ready(function(){
         });// 아이디가 hp3 인 것은 포커스를 잃어버렸을 경우(blur) 이벤트를 처리해주는 것이다. 
 
 
-        $("input#postcode").on("blur", (e) => { 
-
-            const regExp_postcode = /^\d{5}$/;
-            // 숫자 5자리만 들어오도록 검사해주는 정규표현식 객체 생성
-            
-            const bool = regExp_postcode.test($(e.target).val());
-            
-            if(!bool) {
-                // 우편번호가 정규표현식에 위배된 경우 
-
-                $("table#tblMemberRegister :input").prop("disabled", true);
-                $(e.target).prop("disabled", false);
-            //    $(e.target).val("").focus();
-
-            //  $(e.target).next().show();
-            //  또는
-                $(e.target).parent().find("span.error").show();
-            
-            }
-            else {
-                // 우편번호가 정규표현식에 맞는 경우
-                $("table#tblMemberRegister :input").prop("disabled", false); 
-
-                //  $(e.target).next().hide();
-                //  또는
-                $(e.target).parent().find("span.error").hide();
-            }
-
-        });// 아이디가 postcode 인 것은 포커스를 잃어버렸을 경우(blur) 이벤트를 처리해주는 것이다.
+//        $("input#postcode").on("input", (e) => { 
+//
+//            const regExp_postcode = /^\d{5}$/;
+//            // 숫자 5자리만 들어오도록 검사해주는 정규표현식 객체 생성
+//            
+//            const bool = regExp_postcode.test($(e.target).val());
+//            
+//            if(!bool) {
+//                // 우편번호가 정규표현식에 위배된 경우 
+//
+//                $("table#tblMemberRegister :input").prop("disabled", true);
+//                $(e.target).prop("disabled", false);
+//            //    $(e.target).val("").focus();
+//
+//            //  $(e.target).next().show();
+//            //  또는
+//                $(e.target).parent().find("span.error").show();
+//            
+//            }
+//            else {
+//                // 우편번호가 정규표현식에 맞는 경우
+//                $("table#tblMemberRegister :input").prop("disabled", false); 
+//
+//                //  $(e.target).next().hide();
+//                //  또는
+//                $(e.target).parent().find("span.error").hide();
+//            }
+//
+//        });// 아이디가 postcode 인 것은 포커스를 잃어버렸을 경우(blur) 이벤트를 처리해주는 것이다.
 
 
         /////////////////////////////////////////////////////////////////
@@ -164,7 +164,7 @@ $(document).ready(function(){
         // $("input#extraAddress").attr("readonly", true); // 참고항목은 세미 플젝에서 사용안함!!
 
         // ==== "우편번호찾기"를 클릭했을 때 이벤트 처리하기 ==== //
-   $("img#zipcodeSearch").click(function(){
+   $("button#zipcodeSearch").click(function(){
     new daum.Postcode({
         oncomplete: function(data) {
             // 팝업에서 검색결과 항목을 클릭했을 때 실행할 코드를 작성하는 부분.
@@ -225,7 +225,7 @@ $(document).ready(function(){
          // 참고항목을 활성화 시키기
         //  $("input#extraAddress").removeAttr("disabled");    
 
-        });// end of $("img#zipcodeSearch").click(function(){})--------
+        });// end of $("button#zipcodeSearch").click(function(){})--------
 
 
 
@@ -307,7 +307,7 @@ function goSubmit() {
 		success: function(response) {
 			if (confirm("등록이 완료되었습니다. 배송지목록으로 이동하시겠습니까?")) {
 				// 확인을 클릭하면 배송지목록으로 이동
-				window.location.href = ctxPath+'/delivery/deliveryList.gu';
+				window.location.href = ctxPath+'/delivery/deliveryListPopup.gu';
 			} 
 		},
 		error: function(xhr, status, error) {
@@ -320,7 +320,7 @@ function goSubmit() {
 }// end of gosubmit
 	// 취소 함수: 배송지 등록 취소 확인 후, 마이페이지로 돌아가는 처리
 	function goResist() {
-		const isCancelled = confirm("정말 배송지 수정을 취소하고 배송지 목록으로 돌아가겠습니까?");
+		const isCancelled = confirm("배송지 등록을 취소하시겠습니까?");
 
 		if (isCancelled) { // 취소 확인 후
 			// 폼 초기화
@@ -330,6 +330,6 @@ function goSubmit() {
 			$("#is_default").prop("checked", false);  // 기본값 체크 해제
 
 			// 마이페이지로 이동          
-			window.location.href = ctxPath+'/delivery/deliveryList.gu';
+			window.location.href = ctxPath+'/delivery/deliveryListPopup.gu';
 		}
 	}

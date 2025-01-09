@@ -30,7 +30,7 @@ public class DeliveryDAO_imple implements DeliveryDAO {
       try {
          Context initContext = new InitialContext();
          Context envContext = (Context) initContext.lookup("java:/comp/env");
-         ds = (DataSource) envContext.lookup("jdbc/myoracle");
+         ds = (DataSource) envContext.lookup("jdbc/semioracle");
 
          aes = new AES256(SecretMyKey.KEY);
 
@@ -333,7 +333,7 @@ public class DeliveryDAO_imple implements DeliveryDAO {
 
 	    try {
 	        conn = ds.getConnection();
-	        String sql = "delete from tbl_delivery where deliveryno = ?";
+	        String sql = "update tbl_delivery set is_delete = 1 where deliveryno = ?";
 
 	        pstmt = conn.prepareStatement(sql);
 
@@ -379,6 +379,7 @@ public class DeliveryDAO_imple implements DeliveryDAO {
 		            delivery = new DeliveryVO();
 		            delivery.setDeliveryno(rs.getInt("deliveryno"));
 		            delivery.setReceiver(rs.getString("receiver"));
+		            delivery.setReceiver_tel(aes.decrypt(rs.getString("receiver_tel")));
 		            delivery.setDelivery_name(rs.getString("delivery_name"));
 		            delivery.setPostcode(rs.getString("postcode"));
 		            delivery.setAddress(rs.getString("address"));
@@ -387,7 +388,9 @@ public class DeliveryDAO_imple implements DeliveryDAO {
 		            delivery.setIs_default(rs.getInt("is_default"));
 		        }
 
-		    } finally {
+		    } catch (UnsupportedEncodingException | GeneralSecurityException e) {
+				e.printStackTrace();
+			} finally {
 		        close();
 		    }
 

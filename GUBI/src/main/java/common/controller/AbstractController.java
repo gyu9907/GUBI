@@ -3,6 +3,7 @@ package common.controller;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import member.domain.MemberVO;
+import util.url.GetURL;
 //import my.util.MyUtil;
 
 public abstract class AbstractController implements InterCommand {
@@ -67,17 +68,31 @@ public abstract class AbstractController implements InterCommand {
 		}
 	}// end of public boolean checkLogin(HttpServletRequest request) {}------------------
 	
-	
-	
+	// 관리자로 로그인했는지 확인하는 메소드
+	// 관리자로 로그인했으면 true, 아니면 false 반환
+	public boolean checkAdmin(HttpServletRequest request) {
+		
+		HttpSession session = request.getSession();
+		MemberVO loginadmin = (MemberVO) session.getAttribute("loginadmin");
+		
+		if(loginadmin != null) {
+			// 로그인 한 경우
+			return true;
+		}
+		else {
+			// 로그인 안 한 경우
+			return false;
+		}
+	}
 	
 	
 //	// 로그인 또는 로그아웃을 하면 시작페이지로 가는 것이 아니라 방금 보았던 그 페이지로 그대로 가기 위한 것임.
-//	public void goBackURL(HttpServletRequest request) {
-//
-//		HttpSession session = request.getSession();
-//		session.setAttribute("goBackURL", MyUtil.getCurrentURL(request));
-//
-//	}// end of public void goBackURL() {}...
+	public void goBackURL(HttpServletRequest request) {
+
+		HttpSession session = request.getSession();
+		session.setAttribute("goBackURL", GetURL.getCurrentURL(request));
+
+	}// end of public void goBackURL() {}...
 	
 	
 	

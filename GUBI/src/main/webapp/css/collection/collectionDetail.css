@@ -8,13 +8,6 @@
 
 .container {max-width: 1400px;}
 
-/* Bentham 폰트 */
-.bentham-regular {
-	font-family: "Bentham", serif;
-	font-weight: 400;
-	font-style: normal;
-}
-
 .ColDetailMovie_container {
     position: relative;
     height: 100vh;
@@ -117,16 +110,10 @@ a:hover { text-decoration: none; color: black; }
 a:focus { text-decoration: none; }
 a:hover, a:active { text-decoration: none; }
 
-.ColDetailDescripton_container {
+.ColDetailDescripton_container p {
+	
     font-size:11pt;
 	font-family: "HelveticaNeueLTStd-Roman";
-	
-}
-
-.ColDetailDescripton_container h4 {
-	font-family: "Bentham", serif;
-	font-weight: 400;
-	font-style: normal;
 }
 
 .ProductName {
