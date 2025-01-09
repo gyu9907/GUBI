@@ -522,7 +522,7 @@ public class MemberDAO_imple implements MemberDAO {
 			conn.setAutoCommit(false); // 수동전환
 
 			String sql = " INSERT INTO TBL_MEMBER(USERID, PASSWD, NAME, BIRTH, EMAIL, TEL, POSTCODE, ADDRESS, DETAIL_ADDRESS) "
-					   + " VALUES(?, ?, ?, ? ,? ,? ,? ,? ,? ) ";
+					   + " VALUES(?, ?, ?, to_date(?, 'yyyy-mm-dd'), ?, ?, ?, ?, ? ) ";
 
 			pstmt = conn.prepareStatement(sql);
 
@@ -542,7 +542,9 @@ public class MemberDAO_imple implements MemberDAO {
 				sql = " INSERT INTO TBL_DELIVERY "
 					+ " (DELIVERYNO, FK_USERID, IS_DEFAULT, DELIVERY_NAME, RECEIVER, RECEIVER_TEL, POSTCODE, ADDRESS, DETAIL_ADDRESS) "
 					+ " VALUES "
-					+ " (SEQ_DELIVERYNO.NEXTVAL, ?, 1, ?, ?, ?, ?, ?, ?); ";
+					+ " (SEQ_DELIVERYNO.NEXTVAL, ?, 1, ?, ?, ?, ?, ?, ?) ";
+
+				pstmt = conn.prepareStatement(sql);
 				
 				pstmt.setString(1, member.getUserid());
 				pstmt.setString(2, member.getName());
@@ -559,6 +561,7 @@ public class MemberDAO_imple implements MemberDAO {
 			if (n2 == 1) {
 				conn.commit(); // 커밋
 				conn.setAutoCommit(true); // 자동 전환
+				isSuccess = 1;
 			} else { // 그냥 실패한 경우
 				conn.rollback(); // 롤백
 				conn.setAutoCommit(true); // 자동 전환

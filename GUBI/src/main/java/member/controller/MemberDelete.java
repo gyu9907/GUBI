@@ -76,7 +76,7 @@ public class MemberDelete extends AbstractController {
 				request.setAttribute("loc", loc);
 
 				super.setRedirect(false);
-				super.setViewPage("/WEB-INF/msg.jsp");
+				super.setViewPage("/WEB-INF/common/msg.jsp");
 			}//end of if else (super.checkLogin(request)) {}...
 
 		}//end of if else (!"POST".equals(method)) {}...

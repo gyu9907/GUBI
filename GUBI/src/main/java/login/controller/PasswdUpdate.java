@@ -29,9 +29,9 @@ public class PasswdUpdate extends AbstractController {
 		} else {
 			// post 방식
 			HttpSession session = request.getSession();
-			boolean emailCheckOk = (boolean)session.getAttribute("emailCheckOk");
+			String emailCheckOk = (String)session.getAttribute("emailCheckOk");
 			
-			if (!emailCheckOk) { // 해킹 방지용 세션 검사
+			if (emailCheckOk == null) { // 해킹 방지용 세션 검사
 				
 				String message = "인증을 받지않고 바꾸려고 하면 안됩니다!";
 				String loc = "javascript:history.back()";
@@ -40,12 +40,12 @@ public class PasswdUpdate extends AbstractController {
 				request.setAttribute("loc", loc);
 				
 				super.setRedirect(false);
-				super.setViewPage("/WEB-INF/msg.jsp");
-				
-				session.removeAttribute("emailCheckOk"); // 다쓰면 삭제
+				super.setViewPage("/WEB-INF/common/msg.jsp");
 				
 				return; // else 없으면 넣어줘야함!!!!!
 			}
+			
+			session.removeAttribute("emailCheckOk"); // 다쓰면 삭제
 			
 			String userid = request.getParameter("userid");
 			String new_passwd = request.getParameter("passwd");
