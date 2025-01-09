@@ -1,41 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
+
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%
     String ctx_Path = request.getContextPath();
     //    /MyMVC
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>관리자 회원페이지</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
- 
-<!-- Font Awesome 6 Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-<!-- jquery js-->
-<script type="text/javascript" src="<%= ctx_Path%>/js/jquery-3.7.1.min.js"></script>
-<!-- Bootstrap js-->
-<script type="text/javascript" src="<%= ctx_Path%>/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="<%= ctx_Path%>/bootstrap-4.6.2-dist/css/bootstrap.min.css" type="text/css">
+<jsp:include page="/WEB-INF/admin/adminHeader.jsp" />  
 
 <!-- 직접 만든 CSS -->
 <link rel="stylesheet" href="<%= ctx_Path%>/css/admin/member/adminMember.css">
 
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
 <script type="text/javascript">
-
 $(document).ready(function() {
 	
+	document.title="관리자 회원목록";
+	$(".nav-link.MEMBER").addClass("active"); // 메뉴엑티브
+
 	$.datepicker.setDefaults({
 		 dateFormat: 'yy-mm-dd' //Input Display Format 변경
          ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
@@ -52,7 +35,7 @@ $(document).ready(function() {
          ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
          ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
          ,minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-         ,maxDate: "D" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
+         ,maxDate: "+1D" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
 	  });
 	
 	$(function() {
@@ -84,9 +67,8 @@ $(document).ready(function() {
         if ($(e.target).val("${requestScope.searchType}").prop("selected",true)) {
         }
     }); // 생년월일에 마우스로 값을 변경하는 경우
-    
-	$("select[name='searchType']").val("${requestScope.searchType}").prop("selected",true);
-
+   
+	$("select[name='searchSelect']").val("${requestScope.searchSelect}");
 	$("input:text[name='searchWord']").val("${requestScope.searchWord}");
 
 	$("select[name='dateSelect']").val("${requestScope.dateSelect}");
@@ -99,6 +81,51 @@ $(document).ready(function() {
 		if(e.keyCode == 13) {
 			goSearchMember();
 		}
+	});
+	
+	const now = new Date(); // 현재날짜
+	var year = now.getFullYear();
+	var month = (now.getMonth() + 1).toString().padStart(2, '0');
+	var day = now.getDate().toString().padStart(2, '0');
+	
+	const yyyymmdd = year+month+day; // 오늘날짜
+	const yesterday = year+month+(now.getDate()-1).toString().padStart(2, '0')	// 어제
+	const weekday = year+month+(now.getDate()-7).toString().padStart(2, '0')	// 일주일전
+	const monthday = year+(now.getMonth() + 1).toString().padStart(2, '0')-1+day		// 한달전
+	const threemonthday = year+month+day// 세달전
+	
+	// 오늘 
+	$("button.todaybtn").on("click",function(){	
+		//alert("오늘버튼클릭");
+		
+		$("input:text[name='startDate']").val(yyyymmdd);
+		$("input:text[name='endDate']").val(yyyymmdd);
+	});
+	// 어제 
+	$("button.yesterdaybtn").on("click",function(){
+		 //alert("어제버튼클릭");
+	
+		$("input:text[name='startDate']").val(yesterday);
+		$("input:text[name='endDate']").val(yyyymmdd);
+	});
+	// 일주일전 
+	$("button.weekbtn").on("click",function(){
+
+		$("input:text[name='startDate']").val(weekday);
+		$("input:text[name='endDate']").val(yyyymmdd);
+	});
+	// 한달전 
+	$("button.monthbtn").on("click",function(){
+		alert("저번달버튼클릭");
+
+		$("input:text[name='startDate']").val(monthday);
+		$("input:text[name='endDate']").val(yyyymmdd);
+	});
+	// 세달전 
+	$("button.threemonthbtn").on("click",function(){
+		alert("세달전버튼클릭");
+		$("input:text[name='startDate']").val();
+		$("input:text[name='endDate']").val(yyyymmdd);
 	});
 	
 
@@ -184,39 +211,7 @@ function allCheck(selectAll) {
 }
 </script>
 
-</head>
-<body>	
 	<div>
-	
-	<div id="header">   
-		 <a href="<%= ctx_Path%>/admin/admin.gu">
-		 	<img id="logo" src="<%= ctx_Path%>/image/logo.png" onclick="<%= ctx_Path%>/admin/admin.gu"/>
-		 </a>
-	</div><!-- header-->
-
-	<!-- 관리자상단메뉴-->
-	<div id="adminmenu">
-		<ul class="nav nav-tabs">
-			<li class="nav-item">
-				<a class="nav-link" href="<%= ctx_Path%>/admin/admin.gu">HOME</a>
-			  </li>
-			<li class="nav-item">
-			  <a class="nav-link active" href="<%= ctx_Path%>/admin/member.gu">MEMBER</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link"  href="<%= ctx_Path%>/admin/order.gu">ORDER</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" href="<%= ctx_Path%>/admin/category.gu">CATEGORY</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="<%= ctx_Path%>/admin/product.gu">PRODUCT</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" href="#menu3">STATUS</a>
-			</li>
-		  </ul>
-	</div>
 
 	<div id="contents">
 		
@@ -228,7 +223,7 @@ function allCheck(selectAll) {
 				<ul>
 					<li><a class="dropdown-item mb-3" href="#">Member</a></li>
 						<ul>
-							<li><a href="#">회원정보관리</a></li>
+							<li><a href="#" style="color:black">회원정보관리</a></li>
 						</ul>
 				</ul>
 			</div>
@@ -249,9 +244,9 @@ function allCheck(selectAll) {
 				<table class="table table-sm">
 					<thead class="thead-light">
 						<tr>
-							<th class="th"><span>검색어</span></th>
+							<th class="th">검색어</th>
 							<td>
-								<select id="" name="searchSelect">
+								<select id="searchSelect" name="searchSelect">
 									<option value="userid">아이디</option>
 									<option value="name">회원명</option>
 									<option value="tel">핸드폰</option>
@@ -260,23 +255,23 @@ function allCheck(selectAll) {
 							</td>
 						</tr>
 						<tr>
-							<th class="th"><span>기간검색</span></th>
+							<th class="th">기간검색</th>
 							<td>
 								<select name="dateSelect">
 									<option value="registerday" checked>가입날짜</option>
-									<option value="accessdate">최근접속</option>
+									<option value="loginday">최근접속</option>
 								</select>
 								<input type="text" class="mr-1" name="startDate" id="datepicker1" size="10" />
 								<input type="text" class="mr-1" name="endDate" id="datepicker2" size="10" />
-								<button type="button" class="datebtn btn btn-light" value="1">오늘</button>
-								<button type="button" class="datebtn btn btn-light" value="2">어제</button>
-								<button type="button" class="datebtn btn btn-light" value="3">일주일</button>
-								<button type="button" class="datebtn btn btn-light" value="4">1개월</button>
-								<button type="button" class="datebtn btn btn-light" value="5">3개월</button>
+								<button type="button" class="datebtn todaybtn btn btn-light" value="1">오늘</button>
+								<button type="button" class="datebtn yesterdaybtn btn btn-light" value="2">어제</button>
+								<button type="button" class="datebtn weekbtn btn btn-light" value="3">일주일</button>
+								<button type="button" class="datebtn monthbtn btn btn-light" value="4">1개월</button>
+								<button type="button" class="datebtn threemonthbtn btn btn-light" value="5">3개월</button>
 							</td>
 						</tr>
 						<tr>
-							<th class="th"><span>가입여부</span></th>
+							<th class="th">가입여부</th>
 							<td id="radio">
 								<label><span class="mr-1">전체</span><input type="radio" value="" name="status" id="all" class="mr-3"/></label>
 								<label><span class="mr-1">일반회원</span><input type="radio" value="0" name="status" id="basic" class="mr-3"/></label>
@@ -463,7 +458,4 @@ function allCheck(selectAll) {
 		
 	</form>
 	
-</body>
-</html>
-
-
+<jsp:include page="/WEB-INF/admin/adminFooter.jsp" />  

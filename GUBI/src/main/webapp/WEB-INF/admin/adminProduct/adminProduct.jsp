@@ -7,35 +7,21 @@
     String ctx_Path = request.getContextPath();
     //    /MyMVC
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>관리자 상품</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
 
-<!-- Font Awesome 6 Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-<!-- jquery js-->
-<script type="text/javascript" src="<%= ctx_Path%>/js/jquery-3.7.1.min.js"></script>
-<!-- Bootstrap js-->
-<script type="text/javascript" src="<%= ctx_Path%>/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="<%= ctx_Path%>/bootstrap-4.6.2-dist/css/bootstrap.min.css" type="text/css">
+<jsp:include page="/WEB-INF/admin/adminHeader.jsp" />  
 
 <!-- 직접 만든 CSS -->
 <link rel="stylesheet" href="<%= ctx_Path%>/css/admin/product/adminProduct.css">
 <!--  직접 만든 js -->
 <script type="text/javascript" src="<%= ctx_Path%>/js/admin/adminProduct.js"></script>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 <script type="text/javascript">
 
 $(document).ready(function(){
 
+	document.title="관리자 상품목록";
+	$(".nav-link.PRODUCT").addClass("active"); // 메뉴엑티브
+	
 	$.datepicker.setDefaults({
 		 dateFormat: 'yy-mm-dd' //Input Display Format 변경
          ,showOtherMonths: true //빈 공간에 현재월의 앞뒤월의 날짜를 표시
@@ -52,7 +38,7 @@ $(document).ready(function(){
          ,dayNamesMin: ['일','월','화','수','목','금','토'] //달력의 요일 부분 텍스트
          ,dayNames: ['일요일','월요일','화요일','수요일','목요일','금요일','토요일'] //달력의 요일 부분 Tooltip 텍스트
          ,minDate: "-1Y" //최소 선택일자(-1D:하루전, -1M:한달전, -1Y:일년전)
-         ,maxDate: "D" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
+         ,maxDate: "+1D" //최대 선택일자(+1D:하루후, -1M:한달후, -1Y:일년후)
 	  });
 	
    $(function() {
@@ -163,44 +149,12 @@ function allCheck(selectAll) {
 		checkbox.checked = selectAll.checked
 	});
 }
-
-
 </script>
 </head>
 
 <body>
 <div>
-	<!-- 관리자메뉴-->
-	<div id="header">   
-		 <a href="<%= ctx_Path%>/admin/admin.gu">
-		 	<img id="logo" src="<%= ctx_Path%>/image/logo.png" onclick="<%= ctx_Path%>/admin/admin.gu"/>
-		 </a>
-	</div><!-- header-->
-		
 	
-	<div id="adminmenu">
-		<ul class="nav nav-tabs">
-			<li class="nav-item">
-				<a class="nav-link" href="<%= ctx_Path%>/admin/admin.gu">HOME</a>
-			  </li>
-			<li class="nav-item">
-			  <a class="nav-link" href="<%= ctx_Path%>/admin/member.gu">MEMBER</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" href="<%= ctx_Path%>/admin/order.gu">ORDER</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" href="<%= ctx_Path%>/admin/category.gu">CATEGORY</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link active" href="<%= ctx_Path%>/admin/product.gu">PRODUCT</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#menu4">STATUS</a>
-			</li>
-		  </ul>
-	</div>
-
 	<div id="contents">
 		<!-- 사이드 메뉴 -->
 		<div id="sidemenu" class="bg-light p-3">
@@ -210,13 +164,12 @@ function allCheck(selectAll) {
 				<ul>
 					<li><a class="dropdown-item mb-3" href="#">Product</a></li>
 						<ul>
-							<li><a href="#">전체상품관리</a></li>
+							<li><a href="#" style="color:black">전체상품관리</a></li>
 							<li><a href="<%= ctx_Path%>/admin/addProduct.gu">상품등록</a></li>
-							<li><a href="#">재고관리</a></li>	
 						</ul>
 					<li><a class="dropdown-item mb-3" href="#">Review / Question</a></li>
 						<ul>	
-							<li><a href="#">문의관리</a></li>
+							<li><a href="<%= ctx_Path%>/admin/ask.gu">문의관리</a></li>
 							<li><a href="<%= ctx_Path%>/admin/review.gu">리뷰관리</a></li>
 						</ul>
 				</ul>
@@ -239,7 +192,7 @@ function allCheck(selectAll) {
 			<table class="table table-sm">
 				<thead class="thead-light">
 					<tr>
-						<th class="th"><span>검색어</span></th>
+						<th class="th">검색어</th>
 						<td>
 							<select name="searchType">
 								<option value="" disabled selected>검색어</option>
@@ -250,7 +203,7 @@ function allCheck(selectAll) {
 						</td>
 					</tr>
 					<tr>
-						<th class="th"><span>카테고리</span></th>
+						<th class="th">카테고리</th>
 						<td>
 							<select name="major_category" id="major_category">
 								<option value="" disabled selected>대분류</option>
@@ -265,10 +218,10 @@ function allCheck(selectAll) {
 						</td>
 					</tr>
 					<tr>
-						<th class="th"><span>기간검색</span></th>
+						<th class="th">기간검색</th>
 						<td>
-							<input type="text" class="mr-1" name="startDate" id="datepicker1" />
-								<input type="text" class="mr-1" name="endDate" id="datepicker2" />
+							<input type="text" class="mr-1" name="startDate" id="datepicker1" readonly />
+							<input type="text" class="mr-1" name="endDate" id="datepicker2" readonly />
 							<button type="button" class="datebtn btn btn-light">오늘</button>
 							<button type="button" class="datebtn btn btn-light">어제</button>
 							<button type="button" class="datebtn btn btn-light">일주일</button>
@@ -277,7 +230,7 @@ function allCheck(selectAll) {
 						</td>
 					</tr>
 					<tr>
-						<th class="th"><span>판매여부</span></th>
+						<th class="th">판매여부</th>
 						<td id="radio">
 							<label><span class="mr-1">전체</span><input type="radio" value="" name="is_delete" id="t" class="mr-3"/></li></label>
 							<label><span class="mr-1">판매중</span><input type="radio" value="0" name="is_delete" id="t" class="mr-3"/></li></label>
@@ -285,7 +238,7 @@ function allCheck(selectAll) {
 						</td>	
 					</tr>
 					<tr>
-						<th class="th"><span>상품가격</span></th>
+						<th class="th">상품가격</th>
 						<td><input type="text" name="startprice" style="width:100px;" /><span>&nbsp;원 이상~&nbsp;</span><input type="text" name="endprice" style="width:100px;"/><span>&nbsp;원 이하</span></td>
 					</tr>
 				</thead>
@@ -318,7 +271,7 @@ function allCheck(selectAll) {
 					</div>
 				</c:if>
 					
-					<table class="table table-sm mt-3">
+					<table class="table tabletr table-sm mt-3">
 						<thead class="thead-light">
 						  <tr> 	
 							<c:if test="${requestScope.is_delete eq '0' or requestScope.is_delete eq '1'}">
@@ -347,7 +300,7 @@ function allCheck(selectAll) {
 										<th><input type="checkbox" name="updateCheck" value="${pvo.productno}" onclick="onecheck()"/></th>
 									</c:if>
 									<td>${(requestScope.productCnt)-(currentShowPageNo-1)*sizePerPage-(status.index)}</td>
-									<td>${pvo.productno}</td>
+									<td name="productno">${pvo.productno}</td>
 									<td><img src="<%= ctx_Path%>/data/images/${pvo.thumbnail_img}" style="width:30px;"/></td>
 									<td>${pvo.fk_categoryno}</td>
 									<td>${pvo.categoryVO.major_category} \ ${pvo.categoryVO.small_category}</td>
@@ -406,5 +359,4 @@ function allCheck(selectAll) {
 	<form name="recoverFrm">
 		
 	</form>	
-</body>
-</html>
+<jsp:include page="/WEB-INF/admin/adminFooter.jsp" />  

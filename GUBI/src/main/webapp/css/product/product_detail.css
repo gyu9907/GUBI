@@ -49,6 +49,11 @@ body {
   gap: 2rem;
   justify-content: space-between;
   font-size: 12px;
+  align-items: center;
+}
+.product-details .price-info .product-cnt {
+	height: 40px;
+	padding: 0 10px;
 }
 .product-details .price {
   font-weight: bold;
@@ -163,21 +168,11 @@ hr {
   color: #fff;
 }
 
-/* 강제로 맞춰놓은 상세설명 css  부트스트랩을 쓴거면 자동으로 잡혀야 하는데 ,,? */
 .detail_container {
   width: 100%;
   max-width: 100%;
   min-width: 100%;
   padding: 0px 20%;
-}
-.detail_container .row {
-  width: 50%;
-  flex-wrap: initial;
-}
-.detail_container .px-md-5 {
-  width: 100%;
-  max-width: 100%;
-  min-width: 100%;
 }
 
 /* ----------------- Responsive Design ----------------- */
@@ -240,30 +235,9 @@ hr {
   border-radius: 4px;
 }
 
-.review-author {
-  font-weight: bold;
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-.review-rating {
-  color: #ffcc00;
-  margin-bottom: 10px;
-}
-
-.review-comment {
-  font-size: 14px;
-  color: #555;
-}
-
 /* 리뷰 섹션 스타일 */
 .review-section {
   padding: 60px 20%;
-}
-.review-section h3 {
-  font-size: 24px;
-  margin-bottom: 20px;
-  color: #333;
 }
 
 /* 폼 스타일 */
@@ -271,37 +245,6 @@ hr {
   display: flex;
   flex-direction: column;
   gap: 15px;
-}
-
-/* 폼 그룹 스타일 */
-.form-group {
-  display: flex;
-  flex-direction: column;
-}
-.form-group label {
-  font-size: 16px;
-  margin-bottom: 5px;
-  color: #555;
-}
-.form-group input, .form-group select, .form-group textarea {
-  padding: 10px;
-  font-size: 14px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  background-color: #fff;
-  transition: border-color 0.3s ease;
-}
-.form-group input:focus, .form-group select:focus {
-  border-color: #007acc;
-  outline: none;
-}
-.form-group textarea {
-  resize: vertical;
-  min-height: 100px;
-}
-.form-group textarea:focus {
-  border-color: #007acc;
-  outline: none;
 }
 
 /* 텍스트 영역 스타일 */

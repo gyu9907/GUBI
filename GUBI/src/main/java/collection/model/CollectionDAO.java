@@ -143,4 +143,8 @@ public interface CollectionDAO {
 	 */
 	int deleteColProduct(String collectionno) throws SQLException;
 
+	
+	// 메인페이지 카테고리별 컬렉션 목록을 가져오는 메소드
+	List<CollectionVO> selectCollectionProd(String majorCategory) throws SQLException;
+
 }

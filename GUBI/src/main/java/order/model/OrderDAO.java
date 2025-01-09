@@ -23,10 +23,18 @@ public interface OrderDAO {
 	// 주문상세보기
 	List<OrderVO> detailOrderList(String orderno) throws SQLException;
 
+	
+	
 	// status 페이징 처리위함
 	int StatusTotalPage(Map<String, String> paraMap) throws SQLException;
 
 	// 주문상태목록
 	List<OrderVO> statusList(Map<String, String> paraMap) throws SQLException;
+
+	// 주문상태별 회원수
+	int statusOrderCnt(String status) throws SQLException;
+
+	// status 수정하기
+	int updateStatus(String status, String orderno) throws SQLException;
 
 }

@@ -1,4 +1,5 @@
 let start = 1;
+let requestLock = false;
 
 $(document).ready(function(){
 
@@ -19,7 +20,9 @@ $(document).ready(function(){
 		
 		if(collection == "") {
 			if( $(window).scrollTop() + 1 >= $(document).height() - $(window).height() ) { 
-	        		if( $("span#totalProductCount").text() != $("span#countProduct").text() ) {  
+				const totalCount = $("span#totalProductCount").text();
+				const countProduct = $("span#countProduct").text();
+	        		if(totalCount != countProduct) {  
 	                start += len; // start 값에 +16 씩 누적하여 더해준다.
 	                displayProduct(start);
 	            }
@@ -44,8 +47,14 @@ const oneWeekAgo = new Date();
 oneWeekAgo.setDate(new Date().getDate() - 21);
 
 function displayProduct(start) {
-
-
+	
+		if(requestLock == true) {
+			return;
+		}
+		
+		requestLock = true;
+	
+	
 	const freeshipping = $("input[name='freeShipping']").is(":checked");
 
 	const sortby = $("select[name='sortby']").val();
@@ -63,6 +72,7 @@ function displayProduct(start) {
 				"len" : len
 			},
 		dataType : "json",
+		async: false,
 		success : function(json) {
 			
            let v_html = ``;
@@ -112,9 +122,13 @@ function displayProduct(start) {
 			   
 
            } // end of else if(json.length > 0) {}--------------
+		   
+		   requestLock = false;
+		   
 		} ,
         error: function(request, status, error){
             alert("code: "+request.status+"\n"+"message: "+request.responseText+"\n"+"error: "+error);
+			requestLock = false;
         }
 	});	
 }

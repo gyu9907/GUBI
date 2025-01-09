@@ -82,9 +82,9 @@ div#menulist > ul > ul > li:last-child {
 }
 
 /* 본문 */
-div#article {
-   /*  border: solid 1px black; */
+div#article { 
     width: 90%;
+    height:900px;
 }
 table.table { /* 모든 테이블 */
     font-size: 10pt;
@@ -103,10 +103,10 @@ td#radio > label input#t {
 button.datebtn {
     font-size: 8pt;
 }
-table.table > thead > tr > th.th span {
+table.table > thead > tr > th.th {
     /* border: 1px solid red; */
-    position: relative;
-    top: -3px;
+    text-align: center;
+    vertical-align: middle;
 }
 div#membersearch > h6 {
     border-left: 4px solid #0240b1;
@@ -120,7 +120,7 @@ div#top {
     display: flex;
 }
 div#top > span:last-child {
-    color: red;
+    color: black;
 }
 div#memberlist > table.table > thead > tr th {
     font-size: 12pt;
@@ -172,7 +172,7 @@ div#pageBar > nav > ul.pagination > li.page-item a {
     /* border: 1px solid black; */
     height: 35px;
     display: flex;
-    background-color: rgb(235, 237, 236);
+    background-color: #eee;
     padding: 1%;
     font-size:11pt;
     
@@ -199,6 +199,7 @@ div#pageBar > nav > ul.pagination > li.page-item a {
 }
 #orderbody > div.productimage > img {
     width: 112px;
+    text-align: center;
 }
 #orderbody > div.productoption {
     width:350px;

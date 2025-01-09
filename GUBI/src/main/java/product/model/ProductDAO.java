@@ -54,6 +54,9 @@ public interface ProductDAO {
 	
 	// 메인페이지에서 사용할 최신순 3개 신상품 조회
 	List<ProductVO> selectTop3Product() throws SQLException;
+	
+	// 메인페이지에서 사용할 인기상품목록 조회
+	List<ProductVO> selectBestProd() throws SQLException;
 
 	// 제품상세페이지에서 장바구니로 insert 하는 메소드
 	int addCart(Map<String, String> paraMap) throws SQLException;
@@ -85,19 +88,14 @@ public interface ProductDAO {
 	int recoverProduct(String recoverproductno) throws SQLException;
 
 	// 카테고리 번호 찾기 
-	int searchCategoryNo(Map<String, String> paraMap) throws SQLException;
+	String searchCategoryNo(String major_category, String small_category) throws SQLException;
 
 	// 상품번호 채번하기
-	int getProductNum() throws SQLException;
+	int getProductno() throws SQLException;
 	
 	// 상품등록하기
 	int addProduct(Map<String, String> paraMap) throws SQLException;
 
-	// 옵션 등록하기 
-	int addOption(OptionVO ovo, int num) throws SQLException;
-
-	// 이미지 등록하기
-	int addImage(ProductImgVO pvo, int num) throws SQLException;
 
 	// 상품상세보기
 	List<ProductVO> detailProductList(String productno) throws SQLException;
@@ -107,5 +105,22 @@ public interface ProductDAO {
 
 	// 리뷰개수
 	int reviewcnt(String productno) throws SQLException;
+
+	// 옵션 등록하기 
+	int addOption(Map<String, String> paraMap) throws SQLException;
+	
+	// 이미지 등록하기
+	int addImage(Map<String, String> paraMap) throws SQLException;
+
+	// 상품 총판매수
+	int productSalesCnt(String productno) throws SQLException;
+
+	// 지금 상품정보
+	ProductVO productList(String productno) throws SQLException;
+
+	// 카테고리 찾기
+	int selectCategoryno(String major_category, String small_category) throws SQLException ;
+
+	int updateProduct(Map<String, String> paraMap) throws SQLException;
 
 }

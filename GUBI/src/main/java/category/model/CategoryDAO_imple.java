@@ -84,7 +84,7 @@ public class CategoryDAO_imple implements CategoryDAO {
         	 	
         	 	sql = " select small_category, category_img "
     	 			+ " from tbl_category "
-    	 			+ " where major_category = ? "
+    	 			+ " where major_category = ? AND is_delete = 0 "
     	 			+ " order by categoryno ";
         	 	
          }
@@ -164,10 +164,22 @@ public class CategoryDAO_imple implements CategoryDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql =  " select categoryno, major_category, small_category "
-						+ " from tbl_category "
-						+ " where is_delete = 0 "
-						+ " order by categoryno, major_category ";
+			String sql =  " with "
+						+ " a as "
+						+ " ( "
+						+ "    select fk_categoryno, count(*) as productcnt "
+						+ "    from tbl_product "
+						+ "    group by fk_categoryno "
+						+ " ), "
+						+ " b as "
+						+ " ( "
+						+ "    select categoryno, major_category, small_category, is_delete, category_img "
+						+ "    from tbl_category "
+						+ " ) "
+						+ " select categoryno, major_category, small_category, is_delete, nvl(productcnt, 0) as productcnt, category_img "
+						+ " from a right join b "
+						+ " on a.fk_categoryno = b.categoryno "
+						+ " where categoryno is not null and is_delete = 0 ";
 			
 			pstmt = conn.prepareStatement(sql);
 			rs = pstmt.executeQuery();
@@ -179,6 +191,7 @@ public class CategoryDAO_imple implements CategoryDAO {
 				cvo.setCategoryno(rs.getInt("categoryno"));
 				cvo.setMajor_category(rs.getString("major_category"));
 				cvo.setSmall_category(rs.getString("small_category"));
+				cvo.setProductcnt(rs.getInt("productcnt"));
 				
 				categoryList.add(cvo);
 			}
@@ -500,5 +513,44 @@ public class CategoryDAO_imple implements CategoryDAO {
 		
 		
 		return n;
+	}
+
+	// 카테고리등록의 카테고리별 상품개수
+	@Override
+	public List<String> categorycnt(String categoryno) throws SQLException {
+		
+		List<String> categorycnt = new ArrayList<>();
+		
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " select categoryno, count(productno) as productcnt "
+						+ " from tbl_category a join tbl_product b "
+						+ " on a.categoryno = b.fk_categoryno "
+						+ " where categoryno = ? "
+						+ " group by categoryno ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, categoryno);
+			
+			rs = pstmt.executeQuery();
+			
+			while(rs.next()) {
+				String productcnt = "";
+				
+				productcnt = rs.getString("productcnt");
+				
+				categorycnt.add(productcnt);
+			}
+			
+			
+		} finally {
+			close();
+		}
+
+		return categorycnt;
 	}
 }

@@ -2,6 +2,7 @@ package collection.domain;
 
 import java.util.List;
 
+import category.domain.CategoryVO;
 import product.domain.ProductVO;
 
 public class CollectionVO {
@@ -17,6 +18,10 @@ public class CollectionVO {
 	// select용 field
 	List<ProductVO> productList;   /* 컬렉션에 포함된 상품 목록 */
 	int productListCnt;            /* 컬렉션에 포함된 상품 개수 */
+	
+	CategoryVO ctgrvo; /*카테고리목록*/
+	
+
 
 	public int getCollectionno() {
 		return collectionno;
@@ -96,6 +101,13 @@ public class CollectionVO {
 
 	public void setProductListCnt(int productListCnt) {
 		this.productListCnt = productListCnt;
+	}
+	public CategoryVO getCtgrvo() {
+		return ctgrvo;
+	}
+
+	public void setCtgrvo(CategoryVO ctgrvo) {
+		this.ctgrvo = ctgrvo;
 	}
 	
 }

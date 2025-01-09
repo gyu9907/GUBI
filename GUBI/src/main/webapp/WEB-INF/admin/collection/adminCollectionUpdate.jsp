@@ -472,5 +472,4 @@ $(document).ready(function() {
 	<div class="html-container" style="display:none">
 		<c:import url="/data/html/${requestScope.collectionVO.detail_html}" charEncoding="UTF-8"/>
 	</div>
-</body>
-</html>
+<jsp:include page="/WEB-INF/admin/adminFooter.jsp" />  
