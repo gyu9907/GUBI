@@ -11,6 +11,10 @@
 <jsp:include page="../common/bootstrap.jsp" />	
 <link rel="stylesheet" href="<%= ctxPath%>/css/product/product_detail.css">
 <link rel="stylesheet" href="<%= ctxPath%>/css/review/review.css">
+<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/ask/ask.css" />
+
+<jsp:include page="../common/header.jsp" />	
+<jsp:include page="../common/bootstrap.jsp" />	
 
 <%-- 직접 만든 JS --%>
 <script>
@@ -18,6 +22,7 @@
     var loginuser = '<%= session.getAttribute("loginuser")%>';
 </script>
 <script type="text/javascript" src="<%= ctxPath%>/js/product/productDetail.js"></script>
+<script type="text/javascript" src="${pageContext.request.contextPath}/js/ask/ask.js"></script>
 
 
   <div class="productDetail_wrapper">
@@ -121,4 +126,48 @@
 		<%-- <jsp:include page="../review/reviewRegister.jsp" /> --%>
 	</div>
 </div>
+
+
+
+
+
+<%-- productno 전달용 input --%>
+<input type="hidden" id="productno" name="productno" value="${requestScope.pvo.productno}" />
+
+<div style="width: 60%; margin: 0 auto; margin-top: -55px">
+
+<%-- 문의 작성 링크, 문의 보여주기 --%>
+<header id="header_container">
+            <div>
+                <div class="grid_box">
+                    <span>상품 Q&A</span>
+                    <span>(<span>24</span>)</span> <!-- 상품 Q&A의 게시물 개수가 들어갈 자리입니다. -->
+                </div>
+                <div class="grid_box">
+                    <div id="hamburger">햄버거!</div>
+                    <ul>
+                        <li><span class="span_button" style="font-weight: 600;">ALL</span></li> <!-- 선택시 font-weight가 600이 됩니다. -->
+                        <li><span class="span_button" style="color: #797979;">상품문의</span></li> <!-- 선택되지 않은 것들은 color가 #797979가 됩니다. -->
+                        <li><span class="span_button" style="color: #797979;">배송문의</span></li>
+                        <li><span class="span_button" style="color: #797979;">기타문의</span></li>
+                    </ul>
+                </div>
+                <div class="grid_box">
+                    <span id="span_QnA">Q&A쓰기</span>
+                </div>
+            </div>
+</header>
+
+<%-- 뿌려주는 곳 --%>
+<div class="container" style="margin-bottom: 100px;"></div>
+
+	<div id="sortAsklist">여기에 뿌린다.</div>
+
+</div>
+
+
+
+
+
+
 <jsp:include page="../common/footer.jsp" />

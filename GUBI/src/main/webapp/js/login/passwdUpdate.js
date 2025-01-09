@@ -98,7 +98,7 @@ $(document).ready(function () {
                     // 인증번호 발송
                     $(`div#emailSendResult`).html(`인증번호를 발송했습니다!`).css({ "color": "blue" });
                     is_email_send = true; // 인증번호 발송성공!
-                    $(`.hide_emailAuth`).show(); // 인증번호 칸 나타내기
+                    $(`.hide_emailAuth`).slideDown(); // 인증번호 칸 나타내기
                 }
             }
             ,
