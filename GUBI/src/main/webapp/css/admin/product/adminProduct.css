@@ -7,7 +7,6 @@ img#logo {
     /* border: 1px solid red;   */
     margin:1% ;
 }
-
 /* 관리자메뉴 */
 div#adminmenu{
     /* border: solid 1px black; */
@@ -80,7 +79,6 @@ div#menulist > ul > ul > li button.btn span {
 div#menulist > ul > ul > li:last-child {
     margin-bottom: 10%;
 }
-
 /* 본문 */
 div#article {
     /* border: solid 1px black; */
@@ -89,6 +87,12 @@ div#article {
 table.table { /* 모든 테이블 */
     font-size: 10pt;
 }
+table.table tr {
+	height:50px;
+}
+table.table tr:first-child {
+	height:30px;
+}	
 /* 본문상단 */
 div#searchbutton {
     text-align: center;
@@ -103,10 +107,10 @@ td#radio > label input#t {
 button.datebtn {
     font-size: 8pt;
 }
-table.table > thead > tr > th.th span {
-    /* border: 1px solid red; */
-    position: relative;
-    top: -3px;
+table.table > thead > tr > th.th {
+    /* border: 1px solid red;  */
+    text-align: center;
+    vertical-align: middle;
 }
 div#membersearch > h6 {
     border-left: 4px solid #0240b1;
@@ -120,7 +124,7 @@ div#memberlist {
 div#top {
     display: flex;
 }
-div#memberlist > table.table > thead > tr  th {
+div#memberlist > table.table > thead > tr th {
     font-size: 12pt;
 }
 div#productupdate > button {
@@ -233,12 +237,21 @@ div.info {
     font-size: 10.5pt;
     width: 200px;
 }
-/* 푸터 */
-div#footer{
-    border: solid 1px black;
-    height: 100px;
+button.productPage > a {
+    font-size: 8pt;
+    color:white;
+    position: relative;
+    bottom: 7px;
 }
-
+button.updateProduct > a {
+    color:black;
+    font-size: 8pt;
+    position: relative;
+    bottom: 7px;
+}
+a:hover {
+    text-decoration: none;
+}
 /* 페이지바 */
 div#pageBar > nav > ul.pagination {
 	/* border: 1px solid blue; */

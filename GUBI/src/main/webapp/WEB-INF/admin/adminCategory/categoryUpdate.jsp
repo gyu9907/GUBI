@@ -8,71 +8,22 @@
     String ctx_Path = request.getContextPath();
     //    /MyMVC
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>관리자 카테고리수정</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-
-<!-- Font Awesome 6 Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-<!-- jquery js-->
-<script type="text/javascript" src="<%= ctx_Path%>/js/jquery-3.7.1.min.js"></script>
-<!-- Bootstrap js-->
-<script type="text/javascript" src="<%= ctx_Path%>/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="<%= ctx_Path%>/bootstrap-4.6.2-dist/css/bootstrap.min.css" type="text/css">
+<jsp:include page="/WEB-INF/admin/adminHeader.jsp" /> 
 
 <!-- 직접 만든 CSS -->
 <link rel="stylesheet" href="<%= ctx_Path%>/css/admin/category/categoryUpdate.css">
 
 <script type="text/javascript" src="<%= ctx_Path%>/js/admin/categoryUpdate.js"></script>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 </head>
 
 <script type="text/javascript">
 $(document).ready(function(){
-
-	
+	document.title="관리자 카테고리수정";
+	$(".nav-link.CATEGORY").addClass("active"); // 메뉴엑티브
 });
 </script>
-
-<body>
-	<!-- 관리자메뉴-->
-	<div id="header">   
-		  <a href="<%= ctx_Path%>/admin/admin.gu">
-		 	<img id="logo" src="<%= ctx_Path%>/image/logo.png" onclick="<%= ctx_Path%>/admin/admin.gu"/>
-		  </a>
-	</div><!-- header-->
-
-	<div id="adminmenu">
-		<ul class="nav nav-tabs">
-			<li class="nav-item">
-				<a class="nav-link" href="<%= ctx_Path%>/admin/admin.gu">HOME</a>
-			  </li>
-			<li class="nav-item">
-			  <a class="nav-link"  href="<%= ctx_Path%>/admin/member.gu">MEMBER</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" href="<%= ctx_Path%>/admin/order.gu">ORDER</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link active" href="<%= ctx_Path%>/admin/category.gu">CATEGORY</a>
-			</li>
-			<li class="nav-item">
-			  <a class="nav-link" href="<%= ctx_Path%>/admin/product.gu">PRODUCT</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link" href="#menu4">STATUS</a>
-			</li>
-		  </ul>
-	</div>
 
 	<div id="contents">
 	
@@ -86,7 +37,7 @@ $(document).ready(function(){
 					<ul>
 						<li><a href="<%= ctx_Path%>/admin/category.gu">카테고리 조회</a></li>
 						<li><a href="<%= ctx_Path%>/admin/categoryAdd.gu">카테고리 등록</a></li>
-						<li><a href="<%= ctx_Path%>/admin/categoryUpdate.gu">카테고리 수정</a></li>
+						<li><a href="<%= ctx_Path%>/admin/categoryUpdate.gu" style="color:black">카테고리 수정</a></li>
 					</ul>
 				</ul>
 			</div>
@@ -185,6 +136,5 @@ $(document).ready(function(){
 			</div>
 		</div> 
 	</div>
-</div>
-</body>
-</html>
+
+<jsp:include page="/WEB-INF/admin/adminFooter.jsp" />  

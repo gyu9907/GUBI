@@ -42,9 +42,9 @@ public class AdminMember extends AbstractController {
 			if(searchWord == null) {
 				searchWord = "";
 		 	}
-			if(dateSelect == null ||
+			if(dateSelect == null &&
 	    	  (!"registerday".equals(searchSelect) &&
-	    	   !"accessdate".equals(searchSelect) ) ) {
+	    	   !"loginday".equals(searchSelect) ) ) {
 	    		  dateSelect = "registerday";
 			}	
 			if(startDate == null) {
@@ -167,13 +167,13 @@ public class AdminMember extends AbstractController {
 			if(userid != null) {
 				if(status.equals("0")) {
 					for(String deleteuserid : userid) {
-						System.out.println(deleteuserid);
+						
 						n = mdao.deleteMember(deleteuserid); // 회원탈퇴
 					}
 				}
 				else {
 					for(String recoveruserid : userid) {
-						System.out.println(recoveruserid);
+						
 						n = mdao.recoverMember(recoveruserid) + 1; // 회원복구
 					}
 				}

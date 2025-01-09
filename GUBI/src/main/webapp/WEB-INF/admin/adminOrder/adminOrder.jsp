@@ -8,35 +8,20 @@
     String ctx_Path = request.getContextPath();
     //    /MyMVC
 %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>관리자 주문관리</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
 
-
-<!-- Font Awesome 6 Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-<!-- jquery js-->
-<script type="text/javascript" src="<%= ctx_Path%>/js/jquery-3.7.1.min.js"></script>
-<!-- Bootstrap js-->
-<script type="text/javascript" src="<%= ctx_Path%>/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js"></script>
-
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="<%= ctx_Path%>/bootstrap-4.6.2-dist/css/bootstrap.min.css" type="text/css">
+<jsp:include page="/WEB-INF/admin/adminHeader.jsp" />  
 
 <!-- 직접 만든 CSS -->
 <link rel="stylesheet" href="<%= ctx_Path%>/css/admin/order/adminOrder.css">
-
 <script type="text/javascript" src="<%= ctx_Path%>/js/admin/adminOrder.js"></script>
-<link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
 
 <script type="text/javascript">
 $(document).ready(function(){
+	
+	document.title="관리자 주문목록";
+	$(".nav-link.ORDER").addClass("active"); // 메뉴엑티브
+
 	
 	$.datepicker.setDefaults({
 		 dateFormat: 'yy-mm-dd' //Input Display Format 변경
@@ -87,8 +72,6 @@ $(document).ready(function(){
 	$("input:text[name='startDate']").val("${requestScope.startDate}");
 	$("input:text[name='endDate']").val("${requestScope.endDate}");
 	$("input:radio[value='${requestScope.orderStatus}']").prop("checked",true);
-	
-	
 });
 
 function searchOrder() {
@@ -104,38 +87,7 @@ function searchOrder() {
 </head>
 <body>
 	<div>
-		<!-- 관리자메뉴-->
-		<div id="header">   
-			<a href="<%= ctx_Path%>/admin/admin.gu">
-		 		<img id="logo" src="<%= ctx_Path%>/image/logo.png" onclick="<%= ctx_Path%>/admin/admin.gu"/>
-		  	</a>
-		</div>
 		
-		
-		<!-- 관리자상단메뉴-->
-		<div id="adminmenu">
-			<ul class="nav nav-tabs">
-				<li class="nav-item">
-					<a class="nav-link" href="<%= ctx_Path%>/admin/admin.gu">HOME</a>
-				  </li>
-				<li class="nav-item">
-				  <a class="nav-link" href="<%= ctx_Path%>/admin/member.gu">MEMBER</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link active"  href="<%= ctx_Path%>/admin/order.gu">ORDER</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" href="<%= ctx_Path%>/admin/category.gu">CATEGORY</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="<%= ctx_Path%>/admin/product.gu">PRODUCT</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" href="#menu3">STATUS</a>
-				</li>
-			  </ul>
-		</div>
-
 		<div id="contents">
 			<!-- 사이드 메뉴 -->
 			 
@@ -146,17 +98,17 @@ function searchOrder() {
 					<ul>
 						<li><a class="dropdown-item mb-3" href="#">Order</a></li>
 						<ul>
-							<li><a href="#">주문리스트 (전체)</a></li>
+							<li><a href="#" style="color:black">주문리스트 (전체)</a></li>
 							
 							<c:forEach var="status" items="${requestScope.statusCnt}">
-								<c:if test="${status.status < 6}">
+								<c:if test="${status.status ==1 or status.status ==2 or status.status ==4 or status.status ==5 or status.status ==6}">
 									<li id="statusmenu">
 									<c:choose>
-										<c:when test='${status.status == 1}'><a class="menu" href="<%= ctx_Path%>/admin/orderStatus.gu" data-value="${status.status}">결제대기</a></c:when>
-										<c:when test='${status.status == 2}'><a class="menu"href="<%= ctx_Path%>/admin/orderStatus.gu"  data-value="${status.status}">주문완료</a></c:when>
-										<c:when test='${status.status == 3}'><a class="menu"href="<%= ctx_Path%>/admin/orderStatus.gu"  data-value="${status.status}">배송중</a></c:when>
-										<c:when test='${status.status == 4}'><a class="menu"href="<%= ctx_Path%>/admin/orderStatus.gu"  data-value="${status.status}">배송완료</a></c:when>
-										<c:when test='${status.status == 5}'><a class="menu"href="<%= ctx_Path%>/admin/orderStatus.gu"  data-value="${status.status}">구매확정</a></c:when>
+										<c:when test='${status.status == 1}'><a href="<%= ctx_Path%>/admin/orderStatus.gu?status=1" data-value="${status.status}">결제대기</a></c:when>
+										<c:when test='${status.status == 2}'><a href="<%= ctx_Path%>/admin/orderStatus.gu?status=2" data-value="${status.status}">주문완료</a></c:when>
+										<c:when test='${status.status == 4}'><a href="<%= ctx_Path%>/admin/orderStatus.gu?status=4" data-value="${status.status}">배송중</a></c:when>
+										<c:when test='${status.status == 5}'><a href="<%= ctx_Path%>/admin/orderStatus.gu?status=5" data-value="${status.status}">배송완료</a></c:when>
+										<c:when test='${status.status == 6}'><a href="<%= ctx_Path%>/admin/orderStatus.gu?status=6" data-value="${status.status}">구매확정</a></c:when>
 									</c:choose>
 									<button type="button" value="1" class="btn btn-info btn-sm">
 									<span>${status.statusCnt}</span></button></li>
@@ -167,12 +119,12 @@ function searchOrder() {
 						<li><a class="dropdown-item mb-3" href="#">Cancle</a></li>
 						<ul>
 							<c:forEach var="status" items="${requestScope.statusCnt}">
-								<c:if test="${status.status > 5}">
+								<c:if test="${status.status ==3 or status.status ==7 or status.status ==8}">
 									<li>
 									<c:choose>
-										<c:when test='${status.status == 6}'><a href="<%= ctx_Path%>/admin/orderStatus.gu" data-value="${status.status}">주문취소</a></c:when>
-										<c:when test='${status.status == 7}'><a href="<%= ctx_Path%>/admin/orderStatus.gu" data-value="${status.status}">환불접수</a></c:when>
-										<c:when test='${status.status == 8}'><a href="<%= ctx_Path%>/admin/orderStatus.gu" data-value="${status.status}">환불완료</a></c:when>
+										<c:when test='${status.status == 3}'><a href="<%= ctx_Path%>/admin/orderStatus.gu?status=3" data-value="${status.status}">주문취소</a></c:when>
+										<c:when test='${status.status == 7}'><a href="<%= ctx_Path%>/admin/orderStatus.gu?status=7" data-value="${status.status}">환불접수</a></c:when>
+										<c:when test='${status.status == 8}'><a href="<%= ctx_Path%>/admin/orderStatus.gu?status=8" data-value="${status.status}">환불완료</a></c:when>
 									</c:choose>
 									<button type="button" value="1" class="btn btn-success btn-sm">
 									<span>${status.statusCnt}</span></button></li>
@@ -198,7 +150,7 @@ function searchOrder() {
 						<table class="table table-sm">
 							<thead class="thead-light">
 								<tr>
-									<th class="th"><span>검색어</span></th>
+									<th class="th">검색어</th>
 									<td>
 										<select name="searchType">
 											<option value="orderno">주문번호</option>
@@ -210,7 +162,7 @@ function searchOrder() {
 									</td>
 								</tr>
 								<tr>
-									<th class="th"><span>주문일시</span></th>
+									<th class="th">주문일시</th>
 									<td>
 										<input type="text" class="mr-1" name="startDate" id="datepicker1" size="10" />
 										<input type="text" class="mr-1" name="endDate" id="datepicker2" size="10"/>
@@ -222,7 +174,7 @@ function searchOrder() {
 									</td>
 								</tr>
 								<tr>
-									<th class="th"><span>주문상태</span></th>
+									<th class="th">주문상태</th>
 									<td id="radio">
 										<label><span class="mr-1">전체</span><input type="radio" value="" name="orderStatus"      class="mr-3" checked/></li></label>
 										<label><span class="mr-1">결제대기</span><input type="radio" value="1" name="orderStatus"  class="mr-3"/></li></label>
@@ -294,7 +246,7 @@ function searchOrder() {
 									<td>${ordervo.name}</td>
 									<td>${ordervo.fk_userid}</td>
 									<td>${ordervo.tel}</td>
-									<td><fmt:formatNumber value="${ordervo.total_price}" pattern="#,###"/></td>
+									<td><fmt:formatNumber value="${ordervo.total_price}" pattern="#,###"/>원</td>
 								  </tr>
 								</tbody>
 
@@ -341,6 +293,4 @@ function searchOrder() {
 			</div> <!-- end article -->
 		</div>
 	</div>
-</body>
-</html>
-</div>
+<jsp:include page="/WEB-INF/admin/adminFooter.jsp" />  

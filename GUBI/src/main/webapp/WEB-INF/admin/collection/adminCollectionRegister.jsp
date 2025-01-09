@@ -424,5 +424,4 @@ const ctxPath = "${pageContext.request.contextPath}";
 			</div> <%-- end article --%>
 		</div>
 	</div>
-</body>
-</html>
+<jsp:include page="/WEB-INF/admin/adminFooter.jsp" />  

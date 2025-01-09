@@ -41,16 +41,18 @@ public class AdminCategoryAdd extends AbstractController {
 		HttpSession session = request.getSession();
 
 		if ("GET".equalsIgnoreCase(method)) {
+			
 			List<CategoryVO> categoryList = cdao.CategorySelectAll();
+
 			request.setAttribute("categoryList", categoryList);
 
 			super.setRedirect(false);
 			super.setViewPage("/WEB-INF/admin/adminCategory/addCategory.jsp");
 
-		} else {	// post\
+		} else { // post
 			
 			try {
-				// 카테고리삭제하기 
+				
 				ServletContext svlCtx = session.getServletContext();
 	            String uploadFileDir = svlCtx.getRealPath("/data/images");
 	            
@@ -93,16 +95,6 @@ public class AdminCategoryAdd extends AbstractController {
 
 				int n = cdao.addCategory(paraMap); // 카테고리등록
 
-				/*
-				 * if(n==1) { // 새로고침하며 행이 추가되야함 String message = "새로운 카테고리 등록이 성공되었습니다!";
-				 * String loc = request.getContextPath()+"/admin/category.gu";
-				 * 
-				 * request.setAttribute("message", message); request.setAttribute("loc", loc);
-				 * 
-				 * super.setRedirect(false); super.setViewPage("/WEB-INF/common/msg.jsp");
-				 * 
-				 * return; }
-				 */
 				JSONObject jsonObj = new JSONObject();  // {}
 	            jsonObj.put("result", n);
 	          

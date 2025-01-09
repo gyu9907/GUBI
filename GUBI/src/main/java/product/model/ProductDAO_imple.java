@@ -1543,9 +1543,9 @@ public class ProductDAO_imple implements ProductDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql =  " select major_category, small_category "
+			String sql =  " select categoryno, major_category, small_category "
 						+ " from tbl_category "
-						+ " where major_category = ? ";
+						+ " where major_category = ? and is_delete = 0 ";
 			
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, major_category);
@@ -1553,11 +1553,12 @@ public class ProductDAO_imple implements ProductDAO {
 			rs = pstmt.executeQuery();
 			
 			while(rs.next()) {
-				CategoryVO pvo = new CategoryVO();
+				CategoryVO cvo = new CategoryVO();
 				
-				pvo.setSmall_category(rs.getString("small_category"));
+				cvo.setSmall_category(rs.getString("small_category"));
+				cvo.setCategoryno(rs.getInt("categoryno"));
 				
-				selectSmallCategory.add(pvo);
+				selectSmallCategory.add(cvo);
 			}
 
 		} finally {
@@ -1622,8 +1623,8 @@ public class ProductDAO_imple implements ProductDAO {
 				sql += " and price between ? and ? ";
 			}
 			
-			sql  += " order by productno, fk_categoryno  ) "
-				 +  " where rno between ? and ? ";
+			sql  +=   "   ) where rno between ? and ? "
+					+ " order by registerday desc ";
 			
 			int currentShowPageNo = Integer.parseInt(paraMap.get("currentShowPageNo")); // 현재페이지
 			int sizePerPage = Integer.parseInt(paraMap.get("sizePerPage"));
@@ -1922,9 +1923,9 @@ public class ProductDAO_imple implements ProductDAO {
 
 	// 카테고리 번호 찾기 
 	@Override
-	public int searchCategoryNo(Map<String, String> paraMap) throws SQLException {
+	public String searchCategoryNo(String major_category, String small_category) throws SQLException {
 		
-		int categoryno = 0;
+		String categoryno = "";
 
 		try {
 			
@@ -1936,13 +1937,13 @@ public class ProductDAO_imple implements ProductDAO {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, paraMap.get("major_category"));
-			pstmt.setString(2, paraMap.get("small_category"));
+			pstmt.setString(1, major_category);
+			pstmt.setString(2, small_category);
 			
 			rs = pstmt.executeQuery();
 			
 			if(rs.next()) {
-				categoryno = rs.getInt("categoryno");
+				categoryno = rs.getString("categoryno");
 			}
 		} finally {
 			close();
@@ -1956,7 +1957,7 @@ public class ProductDAO_imple implements ProductDAO {
 	
 	// 상품번호 채번하기 
 	@Override
-	public int getProductNum() throws SQLException {
+	public int getProductno() throws SQLException {
 		
 		int num = 0;
 	      
@@ -1995,7 +1996,7 @@ public class ProductDAO_imple implements ProductDAO {
 			
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, paraMap.get("num"));
+			pstmt.setString(1, paraMap.get("productno"));
 			pstmt.setString(2, paraMap.get("categoryno"));
 			pstmt.setString(3, paraMap.get("name"));
 			pstmt.setString(4, paraMap.get("description"));
@@ -2017,7 +2018,7 @@ public class ProductDAO_imple implements ProductDAO {
 
 	// 옵션등록 
 	@Override
-	public int addOption(OptionVO ovo, int num) throws SQLException {
+	public int addOption(Map<String, String> paraMap) throws SQLException {
 
 		int result = 0;
 		
@@ -2025,15 +2026,15 @@ public class ProductDAO_imple implements ProductDAO {
 			
 			conn = ds.getConnection();
 			
-			String sql  = " insert into tbl_option values(?, fk_productno, ?, ?, ?) ";
+			String sql  = " insert into tbl_option values(seq_optionno.nextval, ?, ?, ?, ?) ";
 			
 			pstmt = conn.prepareStatement(sql);
 			
 			
-			pstmt.setInt(1, num);
-			pstmt.setString(2, ovo.getImg());
-			pstmt.setString(3, ovo.getName());
-			pstmt.setString(4, ovo.getColor());
+			pstmt.setString(1, paraMap.get("productno"));
+			pstmt.setString(2, paraMap.get("optionName"));
+			pstmt.setString(3, paraMap.get("colorCode"));
+			pstmt.setString(4, paraMap.get("optionImg"));
 
 			result = pstmt.executeUpdate();
 
@@ -2046,7 +2047,7 @@ public class ProductDAO_imple implements ProductDAO {
 
 	// 이미지 등록하기 
 	@Override
-	public int addImage(ProductImgVO pvo, int num) throws SQLException {
+	public int addImage(Map<String, String> paraMap)throws SQLException {
 
 		int result = 0;
 		
@@ -2058,8 +2059,8 @@ public class ProductDAO_imple implements ProductDAO {
 			
 			pstmt = conn.prepareStatement(sql);
 
-			pstmt.setInt(1, num);
-			pstmt.setString(2, pvo.getImg());
+			pstmt.setString(1, paraMap.get("productno"));
+			pstmt.setString(2, paraMap.get("productImg"));
 			
 			result = pstmt.executeUpdate();
 
@@ -2232,9 +2233,6 @@ public class ProductDAO_imple implements ProductDAO {
 		return cnt;
 	}
 
-	
-	// 김규빈
-
 	// 한 컬렉션에 포함된 상품 검색
 	@Override
 	public List<ProductVO> selectColProductList(String collectionno) throws SQLException {
@@ -2363,5 +2361,162 @@ public class ProductDAO_imple implements ProductDAO {
 			close();
 		}
 		return resultMap;
+	}
+
+	// 상품 총 판매수
+	@Override
+	public int productSalesCnt(String productno) throws SQLException {
+		
+		int n = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " with "
+						+ " a as "
+						+ " ( "
+						+ " select productno, optionno "
+						+ " from tbl_product a join tbl_option b "
+						+ " on a.productno = b.fk_productno "
+						+ " ), "
+						+ " b as "
+						+ " ( "
+						+ " select fk_optionno, cnt, fk_orderno "
+						+ " from tbl_order_detail "
+						+ " ) "
+						+ " select productno, nvl(sum(cnt), 0) "
+						+ " from a left join b "
+						+ " on a.optionno = b.fk_optionno "
+						+ " where productno = ? "
+						+ " group by productno ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, productno);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				n = rs.getInt(2);
+			}
+			
+			
+		} finally {
+			close();
+		}
+		
+		return n;
+	}
+
+	// 상품수정하기 기본정보
+	@Override
+	public ProductVO productList(String productno) throws SQLException {
+		
+		ProductVO pvo = new ProductVO();
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " select major_category, small_category, name, description, cnt, price, point_pct, delivery_price "
+						+ " from tbl_product a join tbl_category b "
+						+ " on a.fk_categoryno = b.categoryno "
+						+ " where productno = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, productno);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				CategoryVO cvo = new CategoryVO();
+				
+				cvo.setMajor_category(rs.getString("major_category"));
+				cvo.setSmall_category(rs.getString("small_category"));
+				pvo.setCategoryVO(cvo);
+				
+				pvo.setName(rs.getString("name"));
+				pvo.setDescription(rs.getString("description"));
+				pvo.setCnt(rs.getInt("cnt"));
+				pvo.setPrice(rs.getInt("price"));
+				pvo.setPoint_pct(rs.getInt("point_pct"));
+				pvo.setDelivery_price(rs.getInt("delivery_price"));
+					
+			}
+			
+			
+		} finally {
+			
+		}
+		
+		
+		return pvo;
+	}
+	
+	// 카테고리 번호 찾기
+	@Override
+	public int selectCategoryno(String major_category, String small_category)  throws SQLException {
+		
+		int n = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " select categoryno "
+						+ " from tbl_category "
+						+ " where major_category = ? and small_category = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, major_category);
+			pstmt.setString(2, small_category);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				n = rs.getInt(1);
+			}
+
+		} finally {
+			close();
+		}
+
+		return n;
+	}
+
+	@Override
+	public int updateProduct(Map<String, String> paraMap) throws SQLException {
+		
+		int n = 0;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql =  " update tbl_product set fk_categoryno = ?, name = ? , description = ? , cnt = ?, "
+						+ " price = ?, delivery_price = ?, point_pct = ? "
+						+ " where productno = ? ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, paraMap.get("categoryno"));
+			pstmt.setString(2, paraMap.get("name"));
+			pstmt.setString(3, paraMap.get("description"));
+			pstmt.setString(4, paraMap.get("cnt"));
+			pstmt.setString(5, paraMap.get("price"));
+			pstmt.setString(6, paraMap.get("delivery_price"));
+			pstmt.setString(7, paraMap.get("point_pct"));
+			pstmt.setString(8, paraMap.get("productno"));
+			
+			n = pstmt.executeUpdate();
+			
+		} finally {
+			close();
+		}
+		
+		
+		return n;
 	}
 }
