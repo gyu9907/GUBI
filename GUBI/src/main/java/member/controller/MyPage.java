@@ -1,65 +1,54 @@
 package member.controller;
 
+import java.util.Map;
 import common.controller.AbstractController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import member.domain.MemberVO;
+import order.model.*;
 
 public class MyPage extends AbstractController {
 
-	@Override
-	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    private OrderDAO odao = new OrderDAO_imple();
 
-	    // 테스트용 사용자
-	    HttpSession session = request.getSession();
-	    MemberVO loginuser = (MemberVO) session.getAttribute("loginuser");
+    @Override
+    public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        HttpSession session = request.getSession();
+        MemberVO loginuser = (MemberVO) session.getAttribute("loginuser");
 
-	    if (loginuser == null) {
-	        // 세션에 사용자 정보가 없는 경우 테스트용 사용자 생성
-	        loginuser = new MemberVO();
-	        loginuser.setUserid("mjhan");
-	        loginuser.setName("한민정");
-	       
-	        
-	        // 세션에 로그인 사용자 정보 추가
-	        session.setAttribute("loginuser", loginuser);
-	    }
-	    // 임시 테스트 아이디 값 loginuser와 ㄹㅇ 로그인 값인 userid는 서로 다르므로 임시 로그인 아이디로는 마이페이지에 들어갈 수 없다! 그러므로 userid를 loginuser와 값이 같게 바꿔준다!
-	    // 로그인 기능이 되면 임시 로그인 테스트는 없앨것!
-	    String userid = request.getParameter("userid");
-	    if (userid == null) {
-	        userid = loginuser.getUserid();  // 로그인한 사용자의 ID를 기본값으로 설정
-	    }
+        // 로그인하지 않은 경우 처리
+        if (!super.checkLogin(request)) {
+           
+        	  String currentURL = request.getRequestURL().toString();
+              session.setAttribute("/ask/askList.gu",currentURL);  // 현재 URL을 세션에 저장
+        	
+        	request.setAttribute("message", "로그인 후 이용 가능합니다.");
+            request.setAttribute("loc", request.getContextPath() + "/login/login.gu");
+           
+            super.setViewPage("/WEB-INF/common/msg.jsp");
+          
+            return;
+        }
 
-	    // 내정보를 수정하기 위한 전제조건은 로그인이 된 상태
-	    if (super.checkLogin(request)) {
-	        // 로그인을 했으면
-	      //  String userid = request.getParameter("userid");
+        // 현재 로그인된 사용자의 ID 가져오기
+        String userid = loginuser.getUserid();
 
-	        if (loginuser.getUserid().equals(userid)) {
-	            // 로그인한 사용자가 자신의 정보를 수정하는 경우
+        // 주문 상태 가져오기
+        Map<String, Integer> orderStatusMap = odao.getOrderStatusByUserId(userid);
+        request.setAttribute("orderStatusMap", orderStatusMap);
 
-	            request.setAttribute("loginuser", loginuser);
-	            super.setViewPage("/WEB-INF/member/myPage.jsp");
-	        } else {
-	            // 로그인한 사용자가 다른 사용자의 마이페이지에 접근하는 경우
-	            String message = "다른 사용자의 마이페이지는 들어올 수 없습니다.";
-	            String loc = "javascript:history.back()";
-
-	            request.setAttribute("message", message);
-	            request.setAttribute("loc", loc);
-	            super.setViewPage("/WEB-INF/msg.jsp");
-	        }
-
-	    } else {
-	        // 로그인을 안 했으면
-	        String message = "마이페이지에 들어가기 위해서는 로그인이 필요합니다.";
-	        String loc = "javascript:history.back()";
-
-	        request.setAttribute("message", message);
-	        request.setAttribute("loc", loc);
-	        super.setViewPage("/WEB-INF/msg.jsp");
-	    }
-	}
+        // 자신의 마이페이지인지 확인
+        String pageOwnerId = request.getParameter("userid");
+        if (pageOwnerId == null || pageOwnerId.equals(userid)) {
+            // 자신의 마이페이지
+            request.setAttribute("loginuser", loginuser);
+            super.setViewPage("/WEB-INF/member/myPage.jsp");
+        } else {
+            // 다른 사용자의 마이페이지에 접근 시도
+            request.setAttribute("message", "다른 사용자의 마이페이지는 들어올 수 없습니다.");
+            request.setAttribute("loc", "javascript:history.back()");
+            super.setViewPage("/WEB-INF/common/msg.jsp");
+        }
+    }
 }
