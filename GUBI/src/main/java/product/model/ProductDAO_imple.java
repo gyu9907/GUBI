@@ -1004,7 +1004,7 @@ public class ProductDAO_imple implements ProductDAO {
 				sql += " WHERE delivery_price = 0 ";
 			}
 
-			sql += ") V ";
+			sql += " ) V ";
 
 			System.out.println(" ----------------count[totalProductCount] 조회-----------");
 			System.out.println("majorCname:: " + majorCname);
@@ -1068,12 +1068,12 @@ public class ProductDAO_imple implements ProductDAO {
 				orderSql = "registerday";
 			}
 			
-			String sql = " SELECT productno, name, price, thumbnail_img, major_category, small_category, registerday "
+			String sql = " SELECT productno, name, price, thumbnail_img, major_category, small_category, registerday, is_delete "
 					   + " FROM "
 					   + " ( "
 					   + "    SELECT row_number() over(order by "+orderSql+" desc) AS RNO "
 				   	   + "         , productno, name, C.major_category, C.small_category, price, thumbnail_img"
-				   	   + "		   , registerday "
+				   	   + "		   , registerday,P.is_delete "
 					   + "    FROM tbl_product P "
 					   + "    JOIN tbl_category C "
 					   + "    ON P.fk_categoryno = C.categoryno ";
@@ -1098,7 +1098,9 @@ public class ProductDAO_imple implements ProductDAO {
 			}
 			sql += " ORDER BY RNO "
 				 + " ) V "
-			     + " WHERE rno between ? and ? ";
+			     + " WHERE rno between ? and ? and is_delete = 0 ";
+			
+			System.out.println("sql ::: " + sql);
 
 			System.out.println(" ----------------리스트[selectCnoProduct] 조회-----------");
 			System.out.println("majorCname:: " + majorCname);
@@ -1161,6 +1163,7 @@ public class ProductDAO_imple implements ProductDAO {
 					   + "      , P.description "
 					   + "      , P.price, P.delivery_price, P.point_pct, P.detail_html "
 					   + "		, C.small_category"
+					   + "      , cnt "
 					   + " FROM tbl_product P "
 					   + " JOIN tbl_option O "
 					   + " ON P.productno = O.fk_productno"
@@ -1183,7 +1186,7 @@ public class ProductDAO_imple implements ProductDAO {
 	            pvo.setDelivery_price(rs.getInt("delivery_price"));   // 배송비
 	            pvo.setPoint_pct(rs.getInt("point_pct"));   // 포인트적립퍼센티지
 	            pvo.setDetail_html(rs.getString("detail_html"));   // 제품상세html
-	            
+	            pvo.setCnt(rs.getInt("cnt")); // 재고량
 	            CategoryVO cvo = new CategoryVO();
 	            cvo.setSmall_category(rs.getString("small_category"));
 	            pvo.setCategoryVO(cvo);
@@ -1384,6 +1387,52 @@ public class ProductDAO_imple implements ProductDAO {
 		
 		return productList;
 	}
+	
+	
+	
+	
+	
+	// 메인페이지에서 사용할 인기상품목록 조회
+	@Override
+	public List<ProductVO> selectBestProd() throws SQLException {
+		
+		List<ProductVO> bestProdList = new ArrayList<>();
+		try {
+			conn = ds.getConnection();
+			
+			
+			String sql = " select productno, P.name, P.price, P.thumbnail_img, sum(OD.cnt) AS salesCount "
+					   + "from tbl_option O "
+				 	   + " JOIN tbl_order_detail OD "
+					   + " ON O.optionno = OD.fk_optionno "
+					   + " JOIN tbl_product P "
+					   + " ON O.fk_productno = P.productno "
+					   + " group by productno, P.name, P.price, P.thumbnail_img "
+					   + " order by salesCount desc ";
+			
+			pstmt = conn.prepareStatement(sql);
+			rs= pstmt.executeQuery();
+			
+			while(rs.next()) {
+				ProductVO pvo  = new ProductVO();
+				pvo.setProductno(rs.getInt("productno"));
+				pvo.setName(rs.getString("name"));
+				pvo.setPrice(rs.getInt("price"));
+				pvo.setThumbnail_img(rs.getString("thumbnail_img"));
+				
+				bestProdList.add(pvo);
+			}
+		} finally {
+			close();
+		}
+		
+		return bestProdList;
+	}
+	
+	
+	
+	
+	
 
 	
 	
@@ -1424,7 +1473,7 @@ public class ProductDAO_imple implements ProductDAO {
 		        	// 어떤 제품을 추가로 장바구니에 넣고자 하는 경우
 		        	
 		        	sql = " update tbl_cart set cnt = cnt + ? "
-		            + " where cartno = ? ";
+		                + " where cartno = ? ";
 		        	
 		        	pstmt = conn.prepareStatement(sql);
 		        	pstmt.setInt(1, Integer.parseInt(paraMap.get("cnt")));
@@ -1451,7 +1500,6 @@ public class ProductDAO_imple implements ProductDAO {
 		
 		return n;
 	}
-
 	
 	// 제품상세페이지에서 리뷰조회하는 메소드
 	@Override
@@ -1460,15 +1508,14 @@ public class ProductDAO_imple implements ProductDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql =  " SELECT reviewno, fk_optionno, content, title, score, r.img "
+			String sql =  " SELECT reviewno, fk_optionno, fk_userid, score, OPT.name "
+					    + "      , title, content, r.img, r.registerday "
 						+ " FROM tbl_product P "
 						+ " JOIN tbl_option OPT "
 						+ " ON P.productno = OPT.fk_productno "
 						+ " JOIN tbl_review R "
 						+ " ON OPT.optionno = R.fk_optionno "
 						+ " WHERE productno = ? " ;
-
-			
 
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, productno);
@@ -1483,18 +1530,25 @@ public class ProductDAO_imple implements ProductDAO {
 				
 				rvo.setReviewno(rs.getInt("reviewno"));
 				rvo.setFk_optionno(rs.getInt("fk_optionno"));
-				rvo.setTitle(rs.getString("title"));
+				rvo.setFk_userid(rs.getString("fk_userid"));
 				rvo.setScore(rs.getInt("score"));
+				
+				OptionVO otpvo = new OptionVO();
+				otpvo.setName(rs.getString("name"));
+				rvo.setOptionvo(otpvo);
+				
+				rvo.setTitle(rs.getString("title"));
 				rvo.setContent(rs.getString("content"));
 				rvo.setImg(rs.getString("img"));
+				rvo.setRegisterday(rs.getString("registerday"));
 				
-				System.out.println(" rs.getInt(\"reviewno\"): " + rs.getInt("reviewno"));
+				//System.out.println(" rs.getInt(\"reviewno\"): " + rs.getInt("reviewno"));
 				
 				reviewList.add(rvo);
 				
 			} // end of while(rs.next()) {}--------------
 			
-			System.out.println("reviewList size: " + reviewList.size());
+			//System.out.println("reviewList size: " + reviewList.size());
 			
 		} finally {
 			close();
@@ -1503,7 +1557,10 @@ public class ProductDAO_imple implements ProductDAO {
 		return reviewList;
 	}
 
-
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+	
+	
+	
 	// 카테고리 대분류 가져오기 
 	@Override
 	public List<CategoryVO> selectMajorCategory() throws SQLException {

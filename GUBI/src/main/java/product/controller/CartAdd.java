@@ -7,6 +7,8 @@ import java.util.Map;
 import common.controller.AbstractController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+import member.domain.MemberVO;
 import product.model.ProductDAO;
 import product.model.ProductDAO_imple;
 
@@ -18,8 +20,7 @@ public class CartAdd extends AbstractController {
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		// === 로그인 유무 검사하기 === //
-	       /*if( !super.checkLogin(request) ) {*/
-		if(false) {
+		if( !super.checkLogin(request) ) {
 	         // 로그인을 하지 않은 상태이라면 
 	         
 	         /*
@@ -28,11 +29,11 @@ public class CartAdd extends AbstractController {
 	            이와 같이 하려고 먼저, ProdView 클래스에서 super.goBackURL(request); 을 해두었음. 
 	         */
 	         
-	         request.setAttribute("message", "장바구니에 담으려면 먼저 로그인 부터 하세요!!");
+	         request.setAttribute("message", "장바구니에 담으려면 먼저 로그인 부터 하세요!! ");
 	         request.setAttribute("loc", "javascript:history.back()");
 	         
 	         super.setRedirect(false);
-	         super.setViewPage("/WEB-INF/msg.jsp");
+	         super.setViewPage("/WEB-INF/common/msg.jsp");
 	         
 	         return;
 	      }
@@ -54,10 +55,9 @@ public class CartAdd extends AbstractController {
 	             String optionno = request.getParameter("optionno"); // 제품번호
 	             String cnt = request.getParameter("cnt"); // 주문수량
 	             
-	            // HttpSession session = request.getSession();
-	            // MemberVO loginuser = (MemberVO) session.getAttribute("loginuser");
-	            // String userid = loginuser.getUserid(); // 사용자ID
-	             String userid = "eomjh";
+	             HttpSession session = request.getSession();
+	             MemberVO loginuser = (MemberVO) session.getAttribute("loginuser");
+	             String userid = loginuser.getUserid(); // 사용자ID
 	             
 	             Map<String, String> paraMap = new HashMap<>();
 	             paraMap.put("optionno", optionno);

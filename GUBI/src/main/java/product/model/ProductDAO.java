@@ -54,6 +54,9 @@ public interface ProductDAO {
 	
 	// 메인페이지에서 사용할 최신순 3개 신상품 조회
 	List<ProductVO> selectTop3Product() throws SQLException;
+	
+	// 메인페이지에서 사용할 인기상품목록 조회
+	List<ProductVO> selectBestProd() throws SQLException;
 
 	// 제품상세페이지에서 장바구니로 insert 하는 메소드
 	int addCart(Map<String, String> paraMap) throws SQLException;

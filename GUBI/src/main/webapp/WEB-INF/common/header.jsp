@@ -51,16 +51,12 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 </head>
 <body>
 
-<%-- 로그인 하기 전 헤더 --%>
-<c:if test="${empty sessionScope.loginuser && empty sessionScope.loginadmin}">
-
 	<div class="header_wrapper" >
         <ul class="nav_wrapper" id="nav_wrapper">
             <li class="nav_list1">
                 <ul class="header_menu_list">
                     <li class="header_menu" id="product_menu"><a href="<%= ctxPath %>/product/productList.gu">Product</a></li>
-                    <li class="header_menu"><a href="">Collections</a></li>
-                    <%--<li class="header_menu"><a href="">GUBI's Story</a></li> --%>
+                    <li class="header_menu"><a href="<%= ctxPath %>/collection/collection.gu">Collections</a></li>
                 </ul>   
             </li>
             <li class="nav_list2">
@@ -72,91 +68,28 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
             </li>
             <li class="nav_list3">
                 <ul>
-                    <%-- <li class="header_icon"><a href=""><i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180 fa-lg"></i></a></li> --%>
-                    <li class="header_icon"><a href="${pageContext.request.contextPath}/login/login.gu"><i class="fa-solid fa-user"></i></a></li>
-                    <li class="header_icon"><a href=""><i class="fa-solid fa-2em fa-magnifying-glass"></i></a></li>
-                    <li class="header_icon"><a href=""><i class="fa-solid fa-location-dot"></i></a></li>
-                    <li class="header_icon"><a href=""><i class="fa-solid fa-cart-shopping"></i></a></li>
-                </ul>   
-            </li>
-        </ul>
-        <div class="menu_container" id="header_dropdown_menu">
-            <ul class="major_categry_list">
-                <li>
-                		<a href="<%= ctxPath%>/product/productList.gu?major_category=SEATING">SEATING</a>
-                		<ul class="small_categry_list" id="seating_list"></ul>
-                	</li>
-                	<li>
-                		<a href="<%= ctxPath%>/product/productList.gu?major_category=LIGHTING">LIGHTING</a>
-                		<ul class="small_categry_list" id="lighting_list"></ul>
-                	</li>
-                	<li>
-                		<a href="<%= ctxPath%>/product/productList.gu?major_category=TABLES">TABLES</a>
-                		<ul class="small_categry_list" id="tables_list"></ul>
-                	</li>
-            </ul>
-           
-            <div class="product-grid">
-                <!-- 제품 카드 1 -->
-                <a href="#">
-                    <div class="product-card">
-                        <div class="product-image"> 
-                            <img src="<%= ctxPath%>/images/main/collection2.png">
-                        </div>
-                        <div class="product-info">
-                            <p>COPPIA TABLE LAMP</p>
-                            <div class="price">A new sculptural twin-bulb table lamp designed for GUBI by Vibeke Fonnesberg Schmidt. Featuring two discs of Fonnesberg Schmidt’s signature plexiglass housed in a curving metal case, the elegantly industrial design represents both a new material and a new designer for GUBI.</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 제품 카드 2 -->
-                <a href="#">
-                    <div class="product-card">
-                        <div class="product-image"> 
-                            <img src="<%= ctxPath%>/images/main/collection2.png">
-                        </div>
-                        <div class="product-info">
-                            <p>COPPIA TABLE LAMP</p>
-                            <div class="price">A new sculptural twin-bulb table lamp designed for GUBI by Vibeke Fonnesberg Schmidt. Featuring two discs of Fonnesberg Schmidt’s signature plexiglass housed in a curving metal case, the elegantly industrial design represents both a new material and a new designer for GUBI.</div>
-                        </div>
-                    </div>
-                </a>
-                
-            </div>
-        </div>
-    </div>
-
-</c:if>
-
-
-
-<%-- 유저가 로그인 해온 경우 헤더 --%>
-<c:if test="${not empty sessionScope.loginuser}">
-		
-<div class="header_wrapper" >
-        <ul class="nav_wrapper" id="nav_wrapper">
-            <li class="nav_list1">
-                <ul class="header_menu_list">
-                    <li class="header_menu" id="product_menu"><a href="<%= ctxPath %>/product/productList.gu">Product</a></li>
-                    <li class="header_menu"><a href="">Collections</a></li>
-                    <%--<li class="header_menu"><a href="">GUBI's Story</a></li> --%>
-                </ul>   
-            </li>
-            <li class="nav_list2">
-                <div class="logo_wrapper">
-                    <a href="<%= ctxPath%>/index.gu">
-                        <img src="<%= ctxPath%>/images/common/logo-b.png" />
-                    </a>
-                </div>
-            </li>
-            <li class="nav_list3">
-                <ul>
-                    <li class="header_icon"><a href="${pageContext.request.contextPath}/login/logout.gu"><i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180 fa-lg"></i></a></li>
-                    <li class="header_icon"><a href="<%-- 마이페이지링크 --%>"><i class="fa-solid fa-user"></i></a></li>
-                    <li class="header_icon"><a href=""><i class="fa-solid fa-2em fa-magnifying-glass"></i></a></li>
-                    <li class="header_icon"><a href=""><i class="fa-solid fa-location-dot"></i></a></li>
-                    <li class="header_icon"><a href=""><i class="fa-solid fa-cart-shopping"></i></a></li>
+					<%-- 로그인 하기 전 헤더 --%>
+					<c:if test="${empty sessionScope.loginuser && empty sessionScope.loginadmin}">
+						<li class="header_icon" style="margin-top: 2.4px;"><a href="<%= ctxPath%>/login/login.gu"><i class="fa-regular fa-user fa-lg"></i></a></li>
+					    <li class="header_icon"><a href="<%= ctxPath%>/product/productSearch.gu"><i class="fa-solid fa-2em fa-magnifying-glass"></i></a></li>
+	                    <li class="header_icon"><a href=""><i class="fa-solid fa-location-dot"></i></a></li>
+	                    <li class="header_icon"><a href="<%= ctxPath%>/cart/cart.gu"><i class="fa-solid fa-cart-shopping"></i></a></li>
+				   </c:if>
+					<%-- 로그인 후 유저 헤더 --%>
+	                <c:if test="${not empty sessionScope.loginuser}">
+						<li class="header_icon"><a href="<%= ctxPath%>/login/logout.gu"><i class="fa-solid fa-arrow-right-from-bracket fa-2em"></i></a></li>
+                    	<li class="header_icon"><a href="<%= ctxPath%>/member/myPage.gu"><i class="fa-solid fa-user"></i></a></li>
+                    	<li class="header_icon"><a href="<%= ctxPath%>/product/productSearch.gu"><i class="fa-solid fa-2em fa-magnifying-glass"></i></a></li>
+	                    <li class="header_icon"><a href=""><i class="fa-solid fa-location-dot"></i></a></li>
+	                    <li class="header_icon"><a href="<%= ctxPath%>/cart/cart.gu"><i class="fa-solid fa-cart-shopping"></i></a></li>
+					</c:if>
+					<%-- 로그인 후 관리자 헤더 --%>
+	                <c:if test="${not empty sessionScope.loginadmin}">
+						<li class="header_icon"><a href="<%= ctxPath%>/login/logout.gu"><i class="fa-solid fa-arrow-right-from-bracket fa-2em"></i></a></li>
+                    	<li class="header_icon"><a href="<%= ctxPath%>/admin/admin.gu"><i class="fa-solid fa-user"></i></a></li>
+                    	<li class="header_icon"><a href="<%= ctxPath%>/product/productSearch.gu"><i class="fa-solid fa-2em fa-magnifying-glass"></i></a></li>
+                    	<li class="header_icon"><a href=""><i class="fa-solid fa-location-dot"></i></a></li>
+					</c:if>
                 </ul>   
             </li>
         </ul>
@@ -206,159 +139,3 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
             </div>
         </div>
     </div>
-			
-</c:if>
-
-
-
-<%-- 관리자가 로그인 해온 헤더 --%>
-<c:if test="${not empty sessionScope.loginadmin}">
-		
-<div class="header_wrapper" >
-        <ul class="nav_wrapper" id="nav_wrapper">
-            <li class="nav_list1">
-                <ul class="header_menu_list">
-                    <li class="header_menu" id="product_menu"><a href="<%= ctxPath %>/product/productList.gu">Product</a></li>
-                    <li class="header_menu"><a href="">Collections</a></li>
-                    <%--<li class="header_menu"><a href="">GUBI's Story</a></li> --%>
-                </ul>   
-            </li>
-            <li class="nav_list2">
-                <div class="logo_wrapper">
-                    <a href="<%= ctxPath%>/index.gu">
-                        <img src="<%= ctxPath%>/images/common/logo-b.png" />
-                    </a>
-                </div>
-            </li>
-            <li class="nav_list3">
-                <ul>
-                    <li class="header_icon"><a href="${pageContext.request.contextPath}/login/logout.gu"><i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180 fa-lg"></i></a></li>
-                    <li class="header_icon"><a href="<%-- 관리자페이지링크 --%>"><i class="fa-solid fa-user"></i></a></li>
-                    <li class="header_icon"><a href=""><i class="fa-solid fa-2em fa-magnifying-glass"></i></a></li>
-                    <li class="header_icon"><a href=""><i class="fa-solid fa-location-dot"></i></a></li>
-                    <li class="header_icon"><a href=""><i class="fa-solid fa-cart-shopping"></i></a></li>
-                </ul>   
-            </li>
-        </ul>
-        <div class="menu_container" id="header_dropdown_menu">
-            <ul class="major_categry_list">
-                <li>
-                	<a href="<%= ctxPath%>/product/productList.gu?major_category=SEATING">SEATING</a>
-                	<ul class="small_categry_list" id="seating_list"></ul>
-                </li>
-                <li>
-                	<a href="<%= ctxPath%>/product/productList.gu?major_category=LIGHTING">LIGHTING</a>
-                	<ul class="small_categry_list" id="lighting_list"></ul>
-                </li>
-                <li>
-                	<a href="<%= ctxPath%>/product/productList.gu?major_category=TABLES">TABLES</a>
-                	<ul class="small_categry_list" id="tables_list"></ul>
-                </li>
-            </ul>
-           
-            <div class="product-grid">
-                <!-- 제품 카드 1 -->
-                <a href="#">
-                    <div class="product-card">
-                        <div class="product-image"> 
-                            <img src="<%= ctxPath%>/images/main/collection2.png">
-                        </div>
-                        <div class="product-info">
-                            <p>COPPIA TABLE LAMP</p>
-                            <div class="price">A new sculptural twin-bulb table lamp designed for GUBI by Vibeke Fonnesberg Schmidt. Featuring two discs of Fonnesberg Schmidt’s signature plexiglass housed in a curving metal case, the elegantly industrial design represents both a new material and a new designer for GUBI.</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 제품 카드 2 -->
-                <a href="#">
-                    <div class="product-card">
-                        <div class="product-image"> 
-                            <img src="<%= ctxPath%>/images/main/collection2.png">
-                        </div>
-                        <div class="product-info">
-                            <p>COPPIA TABLE LAMP</p>
-                            <div class="price">A new sculptural twin-bulb table lamp designed for GUBI by Vibeke Fonnesberg Schmidt. Featuring two discs of Fonnesberg Schmidt’s signature plexiglass housed in a curving metal case, the elegantly industrial design represents both a new material and a new designer for GUBI.</div>
-                        </div>
-                    </div>
-                </a>
-                
-            </div>
-        </div>
-    </div>	
-		
-		
-</c:if>
-
-    <%-- <div class="header_wrapper" >
-        <ul class="nav_wrapper" id="nav_wrapper">
-            <li class="nav_list1">
-                <ul class="header_menu_list">
-                    <li class="header_menu" id="product_menu"><a href="<%= ctxPath %>/product/productList.gu">Product</a></li>
-                    <li class="header_menu"><a href="">Collections</a></li>
-                    <li class="header_menu"><a href="">GUBI's Story</a></li>
-                </ul>   
-            </li>
-            <li class="nav_list2">
-                <div class="logo_wrapper">
-                    <a href="<%= ctxPath%>/index.gu">
-                        <img src="<%= ctxPath%>/images/common/logo-b.png" />
-                    </a>
-                </div>
-            </li>
-            <li class="nav_list3">
-                <ul>
-                    <li class="header_icon"><a href=""><i class="fa-solid fa-arrow-right-from-bracket fa-rotate-180 fa-lg"></i></a></li>
-                    <li class="header_icon"><a href="마이페이지링크"><i class="fa-solid fa-user"></i></a></li>
-                    <li class="header_icon"><a href=""><i class="fa-solid fa-2em fa-magnifying-glass"></i></a></li>
-                    <li class="header_icon"><a href=""><i class="fa-solid fa-location-dot"></i></a></li>
-                    <li class="header_icon"><a href=""><i class="fa-solid fa-cart-shopping"></i></a></li>
-                </ul>   
-            </li>
-        </ul>
-        <div class="menu_container" id="header_dropdown_menu">
-            <ul class="major_categry_list">
-                <li>
-                	<a href="<%= ctxPath%>/product/productList.gu?major_category=SEATING">SEATING</a>
-                	<ul class="small_categry_list" id="seating_list"></ul>
-                </li>
-                <li>
-                	<a href="<%= ctxPath%>/product/productList.gu?major_category=LIGHTING">LIGHTING</a>
-                	<ul class="small_categry_list" id="lighting_list"></ul>
-                </li>
-                <li>
-                	<a href="<%= ctxPath%>/product/productList.gu?major_category=TABLES">TABLES</a>
-                	<ul class="small_categry_list" id="tables_list"></ul>
-                </li>
-            </ul>
-           
-            <div class="product-grid">
-                <!-- 제품 카드 1 -->
-                <a href="#">
-                    <div class="product-card">
-                        <div class="product-image"> 
-                            <img src="<%= ctxPath%>/images/main/collection2.png">
-                        </div>
-                        <div class="product-info">
-                            <p>COPPIA TABLE LAMP</p>
-                            <div class="price">A new sculptural twin-bulb table lamp designed for GUBI by Vibeke Fonnesberg Schmidt. Featuring two discs of Fonnesberg Schmidt’s signature plexiglass housed in a curving metal case, the elegantly industrial design represents both a new material and a new designer for GUBI.</div>
-                        </div>
-                    </div>
-                </a>
-
-                <!-- 제품 카드 2 -->
-                <a href="#">
-                    <div class="product-card">
-                        <div class="product-image"> 
-                            <img src="<%= ctxPath%>/images/main/collection2.png">
-                        </div>
-                        <div class="product-info">
-                            <p>COPPIA TABLE LAMP</p>
-                            <div class="price">A new sculptural twin-bulb table lamp designed for GUBI by Vibeke Fonnesberg Schmidt. Featuring two discs of Fonnesberg Schmidt’s signature plexiglass housed in a curving metal case, the elegantly industrial design represents both a new material and a new designer for GUBI.</div>
-                        </div>
-                    </div>
-                </a>
-                
-            </div>
-        </div>
-    </div> --%>

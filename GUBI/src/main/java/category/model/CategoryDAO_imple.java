@@ -84,7 +84,7 @@ public class CategoryDAO_imple implements CategoryDAO {
         	 	
         	 	sql = " select small_category, category_img "
     	 			+ " from tbl_category "
-    	 			+ " where major_category = ? "
+    	 			+ " where major_category = ? AND is_delete = 0 "
     	 			+ " order by categoryno ";
         	 	
          }

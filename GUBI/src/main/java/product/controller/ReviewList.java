@@ -15,6 +15,7 @@ import product.model.ProductDAO;
 import product.model.ProductDAO_imple;
 import review.domain.ReviewVO;
 
+// 상품별 리뷰 조회
 public class ReviewList extends AbstractController {
 
 	ProductDAO pdao = new ProductDAO_imple();
@@ -24,7 +25,6 @@ public class ReviewList extends AbstractController {
 		
 		String productno = request.getParameter("productno");
 		
-		System.out.println("-------------리뷰조회-------------");
 		List<ReviewVO> reviewList = pdao.selectReview(Integer.parseInt(productno));
 		
 		JSONArray jsonArr = new JSONArray(); 
@@ -34,10 +34,14 @@ public class ReviewList extends AbstractController {
 		    	for(ReviewVO rvo : reviewList) {
 		    		
 		    		JSONObject jsonObj = new JSONObject();
-		    		jsonObj.put("title", rvo.getTitle());    
+		    		jsonObj.put("fk_userid", rvo.getFk_userid());    
 		    		jsonObj.put("score", rvo.getScore());    
+		    		jsonObj.put("name", rvo.getOptionvo().getName());    
+		    		jsonObj.put("title", rvo.getTitle());    
 		    		jsonObj.put("content", rvo.getContent());    
 		    		jsonObj.put("img", rvo.getImg());    
+		    		jsonObj.put("registerday", rvo.getRegisterday());    
+		    		jsonObj.put("reviewno", rvo.getReviewno());    
 
 	            jsonArr.put(jsonObj);
 			}
