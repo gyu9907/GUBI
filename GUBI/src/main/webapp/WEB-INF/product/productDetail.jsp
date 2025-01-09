@@ -102,7 +102,7 @@
   
 	<hr class="border-divider" />
     <!-- 리뷰 작성 폼 -->
-    <div class="review-section">
+    <div class="review-section" id="reivewDiv">
 		<div class="review-list" id="reviewList">
         <!-- 리뷰 항목 -->
 		</div>

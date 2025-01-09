@@ -916,11 +916,12 @@ public class OrderDAO_imple implements OrderDAO {
 					   + "      , o.status, use_point, o.delivery_price, reward_point "
 					   + "      , '[' || LISTAGG( "
 					   + "             '{\"order_detailno\":' || order_detailno || "
+					   + "             ',\"fk_optionno\":' || od.fk_optionno || "
 					   + "             ',\"p_no\":\"' || p.productno || '\"' || "
 					   + "             ',\"p_name\":\"' || cast(p.name as varchar2(100)) || '\"' || "
 					   + "             ',\"op_name\":\"' || cast(op.name as varchar2(100)) || '\"' || "
 					   + "             ',\"op_img\":\"' || cast(op.img as varchar2(200)) || '\"' || "
-					   + "             ',\"reviewno\":\"' || r.reviewno || '\"' || "
+					   + "             ',\"reviewno\":\"' || NVL(r.reviewno, 0) || '\"' || "
 					   + "             ',\"cnt\":\"' || od.cnt || '\"' || "
 					   + "             ',\"price\":\"' || od.price || '\"}', "
 					   + "             ',' "
@@ -1017,10 +1018,12 @@ public class OrderDAO_imple implements OrderDAO {
 					
 					OrderDetailVO odvo = new OrderDetailVO();
 					odvo.setOrder_detailno(jsonObj.getInt("order_detailno"));
+					odvo.setFk_optionno(jsonObj.getInt("fk_optionno"));
 					odvo.setP_no(jsonObj.getInt("p_no"));
 					odvo.setP_name(jsonObj.getString("p_name"));
 					odvo.setOp_name(jsonObj.getString("op_name"));
 					odvo.setOp_img(jsonObj.getString("op_img"));
+					odvo.setReviewno(jsonObj.getInt("reviewno"));
 					odvo.setCnt(jsonObj.getInt("cnt"));
 					odvo.setPrice(jsonObj.getInt("price"));
 					

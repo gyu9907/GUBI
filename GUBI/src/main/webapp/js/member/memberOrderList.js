@@ -22,9 +22,9 @@ $(document).ready(function() {
 
 	// 리뷰확인 버튼을 눌렀을 때
 	$("button#reviewCheck").on("click", function() {
-		const reviewno = $(this).data("reviewno");
+		const productno = $(this).data("productno");
 		
-		reviewCheck(reviewno);
+		location.href=ctxPath + '/product/productDetail.gu?productno=' + productno +"#reivewDiv";
 	});
 	
 });
