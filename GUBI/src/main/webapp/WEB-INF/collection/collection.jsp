@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:include page="../common/header.jsp" />	
+<jsp:include page="/WEB-INF/common/header.jsp" />	
 
 <!-- Bootstrap CSS -->
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/bootstrap-4.6.2-dist/css/bootstrap.min.css" >
@@ -13,9 +13,9 @@
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/collection/collection.css">
 
 <!-- Bentham 폰트 -->
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bentham&display=swap" rel="stylesheet">
+<!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+<!-- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> -->
+<!-- <link href="https://fonts.googleapis.com/css2?family=Bentham&display=swap" rel="stylesheet"> -->
 
 <!-- HelveticaNeueLTStd-Roman 폰트 -->
 <link href="https://db.onlinewebfonts.com/c/66e796dac9aff5a6967ebdd5e021db01?family=HelveticaNeueLTStd-Roman" rel="stylesheet">
@@ -112,15 +112,13 @@ function getCollection() {
 	});
 }
 </script>
-</head>
-<body>
     <div class="Collection_container container-fluid py-5">
 
         <div class="CollectionHeader_container">
-            <div class="CollectionTitle bentham-regular">COLLECTIONS</div>
+            <div class="CollectionTitle">COLLECTIONS</div>
         </div>
 
-        <div class="CollectionNav_container bentham-regular">
+        <div class="CollectionNav_container">
         	<%-- 카테고리 목록 표시 --%>
             <ul>
            		<c:choose>

@@ -37,4 +37,22 @@ public interface OrderDAO {
 	// status 수정하기
 	int updateStatus(String status, String orderno) throws SQLException;
 
+	// 주문 일련번호 채번
+	int getOrderno() throws SQLException;
+
+	// 주문
+	int insertOrder(OrderVO ovo) throws SQLException;
+
+	// 주문 일련번호로 주문 조회
+	OrderVO getOrder(String orderno) throws SQLException;
+
+	// 회원 아이디와 기간으로 주문 목록 조회
+	List<OrderVO> getOrderList(Map<String, String> paraMap) throws SQLException;
+
+	// 회원 아이디와 기간으로 주문 목록 조회 총 개수
+	int getTotalOrder(Map<String, String> paraMap) throws SQLException;
+
+	// 주문 상태 변경
+	int updateOrderStatus(Map<String, String> paraMap) throws SQLException;
+
 }

@@ -1,5 +1,7 @@
 package order.domain;
 
+import java.util.List;
+
 import member.domain.MemberVO;
 import product.domain.OptionVO;
 import product.domain.ProductVO;
@@ -15,6 +17,9 @@ public class OrderVO {
 	private String orderday;  /* 주문일자 */
 	private String delivery_end_day; /* 배송완료일자 */
 	private String status; /* 주문현황  */ /* 1결제대기/2주문완료/3주문취소/4배송중/5배송완료/6구매확정/7환불접수/8환불완료 */
+	private int use_point; /* 포인트 사용금액 */
+	private int reward_point; /* 포인트 적립금 */
+	private int delivery_price; /* 배송비 */
 
 	
 	
@@ -31,6 +36,8 @@ public class OrderVO {
 	OptionVO opvo;
 	ProductVO pvo;
 	OrderDetailVO odvo;
+
+	List<OrderDetailVO> orderDetailList;
 	
 	public OptionVO getOpvo() {
 		return opvo;
@@ -116,6 +123,30 @@ public class OrderVO {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+	public int getUse_point() {
+		return use_point;
+	}
+	public void setUse_point(int use_point) {
+		this.use_point = use_point;
+	}
+	public int getReward_point() {
+		return reward_point;
+	}
+	public void setReward_point(int reward_point) {
+		this.reward_point = reward_point;
+	}
+	public int getDelivery_price() {
+		return delivery_price;
+	}
+	public void setDelivery_price(int delivery_price) {
+		this.delivery_price = delivery_price;
+	}
+	public List<OrderDetailVO> getOrderDetailList() {
+		return orderDetailList;
+	}
+	public void setOrderDetailList(List<OrderDetailVO> orderDetailList) {
+		this.orderDetailList = orderDetailList;
 	}
 	
 }
