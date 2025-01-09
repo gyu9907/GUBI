@@ -1,0 +1,331 @@
+@charset "UTF-8";
+
+/* @font-face {
+    font-family: "Times New Roman";
+    src: url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.eot");
+    src: url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.eot?#iefix")format("embedded-opentype"),
+    url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.woff2")format("woff2"),
+    url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.woff")format("woff"),
+    url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.ttf")format("truetype"),
+    url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.svg#Times New Roman")format("svg");
+    unicode-range: U+0030-0039,U+0041-005A,U+0061-007A
+    
+}
+
+noto-sans-kr-300 - korean
+@font-face {
+  font-display: swap; Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options.
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 300;
+  src: url('../fonts/noto-sans-kr-v36-korean-300.eot'); IE9 Compat Modes
+  src: url('../fonts/noto-sans-kr-v36-korean-300.eot?#iefix') format('embedded-opentype'), IE6-IE8
+       url('../fonts/noto-sans-kr-v36-korean-300.woff2') format('woff2'), Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
+       url('../fonts/noto-sans-kr-v36-korean-300.woff') format('woff'), Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+
+       url('../fonts/noto-sans-kr-v36-korean-300.ttf') format('truetype'), Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+
+       url('../fonts/noto-sans-kr-v36-korean-300.svg#NotoSansKR') format('svg'); Legacy iOS
+       unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
+}
+noto-sans-kr-regular - korean
+@font-face {
+  font-display: swap; Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options.
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/noto-sans-kr-v36-korean-regular.eot'); IE9 Compat Modes
+  src: url('../fonts/noto-sans-kr-v36-korean-regular.eot?#iefix') format('embedded-opentype'), IE6-IE8
+       url('../fonts/noto-sans-kr-v36-korean-regular.woff2') format('woff2'), Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
+       url('../fonts/noto-sans-kr-v36-korean-regular.woff') format('woff'), Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+
+       url('../fonts/noto-sans-kr-v36-korean-regular.ttf') format('truetype'), Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+
+       url('../fonts/noto-sans-kr-v36-korean-regular.svg#NotoSansKR') format('svg'); Legacy iOS
+       unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
+}
+noto-sans-kr-500 - korean
+@font-face {
+  font-display: swap; Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options.
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 500;
+  src: url('../fonts/noto-sans-kr-v36-korean-500.eot'); IE9 Compat Modes
+  src: url('../fonts/noto-sans-kr-v36-korean-500.eot?#iefix') format('embedded-opentype'), IE6-IE8
+       url('../fonts/noto-sans-kr-v36-korean-500.woff2') format('woff2'), Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
+       url('../fonts/noto-sans-kr-v36-korean-500.woff') format('woff'), Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+
+       url('../fonts/noto-sans-kr-v36-korean-500.ttf') format('truetype'), Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+
+       url('../fonts/noto-sans-kr-v36-korean-500.svg#NotoSansKR') format('svg'); Legacy iOS
+       unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
+}
+noto-sans-kr-600 - korean
+@font-face {
+  font-display: swap; Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options.
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/noto-sans-kr-v36-korean-600.eot'); IE9 Compat Modes
+  src: url('../fonts/noto-sans-kr-v36-korean-600.eot?#iefix') format('embedded-opentype'), IE6-IE8
+       url('../fonts/noto-sans-kr-v36-korean-600.woff2') format('woff2'), Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
+       url('../fonts/noto-sans-kr-v36-korean-600.woff') format('woff'), Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+
+       url('../fonts/noto-sans-kr-v36-korean-600.ttf') format('truetype'), Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+
+       url('../fonts/noto-sans-kr-v36-korean-600.svg#NotoSansKR') format('svg'); Legacy iOS
+       unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
+}
+noto-sans-kr-700 - korean
+@font-face {
+  font-display: swap; Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options.
+  font-family: 'Noto Sans KR';
+  font-style: normal;
+  font-weight: 700;
+  src: url('../fonts/noto-sans-kr-v36-korean-700.eot'); IE9 Compat Modes
+  src: url('../fonts/noto-sans-kr-v36-korean-700.eot?#iefix') format('embedded-opentype'), IE6-IE8
+       url('../fonts/noto-sans-kr-v36-korean-700.woff2') format('woff2'), Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
+       url('../fonts/noto-sans-kr-v36-korean-700.woff') format('woff'), Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+
+       url('../fonts/noto-sans-kr-v36-korean-700.ttf') format('truetype'), Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+
+       url('../fonts/noto-sans-kr-v36-korean-700.svg#NotoSansKR') format('svg'); Legacy iOS
+       unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
+} */
+ 
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Times New Roman", Times;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+a, a:hover, a:visited, a:link, a:active{
+  text-decoration: none;
+}
+
+a:hover, a:visited, a:link, a:active {
+  color: #000;
+}
+
+.product-card img {
+  display: inline-block;
+  min-width: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+/* header */
+.header_wrapper {
+	top: 0;
+	position: fixed;
+	width: 100%;
+  height: 48px;
+  z-index: 999;
+background-color: #fff;
+box-shadow: 0px 0px 4.2px rgba(0, 0, 0, 0.3);
+transition: 0.5s;
+    
+  /* overflow: hidden; */
+}
+
+/* .header_wrapper:hover .menu_container {
+	top: 0px;
+	max-height: 100vh;
+	background-color: #fff;
+
+  overflow: hidden;
+} */
+
+
+.main_container .header_wrapper.bg_main {
+  background-color: transparent;
+  box-shadow: none;
+}
+.main_container .header_wrapper.bg_main .header_menu a {
+  color: #fff;
+}
+.main_container .header_wrapper.bg_main .logo_wrapper img {
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+}
+.main_container .header_wrapper.bg_main .header_icon a {
+  color: #fff;
+}
+
+
+
+.header_wrapper .nav_wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  padding: 0 22px;
+  /* background-color: #fff; */
+
+  z-index: 999;
+}
+.header_wrapper .nav_wrapper li ul {
+  display: flex;
+}
+.header_wrapper .nav_list1 {
+  display: flex;
+  align-items: center;
+  width: 30%;
+}
+.header_wrapper .header_menu_list {
+  width: 100%;
+}
+.header_wrapper .header_menu {
+  display: flex;
+  align-items: center;
+  margin-right: 33%;
+  height: 100%;
+}
+.header_wrapper .header_menu a {
+  display: flex;
+  align-items: center;
+  width: initial;
+  height: 100%;
+  font-size: 17px;
+  font-weight: 600;
+  color: #000;
+}
+.header_wrapper .header_menu a:active,
+.header_wrapper .header_menu a:link {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  color: #000;
+}
+.header_wrapper .nav_list2 {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+.header_wrapper .logo_wrapper {
+  width: 63px;
+}
+.header_wrapper .logo_wrapper img {
+  display: inline-block;
+  width: 100%;
+  min-width: 100%;
+  height: 100%;
+}
+.header_wrapper .nav_list3 {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  min-width: 200px; /* 최소 너비 설정 */
+  max-width: 100%; /* 최대 너비는 부모의 너비에 맞게 설정 */
+  gap: 15px;
+  margin-left: auto;
+}
+.header_wrapper .nav_list3 ul {
+  gap: 60px;
+}
+.header_wrapper .header_icon a {
+  display: inline-block;
+  color: #000;
+}
+.header_wrapper .header_icon a:nth-child(3) .fa-solid {
+  font-size: 23px;
+}
+.header_wrapper .header_icon a .fa-solid {
+  font-size: 20px;
+}
+.header_wrapper .header_icon:last-child {
+  margin-right: 0;
+}
+.header_wrapper .menu_container {
+  position: absolute;
+  top:-800px;
+  /* transition: top 1s; */
+
+  display: flex;
+  width: 100%;
+  max-height: 0vh; 
+  padding: 94px 5%;
+
+  background-color: #fff;
+  box-shadow: 0 0 8px 0 rgba(0,0,0,0.2); 
+  
+  animation: fadeInDown 0.7s;
+  animation-delay: 0.5s;
+  transition: 0.5s ease-in-out;
+  
+  z-index: 10;
+}
+ @keyframes fadeInDown {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+.header_wrapper .menu_container .major_categry_list {
+  display: flex;
+}
+
+.header_wrapper .menu_container .major_categry_list li {
+  padding: 10px 60px 10px 0;
+  font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+}
+.header_wrapper .menu_container .small_categry_list {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 0 0 0px;
+}
+.header_wrapper .menu_container .small_categry_list li {
+  padding: 5px 20px 5px 0;
+  color: #000;
+  font-size: 16px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+}
+.header_wrapper .menu_container .small_categry_list li:hover {
+  text-decoration: underline;
+}
+.header_wrapper .menu_container .product-grid {
+  display: flex;
+  margin-left: auto;
+}
+.header_wrapper .menu_container .product-card {
+  width: 400px;
+}
+.header_wrapper .menu_container .product-card:hover {
+  transform: translateY(0);
+}
+.header_wrapper .menu_container .product-image {
+  height: 480px;
+}
+.header_wrapper .menu_container .product-info {
+  display: flex;
+  flex-direction: column;
+}
+
+/* footer */
+.footer_wrapper {
+  font-family: "Noto Sans", serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 123px;
+  background: #F8F7F7;
+}
+.footer_wrapper p:last-child {
+  font-weight: 600;
+}
+
+/* 반응형 레이아웃 *//*# sourceMappingURL=common.css.map */
