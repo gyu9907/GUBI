@@ -601,5 +601,62 @@ public class OrderDAO_imple implements OrderDAO {
 
 		return n;
 	}
+	
+	
+	
+	// 여긴 이진호가 추가함
+	// 마이페이지에서 주문 상태 가져오는 메소드
+	@Override
+	public Map<String, Integer> getOrderStatusByUserId(String userid) {
+
+		Map<String, Integer> statusMap = new HashMap<>();
+
+		try {
+			conn = ds.getConnection();
+
+  		    String sql = " SELECT all_status.status AS status, " +
+                        "       NVL(actual_count.count, 0) AS count " +
+                        " FROM ( " +
+                        "    SELECT '결제대기' AS status, 1 AS code FROM DUAL " +
+                        "    UNION ALL " +
+                        "    SELECT '주문완료' AS status, 2 AS code FROM DUAL " +
+                        "    UNION ALL " +
+                        "    SELECT '배송중' AS status, 4 AS code FROM DUAL " +
+                        "    UNION ALL " +
+                        "    SELECT '배송완료' AS status, 5 AS code FROM DUAL " +
+                        ") all_status " +
+                        " LEFT JOIN ( " +
+                        "    SELECT status, COUNT(*) AS count " +
+                        "    FROM tbl_order " +
+                        "    WHERE fk_userid = ? " +
+                        "    GROUP BY status " +
+                        " ) actual_count " +
+                        " ON all_status.code = actual_count.status " +
+                        " ORDER BY CASE all_status.code " +
+                        "           WHEN 1 THEN 1 " +
+                        "           WHEN 2 THEN 2 " +
+                        "           WHEN 4 THEN 3 " +
+                        "           WHEN 5 THEN 4 " +
+                        "           END ";
+  		    
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, userid);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				String status = rs.getString("status");
+				int count = rs.getInt("count");
+				statusMap.put(status, count); // Map에 데이터 저장
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close();
+		}
+
+		return statusMap;
+	}
+
+	
 
 }
