@@ -36,36 +36,7 @@
 </head>
 <body>
 
-<!-- 임시 헤더 네비게이션 바 // 나중에 팀원 header로 변경함 -->
-  <nav class="nav-bar">
-    <div class="logo">GUBIN</div>
-    <ul class="menu">
-      <li>Products</li>
-      <li>Collections</li>
-      <li>GUBIN's Story</li>
-      </ul>   
-     
-     <!-- 헤더 장바구니 아이콘 버튼이다. 이걸 누르면 오른쪽에 숨겨진 사이드바가 나타나서 장바구니를 보여준다. -->   
-     <div class="sidebar" id="cartSidebar">
-     <h2>장바구니</h2>
-     <ul>
-     <li></li>
-     <li></li>
-     <li></li>
-     </ul> 
-     <button class="close-button" onclick="closeSidebar()">
-     <i class="fa-solid fa-x"></i>
-     </button>
-     </div>
 
-  <!-- 장바구니 아이콘 -->
-
-     
-     <button class="cart-button">
-     <i class="fa-solid fa-cart-shopping"></i> 
-     </button>
-  </nav>
-    
   
   <div class="sidebar2">
     <h2>마이페이지</h2>
@@ -96,7 +67,7 @@
       
         <div class="name">마이페이지</div>
             <p>${loginuser.name}님 반갑습니다.</p>
-       	<hr class="custom-hr">
+          <hr class="custom-hr">
       </div>    
         
     </div>
@@ -115,41 +86,31 @@
           <div>사용가능 포인트</div>
         </div>
     </div>  
-    <div class="shippingStatusContainer">
-      <div class="title">
+<div class="shippingStatusContainer">
+    <div class="title">
         주문/배송조회
-      </div>
-      <div class="status">
-        
-        <div class="item">
-          <div>
-            <div class="black number">${loginuser.status}</div>
-            <div class="text">입금대기</div>
-          </div>
-          <div class="icon"> > </div>
-        </div>     
-        <div class="item">
-          <div>
-            <div class="black number">${loginuser.status}</div>
-            <div class="text">상품배송&준비중</div>
-          </div>
-          <div class="icon"> > </div>  <!--나중에 꺽새 아이콘을 추가한다. -->
-        </div>     
-        <div class="item">
-          <div>
-            <div class="black number">${loginuser.status}</div>
-            <div class="text">배송중</div>
-          </div>
-        <i class="fa-solid fa-arrow-right"></i> <!-- 아이콘을 추가. -->
-        </div>     
-        <div class="item">
-          <div>
-            <div class="black number">${loginuser.status}</div>
-            <div class="text">배송 완료</div>
-          </div>
-        </div>       
-      </div>   
-    </div>  
+    </div>
+    <div class="status">
+        <c:forEach var="entry" items="${orderStatusMap}">
+            <div class="item">
+                <div>
+                    <div class="black number">${entry.key}</div> <!-- 상태 코드 표시 -->
+                    <div class="text">
+                        <!-- 주문 상태 텍스트 표시 -->
+                        <c:choose>
+                            <c:when test="${entry.key == '1'}">입금대기</c:when>
+                            <c:when test="${entry.key == '2'}">주문완료</c:when>
+                            <c:when test="${entry.key == '4'}">배송중</c:when>
+                            <c:when test="${entry.key == '5'}">배송완료</c:when>                        
+                        </c:choose>
+                    </div>
+                </div>
+                <div class="count">(${entry.value})</div> <!-- 상태 개수 표시 -->
+                <div class="icon"> > </div>
+            </div>
+        </c:forEach>
+    </div>   
+</div>
     <!-- 4. 최근 주문 내역 -->
     <div class="recent-orders">
       <h3>최근 주문내역</h3>
