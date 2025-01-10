@@ -97,7 +97,7 @@ public class Login extends AbstractController {
 
 				return; // 메소드 종료
 
-			} else {// 비밀번호 변경한지 3개월 미만인 경우
+			} else {// 비밀번호 변경한지 3개월 미만인 경우, 완벽한 로그인
 				
 				// 로그인을 하면 시작페이지(index.up)로 가는 것이 아니라 로그인을 시도하려고 머물렀던 그 페이지로 가기 위한 것이다.
 				if (session.getAttribute("goBackURL") != null) {
