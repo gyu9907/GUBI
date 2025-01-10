@@ -108,8 +108,25 @@ a:hover, a:visited, a:link, a:active {
   color: #000;
 }
 
-
 /* header */
+div#header {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    align-items: center;
+    padding: 0 20px;
+}
+#logo {
+    /* border: 1px solid red;   */
+    margin:1%;
+}
+div#header i {
+	cursor: pointer;
+}
+div#header a {
+	color:black;
+}
 .header_wrapper {
 	top: 0;
 	position: fixed;
