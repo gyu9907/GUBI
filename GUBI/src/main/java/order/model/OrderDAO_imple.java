@@ -490,7 +490,7 @@ public class OrderDAO_imple implements OrderDAO {
 			String sql =  " select * "
 						+ " from "
 						+ " ( "
-						+ " select rownum as rno, orderno, name, tel, fk_userid, tel, fk_deliveryno, total_price, total_cnt, orderday, delivery_end_day, status "
+						+ " select rownum as rno, orderno, name, fk_userid, tel, fk_deliveryno, total_price, total_cnt, orderday, delivery_end_day, status "
 						+ " from "
 						+ " ( "
 						+ "    with "
