@@ -9,6 +9,7 @@ import delivery.model.DeliveryDAO_imple;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import member.domain.MemberVO;
 
 public class DeliveryList extends AbstractController {
 
@@ -16,23 +17,23 @@ public class DeliveryList extends AbstractController {
 
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
-    	HttpSession session = request.getSession();
-	    String userid = (String) session.getAttribute("userid");
+    	
+    	 // 로그인하지 않은 경우 처리
+        if (!super.checkLogin(request)) {
+        	 goBackURL(request);
 
-	    if (userid == null) {
-	        // 임시 아이디 설정 (테스트용)
-	        session.setAttribute("userid", "mjhan");
-	        userid = "mjhan";  // 임시 아이디 설정, 나중에 로그인 기능 구현시 제거
-	    }
-        // 배송지 삭제 요청 처리
-        //String[] deliverynoArr = request.getParameter("deliveryno").split("\\,");
+            request.setAttribute("message", "로그인 후 이용 가능합니다.");
+            request.setAttribute("loc", request.getContextPath() + "/login/login.gu");
 
+            super.setViewPage("/WEB-INF/common/msg.jsp"); // 메시지 페이지로 이동
+            return; // 함수 종료
+        }
         
-     // if (deliverynoArr != null) {
-         //  for (String no : deliverynoArr) {
-             //  System.out.println("전달된 배송지 번호: " + no); // 디버깅용 출력
-          //  }
-     //   }
+        // 세션에서 userid 가져오기
+        HttpSession session = request.getSession();
+        MemberVO loginuser = (MemberVO) session.getAttribute("loginuser");
+        String userid = loginuser.getUserid();
+    	
 
         // 배송지 목록 조회
         List<DeliveryVO> deliveryList = ddao.getDeliveryList(userid);

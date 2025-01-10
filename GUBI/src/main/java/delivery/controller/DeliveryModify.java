@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
+
 public class DeliveryModify extends AbstractController {
 
     private DeliveryDAO ddao = new DeliveryDAO_imple();
@@ -15,6 +16,18 @@ public class DeliveryModify extends AbstractController {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+    	 // 로그인하지 않은 경우 처리
+        if (!super.checkLogin(request)) {
+        	 goBackURL(request);
+
+            request.setAttribute("message", "로그인 후 이용 가능합니다.");
+            request.setAttribute("loc", request.getContextPath() + "/login/login.gu");
+
+            super.setViewPage("/WEB-INF/common/msg.jsp"); // 메시지 페이지로 이동
+            return; // 함수 종료
+        }
+        
+    	
         String method = request.getMethod(); // "GET" 또는 "POST"
         String deliveryno = request.getParameter("deliveryno"); // query parameter로 전달된 deliveryno
         if (deliveryno == null || deliveryno.isBlank()) { 
@@ -83,7 +96,7 @@ public class DeliveryModify extends AbstractController {
              String loc;
              if (result > 0) {
                  message = "배송지 정보 수정이 완료되었습니다.";
-                 loc = "/myPage.gu"; // 성공 후 이동할 페이지
+                 loc = request.getContextPath() + "/member/myPage.gu"; // 성공 후 이동할 페이지
              } else {
                  message = "배송지 수정에 실패했습니다.";
                  loc = "javascript:history.back()";  // 실패 시 이전 페이지로 돌아가도록
