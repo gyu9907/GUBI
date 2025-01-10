@@ -487,17 +487,25 @@ public class OrderDAO_imple implements OrderDAO {
 			
 			conn = ds.getConnection();
 			
-			String sql =  " with "
-						+ " a as "
+			String sql =  " select * "
+						+ " from "
 						+ " ( "
-						+ " select rownum as rno, orderno, b.name, fk_userid, tel, fk_deliveryno, total_price, total_cnt, orderday, delivery_end_day, a.status "
-						+ " from tbl_order a join tbl_member b "
-						+ " on a.fk_userid = b.userid "
-						+ " ) "
-						+ " select rno, orderno, name, fk_userid, tel, total_price, total_cnt, orderday, delivery_end_day, status "
+						+ " select rownum as rno, orderno, name, tel, fk_userid, tel, fk_deliveryno, total_price, total_cnt, orderday, delivery_end_day, status "
+						+ " from "
+						+ " ( "
+						+ "    with "
+						+ "    a as "
+						+ "    ( "
+						+ "    select orderno, b.name, fk_userid, tel, fk_deliveryno, total_price, total_cnt, orderday, delivery_end_day, a.status "
+						+ "    from tbl_order a join tbl_member b "
+						+ "    on a.fk_userid = b.userid "
+						+ "    ) "
+						+ " select orderno, name, fk_userid, tel, total_price, total_cnt, orderday, delivery_end_day, status,fk_deliveryno "
 						+ " from a "
 						+ " where status = ? "
-						+ " and rno between ? and ? ";
+						+ " ) "
+						+ " )  "
+						+ " where rno between ? and ? ";
 			
 			pstmt = conn.prepareStatement(sql);
 			

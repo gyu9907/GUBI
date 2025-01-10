@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
+	<%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c"   uri="http://java.sun.com/jsp/jstl/core" %>
@@ -36,7 +36,7 @@ $(document).ready(function(){
 							<li><a href="<%= ctx_Path%>/admin/order.gu">주문리스트 (전체)</a></li>
 							
 							<c:forEach var="status" items="${requestScope.statusCnt}">
-								<c:if test="${status.status ==1 or status.status ==2 or status.status ==4 or status.status ==5 or status.status ==6}">
+								<c:if test="${status.status ==1 or status.status == 2 or status.status == 4 or status.status ==5 or status.status ==6}">
 									<li class = "li">
 									<c:choose>
 										<c:when test='${status.status == 1}'><a href="<%= ctx_Path%>/admin/orderStatus.gu?status=1" data-value="${status.status}">결제대기</a></c:when>
