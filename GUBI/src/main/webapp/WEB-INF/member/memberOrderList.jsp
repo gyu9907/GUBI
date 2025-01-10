@@ -20,7 +20,7 @@ const ctxPath = "${pageContext.request.contextPath}";  // JSP에서 컨텍스트
 	<div id="content">
 		<!-- 콘텐츠 영역 시작 -->
 		
-<div class="sidebar2">
+<div class="sidebar">
     <h2><a href="${pageContext.request.contextPath}/member/myPage.gu">마이페이지</a></h2>
     <hr>
     <div class="section">
@@ -33,10 +33,10 @@ const ctxPath = "${pageContext.request.contextPath}";  // JSP에서 컨텍스트
     <div class="section">
         <h3>나의 활동 정보</h3>
         <ul>
-            <li><a href="#">회원정보 및 탈퇴</a></li>
-            <li><a href="${pageContext.request.contextPath}/delivery/deliverList.gu">배송지 관리</a></li>
-            <li><a href="#">포인트</a></li>
-            <li><a href="#">나의 리뷰</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberEdit.gu">회원정보 수정</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberDelete.gu">회원 탈퇴</a></li>
+            <li><a href="${pageContext.request.contextPath}/delivery/deliveryList.gu">배송지 관리</a></li>
+            <li><a href="${pageContext.request.contextPath}/review/myReviewList.gu">나의 리뷰</a></li>
             <li><a href="#">1:1 문의</a></li>
         </ul> 
     </div>
@@ -141,7 +141,7 @@ const ctxPath = "${pageContext.request.contextPath}";  // JSP에서 컨텍스트
 			</c:if>
 
 		<div id="page" class="justify-content-center">
-        	<ul class="pagination pagination-sm justify-content-center" style="margin:20px 0">
+        	<ul class="pagination justify-content-center" style="margin:20px 0">
 				${requestScope.pageBar}
        		</ul>
         </div>

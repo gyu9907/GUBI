@@ -80,10 +80,6 @@ ul label {
     display: inline-block !important;
 }
 
-.CheckoutProduct_container li {
-    display: flex;
-}
-
 div.ProductImg_container > img {
     width: 100px;
     height: 100px;

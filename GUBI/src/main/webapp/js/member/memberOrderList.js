@@ -48,7 +48,3 @@ function updateOrder(orderno, status) {
         }
     });
 }
-
-function reviewCheck(reviewno) {
-	alert(reviewno + "번 리뷰 확인");
-}

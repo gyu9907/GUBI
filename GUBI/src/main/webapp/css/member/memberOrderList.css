@@ -11,41 +11,9 @@
 @font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 700;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Bold.otf) format('opentype');unicode-range: U+AC00-D7A3;}
 
 @font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 900;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');unicode-range: U+AC00-D7A3;}
-@font-face {
-    font-family: 'BookkMyungjo-Bd';
-    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/BookkMyungjo-Bd.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-    unicode-range: U+AC00-D7A3;
-}
 
 #content * {
 	font-family: 'Noto Sans KR', 'Times New Roman';
-}
-
-/* 사이드바 스타일 */
-.sidebar {
-  position: fixed;
-  top: 0;
-  right: -300px;  /* 사이드바 숨김 상태 */
-  width: 300px;
-  height: 100%;
-  background-color: #f4f4f4;
-  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
-  padding: 20px;
-  transition: right 0.3s ease;
-  overflow-y: auto;
-  z-index: 2000; /* 사이드바를 화면에 띄우도록 적당한 z-index 설정 */
-}
-
-.sidebar.open {
-  right: 0; /* 사이드바가 화면에 나타날 때 오른쪽으로 이동 */
-  width: 500px; /* 필요한 사이드바 너비 */
-}	
-
-/* 사이드바 안의 스타일 */
-.sidebar h2 {
-    padding: 20px;
 }
 
 /* 장바구니 버튼 스타일 */
@@ -260,7 +228,7 @@ button#submit-btn:hover {
 }
 /* 사이드 바 메뉴*/
 
-div.sidebar2 {
+div.sidebar {
 	
     position: sticky;
     top:50px;
@@ -275,7 +243,7 @@ div.sidebar2 {
    
 }
 
-.sidebar2 h2 {
+.sidebar h2 {
     font-size: 0.9rem; /* 제목 크기 */
     margin-bottom: 10px; /* 아래 여백 */
     font-weight:500;
@@ -406,4 +374,31 @@ hr {
 
 .container hr {
 	margin-bottom: 0;
+}
+
+/* 페이지바 */
+ul.pagination > li  {
+    border: none;
+}
+ul.pagination > li.page-item a {
+    /* border: 1px solid red; */
+	color:black;
+    font-size: 10pt;
+}
+.page-link {
+    border: none;
+}
+.page-link:active:hover {
+    border: 1px solid  rgba(0, 0, 0, 0.5);
+}  
+.page-link:focus {
+    z-index: 3;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(246, 246, 246, 0.25);
+}
+.page-item.active .page-link {
+    border-bottom: 1px solid black;
+    z-index: 3;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.25);
 }
