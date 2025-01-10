@@ -33,7 +33,7 @@
 					<li><a class="dropdown-item mb-3" href="#">Product</a></li>
 					<ul>
 						<li><a href="<%= ctx_Path%>/admin/product.gu">전체상품관리</a></li>
-						<li><a href="#">상품등록</a></li>
+						<li><a href="<%= ctx_Path%>/admin/addProduct.gu">상품등록</a></li>
 					</ul>
 					<li><a class="dropdown-item mb-3" href="#">Review / Question</a></li>
 					<ul>	
@@ -70,7 +70,7 @@
 								</c:forEach>
 							</select>
 							<select name="small_category" id="small_category" class="infoData">
-								<option value="" disabled selected>소분류</option>
+								
 							</select>
 							<span class="error">카테고리는 필수선택 사항입니다.</span>
 						</td>

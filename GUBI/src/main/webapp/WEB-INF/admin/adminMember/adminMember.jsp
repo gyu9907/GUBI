@@ -83,6 +83,7 @@ $(document).ready(function() {
 		}
 	});
 	
+	// ***** 날짜함수 *****//
 	const now = new Date(); // 현재날짜
 	var year = now.getFullYear();
 	var month = (now.getMonth() + 1).toString().padStart(2, '0');
@@ -91,43 +92,47 @@ $(document).ready(function() {
 	const yyyymmdd = year+month+day; // 오늘날짜
 	const yesterday = year+month+(now.getDate()-1).toString().padStart(2, '0')	// 어제
 	const weekday = year+month+(now.getDate()-7).toString().padStart(2, '0')	// 일주일전
-	const monthday = year+(now.getMonth() + 1).toString().padStart(2, '0')-1+day		// 한달전
-	const threemonthday = year+month+day// 세달전
+	
+	const monthday = new Date(now);
+	monthday.setMonth(now.getMonth()-1);
+	const monthdaystr = monthday.getFullYear() + (monthday.getMonth() + 1).toString().padStart(2, '0') + monthday.getDate().toString().padStart(2, '0')
+	//console.log(monthdaystr); // 한달전
+	
+	const threeMonth = new Date(now);
+	threeMonth.setMonth(now.getMonth()-3);
+	const threeMonthstr = threeMonth.getFullYear() + (threeMonth.getMonth() + 1).toString().padStart(2, '0') + threeMonth.getDate().toString().padStart(2, '0')
+	//console.log(threeMonthstr); // 한달전
 	
 	// 오늘 
 	$("button.todaybtn").on("click",function(){	
-		//alert("오늘버튼클릭");
-		
 		$("input:text[name='startDate']").val(yyyymmdd);
 		$("input:text[name='endDate']").val(yyyymmdd);
 	});
+	
 	// 어제 
 	$("button.yesterdaybtn").on("click",function(){
-		 //alert("어제버튼클릭");
-	
 		$("input:text[name='startDate']").val(yesterday);
 		$("input:text[name='endDate']").val(yyyymmdd);
 	});
+	
 	// 일주일전 
 	$("button.weekbtn").on("click",function(){
-
 		$("input:text[name='startDate']").val(weekday);
 		$("input:text[name='endDate']").val(yyyymmdd);
 	});
+	
 	// 한달전 
 	$("button.monthbtn").on("click",function(){
-		alert("저번달버튼클릭");
-
-		$("input:text[name='startDate']").val(monthday);
-		$("input:text[name='endDate']").val(yyyymmdd);
-	});
-	// 세달전 
-	$("button.threemonthbtn").on("click",function(){
-		alert("세달전버튼클릭");
-		$("input:text[name='startDate']").val();
+		$("input:text[name='startDate']").val(monthdaystr);
 		$("input:text[name='endDate']").val(yyyymmdd);
 	});
 	
+	// 세달전 
+	$("button.threemonthbtn").on("click",function(){
+		$("input:text[name='startDate']").val(threeMonthstr);
+		$("input:text[name='endDate']").val(yyyymmdd);
+	});
+	// ***** 날짜함수 끝 *****//
 
 });
 

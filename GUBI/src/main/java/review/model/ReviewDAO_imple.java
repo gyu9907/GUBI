@@ -152,24 +152,29 @@ public class ReviewDAO_imple implements ReviewDAO {
 			String sql =  " select * "
 						+ " from "
 						+ " ( "
+						+ " select rownum as rno, reviewno, userid, img, title, content, score, registerday, "
+						+ " fk_productno, optionno, username, productname "
+						+ " from "
+						+ " ( "
 						+ " with "
 						+ " a as "
 						+ " ( "
-						+ " select rownum as rno, reviewno, userid, b.name, img, fk_optionno, title, "
-						+ " case "
-						+ " when length(content) > 10 THEN SUBSTR(content, 1, 10) || ' ...' "
-						+ " else content end as content, "	
-						+ " score, a.registerday "
-						+ " from tbl_review a join tbl_member b "
-						+ " on a.fk_userid = b.userid "
+						+ " 	select rownum as rno, reviewno, userid, b.name, img, fk_optionno, title, "
+						+ " 	case "
+						+ " 	when length(content) > 10 THEN SUBSTR(content, 1, 10) || ' ...' "
+						+ " 	else content end as content, "	
+						+ " 	score, a.registerday "
+						+ " 	from tbl_review a join tbl_member b "
+						+ " 	on a.fk_userid = b.userid "
 						+ " ), "
 						+ " b as "
 						+ " ( "
-						+ " select fk_productno, optionno, b.name "
-						+ " from tbl_option a join tbl_product b "
-						+ " on a.fk_productno = b.productno "
+						+ " 	select fk_productno, optionno, b.name "
+						+ " 	from tbl_option a join tbl_product b "
+						+ " 	on a.fk_productno = b.productno "
 						+ " ) "
-						+ " select rno, reviewno, img, title, content, a.userid, a.name as username, a.registerday, score, b.name as productname "
+						+ " select reviewno, img, title, content, a.userid, a.name as username, a.registerday, score,"
+						+ " b.name as productname, optionno, fk_productno "
 						+ " from a join b "
 						+ " on a.fk_optionno = b.optionno "
 						+ " where reviewno is not null ";
@@ -189,7 +194,7 @@ public class ReviewDAO_imple implements ReviewDAO {
 						+  "      and to_date(?, 'YYYY-MM-DD') ";
 				}
 				
-				sql +=    " order by a.registerday desc "
+				sql +=    " order by a.registerday desc ) "
 						+ ") where rno between ? and ? ";
 				
 				int sizePerPage = Integer.parseInt(paraMap.get("sizePerPage"));
@@ -326,29 +331,41 @@ public class ReviewDAO_imple implements ReviewDAO {
 			
 			conn = ds.getConnection();
 			
-			String sql =  " with "
-						+ " a as "
+			String sql =  " select * "
+						+ " from  "
 						+ " ( "
-						+ " 	select rownum rno, askno, userid, fk_productno, fk_adminid, name, "
-						+ " 	case "
-						+ " 	when length(question) > 15 THEN SUBSTR(question, 1, 15) || ' ...' "
-						+ " 	else question end as question, "	
-						+ " 	answer, is_hide, a.registerday, answerday, ask_category "
-						+ " 	from tbl_ask a join tbl_member b "
-						+ " 	on a.fk_userid = b.userid "
+						+ " select rownum rno, askno, userid, fk_productno, fk_adminid, name, productno, optionname, optionno, "
+						+ " answer, is_hide, registerday, answerday, ask_category, question "
+						+ " from "
+						+ " ( "
+						+ " with "
+						+ " a as "
+						+ " (  "
+						+ "    select askno, userid, fk_productno, fk_adminid, name, "
+						+ "    case "
+						+ "    when length(question) > 15 THEN SUBSTR(question, 1, 15) || ' ...' "
+						+ "    else question end as question, "
+						+ "    answer, is_hide, a.registerday, answerday, ask_category "
+						+ "    from tbl_ask a join tbl_member b "
+						+ "    on a.fk_userid = b.userid "
 						+ " ), "
-						+ " b "
+						+ " b  "
 						+ " as "
 						+ " ( "
-						+ " 	select productno "
-						+ " 	from tbl_product "
+						+ "    select productno, optionno, b.name as optionname "
+						+ "    from tbl_product a join tbl_option b "
+						+ "    on a.productno = b.fk_productno "
 						+ " ) "
-						+ " select * "
+						+ " select askno, userid, fk_productno, fk_adminid, name, productno, optionname, optionno, "
+						+ " answer, is_hide, a.registerday, answerday, ask_category, question "
 						+ " from a join b "
 						+ " on a.fk_productno = b.productno "
+						+ " order by registerday desc "
+						+ " ) "
+						+ " ) "
 						+ " where rno between ? and ? ";
-						
-			
+							
+				
 			String ask_category = paraMap.get("ask_category");
 			int  sizePerPage = Integer.parseInt(paraMap.get("sizePerPage"));
 			int currentShowPageNo = Integer.parseInt(paraMap.get("currentShowPageNo"));

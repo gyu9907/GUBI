@@ -50,6 +50,12 @@ public interface AdminDAO {
 
 	// 회원가입리스트
 	List<MemberVO> registerlist(Map<String, String> paraMap2) throws SQLException;
+
+	// 최근회원가입수
+	int registerListCnt() throws SQLException;
+
+	// 최근주문수
+	int orderListCnt() throws SQLException;
 	
 	
 

@@ -39,77 +39,95 @@ public class AdminCategoryAdd extends AbstractController {
 
 		String method = request.getMethod();
 		HttpSession session = request.getSession();
-
-		if ("GET".equalsIgnoreCase(method)) {
+		
+		if(!super.checkAdmin(request) ) { // 관리자가 아닌 경우
+			 // 로그인을 안한 경우 또는 일반사용자로 로그인 한 경우
+	         String message = "관리자만 접근이 가능합니다.";
+	         String loc = "/GUBI/index.gu";
+	         
+	         request.setAttribute("message", message);
+	         request.setAttribute("loc", loc);
+	         
+	         // super.setRedirect(false);
+	         super.setViewPage("/WEB-INF/common/msg.jsp");
+	         return;
+		}
+		// 관리자인 경우
+		else {
 			
-			List<CategoryVO> categoryList = cdao.CategorySelectAll();
-
-			request.setAttribute("categoryList", categoryList);
-
-			super.setRedirect(false);
-			super.setViewPage("/WEB-INF/admin/adminCategory/addCategory.jsp");
-
-		} else { // post
-			
-			try {
+			if ("GET".equalsIgnoreCase(method)) {
 				
-				ServletContext svlCtx = session.getServletContext();
-	            String uploadFileDir = svlCtx.getRealPath("/data/images");
-	            
-	            String major_category = request.getParameter("major_category");
-				String small_category = request.getParameter("small_category");
-				// System.out.println("확인이요" + major_category + small_category);
+				List<CategoryVO> categoryList = cdao.CategorySelectAll();
 
-				// 카테고리등록
-				String img = "";
-				
-				Part category_img = request.getPart("categoryimg");
-				
-				if(category_img.getHeader("Content-Disposition").contains("filename=")) {
+				request.setAttribute("categoryList", categoryList);
+
+				super.setRedirect(false);
+				super.setViewPage("/WEB-INF/admin/adminCategory/addCategory.jsp");
+
+			} else { // post
 					
-					String fileName = extractFileName(category_img.getHeader("Content-Disposition")); // 이름만들기 메소드 
+				try {
 					
-					if(category_img.getSize() > 0) {
-						 String newFilename = fileName.substring(0, fileName.lastIndexOf(".")); // 확장자를 뺀 파일명 알아오기 
-		    			 newFilename += "_"+String.format("%1$tY%1$tm%1$td%1$tH%1$tM%1$tS", Calendar.getInstance());
-		    			 newFilename += System.nanoTime();
-		    			 
-		    			 newFilename += fileName.substring(fileName.lastIndexOf(".")); // 확장자 붙이기
-		    			 
-		    			 img = newFilename;
-		    			 
-		    			 // >>> 파일을 지정된 디스크 경로에 저장해준다. 이것이 바로 파일을 업로드 해주는 작업이다. <<<
-		    			 category_img.write(uploadFileDir + File.separator + newFilename);
-		    			 
-		    			 // 임시데이터 제거하기 
-		    			 category_img.delete();
+					ServletContext svlCtx = session.getServletContext();
+		            String uploadFileDir = svlCtx.getRealPath("/data/images");
+		            
+		            String major_category = request.getParameter("major_category");
+					String small_category = request.getParameter("small_category");
+					// System.out.println("확인이요" + major_category + small_category);
+
+					// 카테고리등록
+					String img = "";
+						
+					Part category_img = request.getPart("categoryimg");
+					
+					if(category_img.getHeader("Content-Disposition").contains("filename=")) {
+							
+						String fileName = extractFileName(category_img.getHeader("Content-Disposition")); // 이름만들기 메소드 
+						
+						if(category_img.getSize() > 0) {
+							 String newFilename = fileName.substring(0, fileName.lastIndexOf(".")); // 확장자를 뺀 파일명 알아오기 
+			    			 newFilename += "_"+String.format("%1$tY%1$tm%1$td%1$tH%1$tM%1$tS", Calendar.getInstance());
+			    			 newFilename += System.nanoTime();
+			    			 
+			    			 newFilename += fileName.substring(fileName.lastIndexOf(".")); // 확장자 붙이기
+			    			 
+			    			 img = newFilename;
+			    			 
+			    			 // >>> 파일을 지정된 디스크 경로에 저장해준다. 이것이 바로 파일을 업로드 해주는 작업이다. <<<
+			    			 category_img.write(uploadFileDir + File.separator + newFilename);
+			    			 
+			    			 // 임시데이터 제거하기 
+			    			 category_img.delete();
+						}
+						
+					} else {
+							img =  request.getParameter(category_img.getName());
 					}
-				} else {
-					img =  request.getParameter(category_img.getName());
+						
+					Map<String, String> paraMap = new HashMap<>();
+					paraMap.put("major_category", major_category);
+					paraMap.put("small_category", small_category);
+					paraMap.put("img", img);
+
+					int n = cdao.addCategory(paraMap); // 카테고리등록
+
+					JSONObject jsonObj = new JSONObject();  // {}
+		            jsonObj.put("result", n);
+		          
+		            String json = jsonObj.toString(); // 문자열로 변환 
+		            request.setAttribute("json", json);
+		          
+		            super.setRedirect(false);
+		            super.setViewPage("/WEB-INF/common/jsonview.jsp");
+
+				} catch (SQLException e) {
+					e.printStackTrace();
 				}
-				
-				Map<String, String> paraMap = new HashMap<>();
-				paraMap.put("major_category", major_category);
-				paraMap.put("small_category", small_category);
-				paraMap.put("img", img);
 
-				int n = cdao.addCategory(paraMap); // 카테고리등록
-
-				JSONObject jsonObj = new JSONObject();  // {}
-	            jsonObj.put("result", n);
-	          
-	            String json = jsonObj.toString(); // 문자열로 변환 
-	            request.setAttribute("json", json);
-	          
-	            super.setRedirect(false);
-	            super.setViewPage("/WEB-INF/common/jsonview.jsp");
-
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+			}// end of else
 
 		}
 
-	}
-
+	}// end of if(!super.checkAdmin(request) )
 }
+
