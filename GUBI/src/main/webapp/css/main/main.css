@@ -27,6 +27,7 @@
   filter: brightness(0.7);
 }
 .main_container .banner_wrapper .banner_video_wrapper .text_box {
+	font-family: "Times New Roman", Times;
   position: absolute;
   bottom: 38px;
   left: 24px;
