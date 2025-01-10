@@ -43,7 +43,7 @@ const ctxPath = "${pageContext.request.contextPath}";
 		            <li><a href="${pageContext.request.contextPath}/member/memberDelete.gu">회원 탈퇴</a></li>
 		            <li><a href="${pageContext.request.contextPath}/delivery/deliveryList.gu">배송지 관리</a></li>
 		            <li><a href="${pageContext.request.contextPath}/review/myReviewList.gu">나의 리뷰</a></li>
-		            <li><a href="#">1:1 문의</a></li>
+		            <li><a href="${pageContext.request.contextPath}/ask/askList.gu">1:1 문의</a></li>
 				</ul>
 			</div>
 		</div>
