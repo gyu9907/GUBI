@@ -219,9 +219,62 @@ span#span_QnA {
 
 
 
+.no_list {
+    color: rgb(85,85,85);
+    margin-top: 30px;
+    margin-bottom: 40px;
+    font-size: 12pt;
+    text-align: center;
+    /* font-weight: bold; */
+}
 
 
 
+
+/* ---------------------------------------------------------------------------------------------- */
+.disabled {
+    background-color: #eee;
+
+    /* border: solid 0px black;
+    font-size: 10pt;
+    width: 110px;
+    height: 20px;
+    padding: 0;
+    color: #555; */
+
+    outline: none !important;
+    border-color: black !important; 
+
+    /* color: #8b8b8b; */
+    color: gray;
+    cursor: default;
+}
+
+
+input#userid {
+    /* width: 100%; */
+    border-color: #ccc;
+    border-left-width: 0;
+    border-right-width: 0;
+    border-top-width: 0;
+    border-bottom-width: 1;
+}
+
+
+textarea#question {
+    border: solid 1px #eee;
+}
+
+
+.contents {
+    font-size: 11pt;
+    font-weight: bold;
+}
+
+
+ul#ulul {
+    list-style: circle;
+}
 
 
 

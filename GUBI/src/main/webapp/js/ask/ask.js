@@ -219,9 +219,13 @@ function sortAsk(index) {
         success: function (json) {
 
             let v_html = ``;
-            // console.log("json.length => ",json.length);
+            // console.log("json.true => ",json.true);
+            // console.log("json.false => ",json.false);
+            console.log("json => ",json);
+            console.log("json.length => ",json.length); // 안떠
             
             let QnA_type = "";
+
             if (json.length > 0) {
                 
                 let cnt = 1;
@@ -236,8 +240,6 @@ function sortAsk(index) {
                     if (item.ask_category == "2") {
                         QnA_type = "기타문의";
                     }
-
-                    
 
                     if (item.is_hide == "1") { // 비공개 문의
                         
@@ -255,7 +257,7 @@ function sortAsk(index) {
 
                     v_html += 
                         `<p>
-                            <button class="btn containersss" type="button" data-toggle="collapse" data-target="#demo${cnt}" style="width: 100%; "> 
+                            <button class="btn containersss" type="button" data-toggle="collapse" data-target="#demo${cnt}" style="width: 100%;"> 
                                 <div class="text-section">
                                     <span class="span1">${QnA_type}</span>
                                     <strong>${item.subject}</strong>
@@ -266,7 +268,7 @@ function sortAsk(index) {
                         </p>
 
                         <div class="collapse mb-1" id="demo${cnt}">
-                            <div class="card card-body" style="display: flex; margin-bottom: 20px; background-color:#f7f7f7">
+                            <div class="card card-body" style="display: flex; margin-bottom: 20px; background-color:#f7f7f7;">
                                 <div class="containeraaa">
                                     <div class="text-section">
                                         <div>문의내용 :</div>
@@ -288,7 +290,7 @@ function sortAsk(index) {
 
             } else {
                 v_html = `조건에 해당하는 문의 사항이 없습니다.`;
-                $("div#sortAsklist").html(v_html);
+                $("div#sortAsklist").html(v_html).addClass('no_list');
             }
         },
         error: function (request, status, error) {

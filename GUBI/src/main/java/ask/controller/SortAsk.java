@@ -60,6 +60,7 @@ public class SortAsk extends AbstractController {
 			
 			JSONArray jsonArr = new JSONArray(); 
 			
+//			if (askList.size() > 0) {
 			if (!askList.isEmpty()) {
 				
 				for (AskVO avo : askList) {
@@ -92,6 +93,7 @@ public class SortAsk extends AbstractController {
 					jsonObj.put("registerday", avo.getRegisterday());
 					jsonObj.put("answerday", avo.getAnswerday());
 					jsonObj.put("ask_category", avo.getAsk_category());
+//					jsonObj.put("true", true);
 					
 					jsonArr.put(jsonObj);
 					
@@ -101,6 +103,20 @@ public class SortAsk extends AbstractController {
 				
 				request.setAttribute("json", json);
 //				System.out.println("확인용 json => "+json);
+				
+				super.setRedirect(false);
+				super.setViewPage("/WEB-INF/common/jsonview.jsp");
+			
+			} 
+			else { // 리스트가 0 인 경우
+				
+				JSONObject jsonObj = new JSONObject(); // {}
+				
+//				jsonArr.put(jsonObj);
+				
+				String json = jsonArr.toString();
+				
+				request.setAttribute("json", json);
 				
 				super.setRedirect(false);
 				super.setViewPage("/WEB-INF/common/jsonview.jsp");

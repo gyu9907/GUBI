@@ -132,14 +132,14 @@
 <%-- productno 전달용 input --%>
 <input type="hidden" id="productno" name="productno" value="${requestScope.pvo.productno}" />
 
-<div style="width: 60%; margin: 0 auto; margin-top: -55px">
+<div style="width: 60%; margin: 0 auto; margin-top: -90px">
 
 <%-- 문의 작성 링크, 문의 보여주기 --%>
 <header id="header_container">
             <div>
                 <div class="grid_box">
                     <span>상품 Q&A</span>
-                    <span>(<span>24</span>)</span> <!-- 상품 Q&A의 게시물 개수가 들어갈 자리입니다. -->
+                    <span></span> <!-- 상품 Q&A의 게시물 개수가 들어갈 자리입니다. -->
                 </div>
                 <div class="grid_box">
                     <div id="hamburger">햄버거!</div>
@@ -156,10 +156,8 @@
             </div>
 </header>
 
-<%-- 뿌려주는 곳 --%>
-<div class="container" style="margin-bottom: 100px;"></div>
-
-	<div id="sortAsklist">여기에 뿌린다.</div>
+	<%-- 뿌려주는 곳 --%>
+	<div style="margin-top: 20px" id="sortAsklist">여기에 뿌린다.</div>
 
 </div>
 
