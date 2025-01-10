@@ -488,7 +488,7 @@ public class OrderDAO_imple implements OrderDAO {
 			conn = ds.getConnection();
 			
 			String sql =  " select * "
-						+ " from "
+						+ " from " 
 						+ " ( "
 						+ " select rownum as rno, orderno, name, fk_userid, tel, fk_deliveryno, total_price, total_cnt, orderday, delivery_end_day, status "
 						+ " from "
