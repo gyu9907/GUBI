@@ -21,8 +21,9 @@ $(document).ready(function(){
 	document.title="관리자 문의답변";
 	$(".nav-link.PRODUCT").addClass("active"); // 메뉴엑티브
 	
+	
+	
 });
-
 </script>
 </head>
 
@@ -70,12 +71,11 @@ $(document).ready(function(){
 				<span class="mb-4">전체 : ${requestScope.askCnt}건 조회</span>
 			</div>
 			
-		
 			<div class="askCategory">
-				<span><a href="<%= ctx_Path%>/admin/ask.gu">전체보기</a></span>
-				<span><a href="<%= ctx_Path%>/admin/ask.gu?category=0">상품문의</a></span>
-				<span><a href="<%= ctx_Path%>/admin/ask.gu?category=1">배송문의</a></span>
-				<span><a href="<%= ctx_Path%>/admin/ask.gu?category=2">기타문의</a></span>
+				<span><a href="<%= ctx_Path%>/admin/ask.gu" style="${empty requestScope.ask_category ? 'color: black;' : ''}">전체보기</a></span>
+				<span><a href="<%= ctx_Path%>/admin/ask.gu?category=0" style="${requestScope.ask_category eq '0' ? 'color: black;' : ''}">상품문의</a></span>
+				<span><a href="<%= ctx_Path%>/admin/ask.gu?category=1" style="${requestScope.ask_category eq '1' ? 'color: black;' : ''}">배송문의</a></span>
+				<span><a href="<%= ctx_Path%>/admin/ask.gu?category=2" style="${requestScope.ask_category eq '2' ? 'color: black;' : ''}">기타문의</a></span>
 			</div>
 			
 			<div>

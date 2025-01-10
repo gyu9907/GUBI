@@ -1,23 +1,4 @@
 @charset "UTF-8";
-/* 로고 */
-div#header {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-}
-img#logo {
-    /* border: 1px solid red;   */
-    margin:1% ;
-}
-
-/* 관리자메뉴 */
-div#adminmenu{
-    /* border: solid 1px black; */
-    height: 40px;
-    text-align: center;
-}
-div#adminmenu > ul > li a {
-    color:BLACK;
-    font-size: 10pt;
-}
 /* 본문내용 */
 div#contents{
     /* border: solid 1px black; */
@@ -139,17 +120,19 @@ div#pageBar > nav > ul.pagination > li.page-item a {
     background-color: rgba(255, 255, 255, 0.25);
   }
 /* 모달 */
-div.head {
+span.oname {
     font-size: 18pt;
-    font-weight: bold;
+    /* font-weight: bold; */
 }
 div.first {
     /* border-top: 1px solid gray; */
     font-size: 10pt;
     margin-bottom: 1%;
+    color:gray;
 }
 div.second {
-    border-bottom: 1px solid gray;
+    border-bottom: 1px solid #ccc;
     margin-bottom: 3%;
     padding-bottom: 1%;
+    font-size:11pt;
 }

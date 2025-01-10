@@ -98,7 +98,7 @@ $(document).ready(function(){
 				<table class="table table-sm">
 					<thead class="thead-light">
 						<tr>
-							<th class="th">카테고리 소속</th> <!-- 대분류 의자,책상,조명 등 -->
+							<th class="th">카테고리 대분류</th> <!-- 대분류 의자,책상,조명 등 -->
 							<td>
 								<select name="major_category" id="category">
 									<option value="" disabled selected>대분류</option>
@@ -109,7 +109,7 @@ $(document).ready(function(){
 							</td>
 						</tr>
 						<tr>
-							<th class="th">카테고리명</th> <!-- 소분류 거실의자, 야외의자 등 -->
+							<th class="th">카테고리 소분류명</th> <!-- 소분류 거실의자, 야외의자 등 -->
 							<td>
 								<input type="text" id="small_category" name="small_category" />
 								<span class="btn btn-light" id="categorycheck">카테고리 중복검사</span>

@@ -83,7 +83,9 @@ $(document).ready(function(){
 					<div class="existAnswer">
 						${requestScope.askDetail.answer}
 					</div>
-					<button type="button" class="btn btn-dark"><a href="<%= ctx_Path%>/admin/ask.gu">목록으로</a></button>
+					<a href="<%= ctx_Path%>/admin/ask.gu"><button type="button" class="btn btn-dark">목록으로</button></a>
+						
+					
 				</c:if>
 				
 				<c:if test="${empty requestScope.askDetail.answer}"> 

@@ -107,20 +107,22 @@ $(document).ready(function(){
 												<div class="title">카테고리 소분류</div>
 												<div>
 													<input type="text" id="small_category" maxLength="30"/>
+													<span class="error1">카테고리 소분류는 필수입력 사항입니다.</span>
 												</div> 
 											</div>
 											<div>
 												<div class="title">카테고리 이미지</div>
 												<div id="image">
 												<img src="" id="viewcategoryimg" class="mr-2" />
-													 <input type="text" id="categoryimg" name="categoryimg" readonly />
+													<!--  <input type="text" id="categoryimg" name="categoryimg" readonly /> -->
 													 <input type="file" id="newcategoryimg" class="" />
+													 <span class="error2">카테고리 이미지는 필수입력 사항입니다.</span>
 												</div>
 											</div>
 										</div>
 										<!-- Modal footer -->
 										<div class="modal-footer">
-										<button type="button" class="btn btn-dark" data-dismiss="modal" id="updataCategory">수정하기</button>
+										<button type="button" class="btn btn-dark" id="updataCategory">수정하기</button>
 										  <button type="button" class="btn btn-light" data-dismiss="modal">Close</button>
 										</div>
 									  </div>

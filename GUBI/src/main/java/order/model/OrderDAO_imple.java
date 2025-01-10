@@ -90,11 +90,11 @@ public class OrderDAO_imple implements OrderDAO {
 			String sql =  " select * "
 						+ " from "
 						+ " ( "
-						+ " select rownum as rno, orderno, orderday, total_cnt, a.status, fk_userid, total_price, name, tel "
+						+ " select rownum as rno, orderno, to_char(orderday,'YYYY-MM-DD') as orderday"
+						+ " , total_cnt, a.status, fk_userid, total_price, name, tel "
 						+ " from tbl_order a join tbl_member b "
 						+ " on a.fk_userid = b.userid "
 						+ " where userid != 'admin' ";
-
 			
 			String searchType = paraMap.get("searchType");
 			String searchWord = paraMap.get("searchWord");
@@ -111,7 +111,7 @@ public class OrderDAO_imple implements OrderDAO {
 			if(! orderStatus.isBlank() ) {
 				sql += " and a.status = ? ";
 			}
-
+			
 			sql += " ) where rno between ? and ? ";
 			
 			int currentShowPageNo = Integer.parseInt(paraMap.get("currentShowPageNo"));

@@ -139,14 +139,13 @@ $(document).ready(function(){
 									  <div class="modal-content">
 										<!-- Modal header -->
 										<div class="modal-header">
-										  <h5 class="modal-title">주문상태 변경하기</h5>
+										  <h5 class="modal-title"><span>Order no </span><span class="orno">${ordervo.orderno}</span></h5>
 										  <button type="button" class="close" data-dismiss="modal">&times;</button>
 										</div>
 										<!-- Modal body -->
 										<div class="modal-body">
-											<div class="head"><span>Order no </span><span class="orno">${ordervo.orderno}</span></div>
+											<div class="head"><span class="oname">${ordervo.name}</span> 님의 주문상태</div>
 											<div>
-												<div class="title">${ordervo.name} 님의 주문상태</div>
 												<div class="first mt-3">주문날짜</div><div class="second">${ordervo.orderday}</div>
 												<div class="first">주문상태</div>
 												<div class="second">
@@ -194,9 +193,7 @@ $(document).ready(function(){
 														<label><span class="mr-1">환불접수</span><input type="radio" value="7"  name="orderStatus${ordervo.orderno}"  class="mr-2"/></label>
 							    					</c:if>
 							    					<c:if test="${ordervo.status == 6}"> <!-- 구매확정 -->	
-								    					<label><span class="mr-1">구매확정</span><input type="radio" value="6"  name="orderStatus${ordervo.orderno}"  class="my mr-2"/></label>						    					
-														<label><span class="mr-1">환불접수</span><input type="radio" value="7" name="orderStatus${ordervo.orderno}"  class="mr-2"/></label>
-														<label><span class="mr-1">환불완료</span><input type="radio" value="8" name="orderStatus${ordervo.orderno}"  class="mr-2"/></label>
+								    					변경 가능한 주문 상태가 없습니다
 							    					</c:if>
 							    					<c:if test="${ordervo.status == 7}"> <!-- 환불접수 -->
 														<label><span class="mr-1">환불접수</span><input type="radio" value="7" name="orderStatus${ordervo.orderno}"  class="my mr-2"/></label>
@@ -218,7 +215,6 @@ $(document).ready(function(){
 									  </div>
 									</div>
 								</div>
-
 								</c:forEach>
 							</c:if>
 							<c:if test="${empty requestScope.statusList}">
@@ -239,5 +235,6 @@ $(document).ready(function(){
 				
 	
 			</div> <!-- end article -->
+		</div>
 		</div>
 <jsp:include page="/WEB-INF/admin/adminFooter.jsp" />   

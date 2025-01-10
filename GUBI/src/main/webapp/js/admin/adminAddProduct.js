@@ -87,7 +87,7 @@ $(document).ready(function(){
 
 	});// 아이디 description 인 것은 포커스를 잃어버렸을 경우(blur) 이벤트를 처리해주는 것이다. 
 	
-	$("input#cnt").val(0);
+	$("input#cnt").val(1);
 	/* 수량 검사하기 */
 	$("input#cnt").blur((e) => { 
 
@@ -408,75 +408,92 @@ $(document).ready(function(){
             });
         }
     });
-
-	  // 옵션사진 추가하기
-	  $(document).on("change", "input.optionimg", function(e) {
-
-		const input = $(e.target)
-  		const imgfile = input[0].files[0];
-		
-		
-		// 썸네일 이미지
-		$(document).on("change", "input.thumbnail_img", function(e){
-
+	
+	
+	// 썸네일 이미지
+	$("input.thumbnail_img").on("change", function(e){
+		// alert("썸네일이미지");
 		const thumbnail_img = $(e.target).get(0);
-
+		
 		// 썸네일이미지 
 		if(thumbnail_img) {
-			//console.log("썸네일 파일 정보:", thumbnail_img); // 파일 정보 출력
+			console.log("썸네일 파일 정보:", thumbnail_img); // 파일 정보 출력
 			const fileReader =  new FileReader();
 					
 			fileReader.readAsDataURL(thumbnail_img.files[0]); 
 			
 			// 파일 읽기 성공! 
 			fileReader.onload = function(){ 
-				//console.log(fileReader.result);
+				console.log(fileReader.result);
 				document.getElementById("previewImg").src = fileReader.result
 			};
 		} else {
 			alert("썸네일 사진이 선택되지 않음");
 		}
-		});
+	});
+	
+	// 옵션사진 추가하기
+	$(document).on("change", "input.optionimg", function(e) {
+		const input = $(e.target);
+		const files = input[0].files; // 선택한 파일배열
 		
-		// 옵션사진 ( 여러장 가능 )
-		if(imgfile) {
-			//console.log("옵션 사진 파일 정보:", imgfile); // 파일 정보 출력
-			const fileReader =  new FileReader();		  		
-	  		fileReader.readAsDataURL(imgfile);
-	  		
-	  		// 파일 읽기 성공! 
-	  		fileReader.onload = function(){ 
-	  			
-	  		};
-		} else {
-			alert("파일이 선택되지 않음");
+		if(files.length == 0) {
+			alert("파일이 선택되지 않았습니다.");
+			return;
 		}
+		
+		for(let i=0; i < files.length; i++) {
+			const file = files[i];
+			const fileReader =  new FileReader();
+			
+			fileReader.onload = function(){ 
+				  console.log("fileReader.result",fileReader.result);
+			}
+			fileReader.readAsDataURL(file);
+		}
+
 	  });
 	   
 	  // 추가이미지 (최소 2개)
-	  $(document).on("change", "input:file[name='img']", function(e){
-	  		// alert("추가이미지입니다")
-			const input = $(e.target)
-	  		const imgfile = input[0].files[0];
-	  		const imgpreview = input.closest("td").find("img.preview"); 
-			
-			if(imgfile) {
-				//console.log("추가이미지 파일 정보:", imgfile); // 파일 정보 출력
-				const fileReader =  new FileReader();		  		
-		  		fileReader.readAsDataURL(imgfile);
-		  		
-		  		// 파일 읽기 성공! 
-		  		fileReader.onload = function(){ 
-		  			//console.log(fileReader.result);
-		  			imgpreview.attr("src", fileReader.result);
-		  		};
-			} else {
-				alert("파일이 선택되지 않음");
-			}
+	  // 이미지 미리보기
+	  	$(document).on("change", "input.img_file", function(e) {
+	  		const inputFileEl = $(e.target).get(0);
+	  	    const previewEl = $(inputFileEl).parent().parent().find(".preview"); // 미리보기 element
 
-	  });
+	  	    if (inputFileEl.files && inputFileEl.files[0]) { // 파일을 업로드한 경우
+	  	        
+	  	        const fileType = inputFileEl.files[0].type; // "image/jpeg", "image/png", ...
+	  	        const reg = /image\/(jpeg|png|webp)$/; // 확장자가 이미지인지 확인하기 위한 regex
+	  	        
+	  	        if(!reg.test(fileType)){ // 확장자가 이미지가 아닌 경우
+	  	            alert('이미지 파일만 업로드 가능합니다.\n .jpeg .png, .webp');
+	  	            inputFileEl.value = ""; // input 비우기
+	  	            return;
+	  	        }
 
-	  //상품등록하기 시작//////////////////////////////////////////////////////////////////////////
+	  	        const limitSize = 5 * 1024 * 1024; // 5mb 크기 제한을 위한 변수
+
+	  	        const uploadSize = inputFileEl.files[0].size;
+
+	  	        if (limitSize < uploadSize) { // 이미지 크기가 5mb 이상인 경우
+	  	            alert('5MB 미만 이미지만 업로드가 가능합니다.');
+	  	            inputFileEl.value = ""; // input 비우기
+	  	            return;
+	  	        }
+
+	  			// 이미지 파일을 로드해서 미리보기에 표시
+	  	        const fileReader = new FileReader();
+	  			
+	  			fileReader.readAsDataURL(inputFileEl.files[0]);
+	  	        fileReader.onload = function() { 
+	  				$(previewEl).attr("src", fileReader.result);
+	  	        };
+	  	    } else { // 파일을 업로드하지 않은 경우
+	  	        $(previewEl).attr("src", ""); // 미리보기 이미지 삭제
+	  	    }
+	  	});
+
+	  // 상품등록하기 시작 //////////////////////////////////////////////////////////////////////////
 	  $("button.ragibtn").on("click", function() {
 
 			let is_infoData_Ok = true;
