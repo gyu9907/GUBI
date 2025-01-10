@@ -1095,7 +1095,7 @@ public class ProductDAO_imple implements ProductDAO {
 					sql += " AND delivery_price = 0 ";
 				}
 			} else if(is_free) {
-				sql += " WHERE delivery_price = 0 ";
+				sql += " AND delivery_price = 0 ";
 			}
 			sql += " ORDER BY RNO "
 				 + " ) V "
