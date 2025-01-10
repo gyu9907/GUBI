@@ -220,6 +220,8 @@ transition: 0.5s;
 }
 .header_wrapper .menu_container .product-image {
   height: 480px;
+  width: inherit;
+  cursor: pointer;
 }
 
 .header_wrapper .menu_container .product-image:hover img {
