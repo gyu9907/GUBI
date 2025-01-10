@@ -44,7 +44,7 @@ $(document).ready(function () {
 
 
 
-<div class="container mt-5" style="border: solid 0px red;">
+<div class="container pt-5" style="border: solid 0px red; height: calc(100vh - 123px)">
 
         <h4>LOGIN / JOIN US</h4>
 
@@ -70,14 +70,14 @@ $(document).ready(function () {
 
                     <div class="row justify-content-center">
         
-                        <div class="col-lg-5 col-md-7 col_mt" style="margin-bottom: -1%;">아이디</div>
+                        <div class="col-lg-5 col-md-7 col_mt" style="margin-bottom: -1%; font-size:14px; color: #999;">ID</div>
                         <div class="w-100"></div>
                         <div class="col-lg-5 col-md-7 col_mt">
                             <input class="underline" type="text" name="userid" id="loginUserid" size="20" autocomplete="off"
                                 placeholder="아이디" />
                         </div>
                         <div class="w-100"></div>
-                        <div class="col-lg-5 col-md-7 col_mt" style="margin-bottom: -1%;">비밀번호</div>
+                        <div class="col-lg-5 col-md-7 col_mt" style="margin-bottom: -1%; font-size:14px; color: #999;">PASSWORD</div>
                         <div class="w-100"></div>
                         <div class="col-lg-5 col-md-7 col_mt">
                             <input class="underline" type="password" name="passwd" id="loginUserpasswd" size="20"
@@ -101,14 +101,12 @@ $(document).ready(function () {
                         </div>
                         <div class="w-100"></div>
                         <div class="col-lg-5 col-md-7 col_mt">
-                            <button type="button" id="btnuserSubmit" class="btnstyle" onclick="gouserLogin()">로그인</button>
+                            <button type="button" id="btnuserSubmit" class="btnstyle" onclick="gouserLogin()">LOGIN</button>
                         </div>
                         <div class="w-100"></div>
-                        <div class="col-lg-5 col-md-7 col_mt">혹시 회원이 아니신가요?</div>
+                        <!-- <div class="col-lg-5 col-md-7 col_mt">혹시 회원이 아니신가요?</div> -->
                         <div class="w-100"></div>
-                        <div class="col-lg-5 col-md-7 col_mt"><button type="button" id="btnRegister" class="btnstyle"
-                                style="border: solid 0px; background-color: lightslategray;"
-                                onclick="goRegister()">회원가입</button>
+                        <div class="col-lg-5 col-md-7 col_mt"><button type="button" id="btnRegister" class="btnstyle" style="border:none; background-color: #000; color: #fff;" onclick="goRegister()">JOIN US</button>
                         </div>
                     </div>
         
@@ -123,14 +121,14 @@ $(document).ready(function () {
 
                     <div class="row justify-content-center">
         
-                        <div class="col-lg-5 col-md-7 col_mt" style="margin-bottom: -1%;">아이디</div>
+                        <div class="col-lg-5 col-md-7 col_mt" style="margin-bottom: -1%; font-size:14px; color: #999;">ID</div>
                         <div class="w-100"></div>
                         <div class="col-lg-5 col-md-7 col_mt">
                             <input class="underline" type="text" name="adminid" id="loginAdminid" size="20" autocomplete="off"
                                 placeholder="아이디" />
                         </div>
                         <div class="w-100"></div>
-                        <div class="col-lg-5 col-md-7 col_mt" style="margin-bottom: -1%;">비밀번호</div>
+                        <div class="col-lg-5 col-md-7 col_mt" style="margin-bottom: -1%; font-size:14px; color: #999;">PASSWORD</div>
                         <div class="w-100"></div>
                         <div class="col-lg-5 col-md-7 col_mt">
                             <input class="underline" type="password" name="adminpasswd" id="loginAdminpasswd" size="20"
@@ -139,7 +137,7 @@ $(document).ready(function () {
         
                         <div class="w-100" style="margin-bottom: 4.9%;"></div>
                         <div class="col-lg-5 col-md-7 col_mt">
-                            <button type="button" id="btnadminSubmit" class="btnstyle" onclick="goadminLogin()">로그인</button>
+                            <button type="button" id="btnadminSubmit" class="btnstyle" onclick="goadminLogin()">LOGIN</button>
                         </div>
                         <div class="w-100" style="margin-bottom: 120px"></div>
                     </div>

@@ -276,18 +276,18 @@ public class AdminDAO_imple implements AdminDAO {
 			
 			
 			String sql =  " select count(*) cnt "
-						+ " from tbl_member "
-						+ " where registerday = sysdate "
+						+ " from tbl_login "
+						+ " where to_char(loginday, 'yyyymmdd') = to_char(sysdate, 'yyyymmdd') "
 						+ " union all "
 						+ " select count(*) "
-						+ " from tbl_member "
-						+ " where registerday >= trunc(sysdate) - 7 "
-						+ " and registerday < trunc(sysdate) + 1 "
+						+ " from tbl_login "
+						+ " where loginday >= trunc(sysdate) - 7  "
+						+ " and loginday < trunc(sysdate) + 1 "
 						+ " union all "
 						+ " select count(*) "
-						+ " from tbl_member "
-						+ " where registerday >= trunc(sysdate) - 30 "
-						+ " and registerday < trunc(sysdate) + 1 ";
+						+ " from tbl_login "
+						+ " where loginday >= trunc(sysdate) - 30 "
+						+ " and loginday < trunc(sysdate) + 1 ";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -317,7 +317,7 @@ public class AdminDAO_imple implements AdminDAO {
 			
 			String sql =  " select count(*) cnt "
 						+ " from tbl_member "
-						+ " where registerday = sysdate "
+						+ " where to_char(registerday, 'yyyymmdd') = to_char(sysdate, 'yyyymmdd') "
 						+ " union all "
 						+ " select count(*) "
 						+ " from tbl_member "
@@ -357,7 +357,7 @@ public class AdminDAO_imple implements AdminDAO {
 			
 			String sql =  " select count(*) "
 						+ " from tbl_order "
-						+ " where orderday = sysdate "
+						+ " where to_char(orderday, 'yyyymmdd') = to_char(sysdate, 'yyyymmdd') "
 						+ " union all "
 						+ " select count(*) "
 						+ " from tbl_order "
@@ -397,7 +397,7 @@ public class AdminDAO_imple implements AdminDAO {
 			
 			String sql =  " select nvl(sum(total_price), 0) "
 						+ " from tbl_order "
-						+ " where orderday = sysdate "
+						+ " where to_char(orderday, 'yyyymmdd') = to_char(sysdate, 'yyyymmdd') "
 						+ " union all "
 						+ " select nvl(sum(total_price), 0) "
 						+ " from tbl_order "
@@ -543,7 +543,8 @@ public class AdminDAO_imple implements AdminDAO {
 						+ " select reviewno, fk_userid, name, title, registerday "
 						+ " from a join b "
 						+ " on a.fk_productno = b.productno "
-						+ " where registerday between to_date(add_months(sysdate, -1)) and sysdate ";
+						+ " where registerday between to_date(add_months(sysdate, -1)) and sysdate "
+						+ " order by registerday desc ";
 			
 			pstmt = conn.prepareStatement(sql);
 			
@@ -664,6 +665,79 @@ public class AdminDAO_imple implements AdminDAO {
 		}
 		
 		return registerlist;
+	}
+
+	// 최근회원가입수
+	@Override
+	public int registerListCnt() throws SQLException {
+		
+		int n = 0;
+		
+		try {
+			
+			conn = ds.getConnection();
+			
+			String sql =  " select count(*) "
+						+ " from "
+						+ " ( "
+						+ " with "
+						+ " a as ( "
+						+ " select rownum as rno, userid, name, registerday "
+						+ " from tbl_member "
+						+ " ), "
+						+ " b as "
+						+ " ( "
+						+ " select fk_userid, count(*) as logincnt "
+						+ " from tbl_login "
+						+ " group by fk_userid "
+						+ " ) "
+						+ " select rno, userid, name, logincnt, registerday"
+						+ " from a join b "
+						+ " on a.userid = b.fk_userid ) ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				n = rs.getInt(1);
+			}
+			
+		} finally {
+			close();
+		}
+		
+		return n;
+		
+	}
+
+	// 최근주문수
+	@Override
+	public int orderListCnt() throws SQLException {
+		
+		int n = 0;
+		
+		try {
+			conn = ds.getConnection();
+			
+			String sql =  " select count(*) "
+						+ " from "
+						+ " ( select rownum as rno, orderno, fk_userid, total_cnt, total_price, orderday "
+						+ " from tbl_order ) ";
+			
+			pstmt = conn.prepareStatement(sql);
+			
+			rs = pstmt.executeQuery();
+			
+			if(rs.next()) {
+				n = rs.getInt(1);
+			}
+			
+		} finally {
+			close();
+		}
+		
+		return n;
 	}
 
 

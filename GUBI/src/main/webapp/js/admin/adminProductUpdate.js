@@ -1,16 +1,17 @@
 $(document).ready(function(){
 	
 	// selectSmallCategory();
-			
+				
 	const major = $("input.major").val();
 	const small = $("input.small").val();
+	console.log("small"+small)
 	const pname = $("input.pname").val();
 	const description = $("input.description").val();
 	const cnt = $("input.cnt").val();
 	const price = $("input.price").val();
 	const point_pct = $("input.point_pct").val();
 	const delivery_price = $("input.delivery_price").val();
-
+	
 	// input 값 넣기 
 	$("select#major_category").val(major);
 	$("select#small_category").val(small);
@@ -20,12 +21,11 @@ $(document).ready(function(){
 	$("input#price").val(price);
 	$("input#delivery_price").val(delivery_price);
 	$("input#point_pct").val(point_pct);
-	
-	
+
 	$(document).on("change","select#major_category", function(){
 			selectSmallCategory();
 	});// end of $(document).on("change","select#major_category", function(e)
-		
+
 	
 	/************************* 유효성 검사하기 **************************/
 
@@ -264,15 +264,6 @@ $(document).ready(function(){
            	  }
 			});
 		}
-	
-			/*const newmajor = $("input.major").val();
-			const newsmall = $("input.small").val();
-			const newpname = $("input.pname").val();
-			const newdescription = $("input.description").val();
-			const newcnt = $("input.cnt").val();
-			const newprice = $("input.price").val();
-			const newpoint_pct = $("input.point_pct").val();
-			const newdelivery_price = $("input.delivery_price").val();*/
 			
 	  });
 	  // 수정하기 끝 /////////////////////////////////////////////////////////////////////////
@@ -296,9 +287,9 @@ function selectSmallCategory() {
 	       		let html = `<option value="" disabled selected>소분류</option>`;
 	       	
 	   			$.each(json, function(index, item){
-	   				//console.log(item.small_category);
+				
 	      	 		html += `<option value='${item.small_category}'>${item.small_category}</option>`;
-	      	 	});// end of $.each(json, function(index, item)
+	      	 	});
 	      	 			
 	   			$("select#small_category").html(html);
 	        },                   

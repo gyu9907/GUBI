@@ -1,16 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-     <div class="row mt-2 mb-4 text-center" id="footer">
-       <div class="col-md-12">
-          <p>
-             &copy; Company 2024 &nbsp;&nbsp; 대표전화(전국) : 1577-1588
-          </p>
-          <p>
-             쌍용강북교육센터 우수한 형제자매들
-          </p>
-       </div>
-     </div>
-
+	<div class="footer_wrapper">
+	    <p>copyright© 쌍용강북센터 세미프로젝트 5조</p>
+	    <p>본 사이트는 개인 포트폴리오 사이트로 제작되어 상업적 목적이 아닙니다</p>
+	</div>
+    
 </body>
 </html>

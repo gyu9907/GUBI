@@ -1,15 +1,25 @@
-/* 로고 */
+/* 헤더 */
 div#header {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: space-between;
+    height: 60px;
+    align-items: center;
+    padding: 0 20px;
 }
 #logo {
     /* border: 1px solid red;   */
     margin:1%;
 }
+div#header i {
+	cursor: pointer;
+}
+div#header a {
+	color:black;
+}
 /* 본문전체 */
 div#article {
     display: flex;
-    /* border: 1px solid orange; */
 }
 
 /* 관리자메뉴 */
@@ -129,7 +139,7 @@ div#month > div#money > div h4 {
 div#allorder {
     /* border: 1px solid rgba(0, 0, 0, 0.2); */
     width:100%;
-    height:450px;
+    height:500px;
     padding: 2%;
     background-color: white;
 }
@@ -157,7 +167,7 @@ div#page > ul > li a {
 div#registerlist {
     /* border: 1px solid black; */
     width:100%;
-    height:450px;
+    height:500px;
     padding: 2%;
     background-color: white;
     margin-top: 1%;
@@ -189,7 +199,7 @@ div#reviewtitle {
 div#review > div > table.table {
     /* border: 1px solid red; */
     display: block;
-    height: 800px;
+    height: 900px;
     max-height: 800px;
     overflow-y: scroll;
     margin: 0 auto;
@@ -201,23 +211,24 @@ div#reviewtitle > div.title {
 div#reviewtitle > button.datebtn {
     font-size: 9pt;
 }
-
+#review > div:nth-child(2) > table > thead tr th {
+	font-size:9pt;
+}
 /* 공통 버튼디자인 */
 button.viewbtn {
     height: 30px;
     background-color: #222831;
     color: white;
 }
+button.viewbtn:hover {
+    color:#ccc;
+}
 button.viewbtn > span {
     /* border: 1px solid red; */
     position: relative;
     top: -4px;
 }
-button.datebtn > span {
-    /* border: 1px solid red; */
-    position: relative;
-    top: -5px;
-}
+
 /* 테이블공통 */
 div#money > div:not(:last-child) {
     margin-right: 2%;
@@ -260,10 +271,6 @@ div#pageBar > nav > ul.pagination > li.page-item a {
 }
 .page-link {
     border: none;
-}
-  
-.page-link:hover {
-    /* border: 1px solid  rgba(0, 0, 0, 0.5); */
 }
 .page-link:active:hover {
     border: 1px solid  rgba(0, 0, 0, 0.5);
@@ -315,5 +322,21 @@ div#pageBar2 > nav > ul.pagination > li.page-item a {
     color: #fff;
     background-color: rgba(255, 255, 255, 0.25);
   }
-  
+ 
+ /* footer */
+.footer_wrapper {
+  /* border-top: 1px solid gray; */
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 123px;
+/*   background: #f8f9fa; */
+}
+.footer_wrapper p:last-child {
+  font-weight: 600;
+} 
   

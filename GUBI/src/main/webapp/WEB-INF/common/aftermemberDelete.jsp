@@ -1,12 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
-    
-    
 <jsp:include page="/WEB-INF/common/header.jsp" />
 <jsp:include page="/WEB-INF/common/bootstrap.jsp" />
-    
-    
     
 <div class="container mt-5 justify-content-center" style="border: solid 0px red; height: 100vh">    
     
@@ -18,17 +14,9 @@
     		<div class="col-lg-12 col-md-12" style="text-align:center; font-size:30pt;">
     			만약 탈퇴 철회를 원하신다면 GUBI 관리자에게 문의해주시기 바랍니다.
     		</div>
-    	
     	</div>
     	
 </div>   
-    
-    
-    
-    
-    
-    
-    
     
 <jsp:include page="/WEB-INF/common/footer.jsp" /> 
     

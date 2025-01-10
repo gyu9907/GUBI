@@ -1638,10 +1638,15 @@ public class ProductDAO_imple implements ProductDAO {
 			String sql =  " select * "
 						+ " from "
 						+ " ( "
+						+ " select rownum as rno, productno, fk_categoryno, thumbnail_img, name, price, delivery_price, cnt, registerday, "
+						+ " is_delete, major_category, small_category "
+						+ " from "
+						+ " ( "
 						+ " 	with "
 						+ " 	a as "
 						+ " 	( "
-						+ " 		select productno, thumbnail_img, fk_categoryno, name, price, delivery_price, cnt, registerday, is_delete "
+						+ " 		select productno, thumbnail_img, fk_categoryno, name, price, delivery_price, cnt, "
+						+ " 		to_char(registerday, 'yyyy-mm-dd') as registerday , is_delete "
 						+ " 		from tbl_product "
 						+ " 	), "
 						+ " 	b as "
@@ -1649,7 +1654,7 @@ public class ProductDAO_imple implements ProductDAO {
 						+ " 		select categoryno, major_category, small_category "
 						+ " 		from tbl_category "
 						+ " 	) "
-						+ " 	select rownum as rno, productno, fk_categoryno, thumbnail_img, name, price, delivery_price, cnt, registerday, a.is_delete, major_category, small_category "
+						+ " 	select productno, fk_categoryno, thumbnail_img, name, price, delivery_price, cnt, registerday, a.is_delete, major_category, small_category "
 						+ " 	from a join b  "
 						+ " 	on a.fk_categoryno = b.categoryno "
 						+ "	 	where productno is not null ";
@@ -1681,8 +1686,9 @@ public class ProductDAO_imple implements ProductDAO {
 				sql += " and price between ? and ? ";
 			}
 			
-			sql  +=   "   ) where rno between ? and ? "
-					+ " order by registerday desc ";
+			sql  +=   "   order by registerday desc"
+					+ " ) "
+					+ " ) where rno between ? and ? ";
 			
 			int currentShowPageNo = Integer.parseInt(paraMap.get("currentShowPageNo")); // 현재페이지
 			int sizePerPage = Integer.parseInt(paraMap.get("sizePerPage"));
