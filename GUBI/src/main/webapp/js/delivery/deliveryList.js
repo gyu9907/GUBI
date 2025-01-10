@@ -70,7 +70,6 @@ function goSubmit() {
 // 배송지 수정 페이지로 이동하는 함수
 function opendeliveryModifyPage(row) {
     var deliveryno = row.getAttribute('data-deliveryno');
-    var ctxPath = document.body.getAttribute('data-ctxPath'); // JSP에서 전달된 ctxPath 값 가져오기
 
     // 수정 페이지로 이동
     window.location.href = ctxPath + "/delivery/deliveryModify.gu?deliveryno=" + deliveryno;

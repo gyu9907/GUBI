@@ -17,9 +17,6 @@ const ctxPath = "${pageContext.request.contextPath}";  // JSP에서 컨텍스트
 <script type="text/javascript" src="${pageContext.request.contextPath}/js/member/memberOrderList.js"></script>
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/member/memberOrderList.css" />
 
-	<div id="content">
-		<!-- 콘텐츠 영역 시작 -->
-		
 <div class="sidebar">
     <h2><a href="${pageContext.request.contextPath}/member/myPage.gu">마이페이지</a></h2>
     <hr>
@@ -41,6 +38,10 @@ const ctxPath = "${pageContext.request.contextPath}";  // JSP에서 컨텍스트
         </ul> 
     </div>
   </div>
+  
+	<div id="content">
+		<!-- 콘텐츠 영역 시작 -->
+		
 
 
 		<div class="container mt-4">

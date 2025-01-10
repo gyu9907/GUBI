@@ -20,8 +20,7 @@ public class MyPage extends AbstractController {
         // 로그인하지 않은 경우 처리
         if (!super.checkLogin(request)) {
            
-        	  String currentURL = request.getRequestURL().toString();
-              session.setAttribute("/ask/askList.gu",currentURL);  // 현재 URL을 세션에 저장
+        	super.goBackURL(request);
         	
         	request.setAttribute("message", "로그인 후 이용 가능합니다.");
             request.setAttribute("loc", request.getContextPath() + "/login/login.gu");

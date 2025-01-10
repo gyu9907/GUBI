@@ -17,6 +17,19 @@ public class MemberDelete extends AbstractController {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		// 로그인하지 않은 경우 처리
+        if (!super.checkLogin(request)) {
+           
+        	super.goBackURL(request);
+        	
+        	request.setAttribute("message", "로그인 후 이용 가능합니다.");
+            request.setAttribute("loc", request.getContextPath() + "/login/login.gu");
+           
+            super.setViewPage("/WEB-INF/common/msg.jsp");
+          
+            return;
+        }
+		
 		String method = request.getMethod();
 
 		if (!"POST".equals(method)) { // get 방식

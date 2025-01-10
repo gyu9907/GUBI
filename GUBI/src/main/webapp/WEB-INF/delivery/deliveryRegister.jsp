@@ -5,10 +5,9 @@
 	String ctxPath = request.getContextPath();
     //     /MyMVC
 %>
-<!-- jQuery 라이브러리 추가 -->
-<script type="text/javascript" src="<%= ctxPath%>/js/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="<%= ctxPath%>/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js" ></script> 
 
+<jsp:include page="/WEB-INF/common/header.jsp" />
+<jsp:include page="/WEB-INF/common/bootstrap.jsp" />
 
 <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/delivery/deliveryRegister.css" />
 
@@ -19,17 +18,7 @@ const ctxPath = "${pageContext.request.contextPath}";
 </script>
 
 <script type="text/javascript" src="<%= ctxPath%>/js/delivery/deliveryRegister.js"></script> 
-  
-  <!-- 임시 헤더 네비게이션 바 // 나중에 팀원 header로 변경함 -->
-  <nav class="nav-bar">
-    <div class="logo">GUBIN</div>
-    <ul class="menu">
-      <li>Products</li>
-      <li>Collections</li>
-      <li>GUBIN's Story</li>
-    </ul>
-  </nav>
-  
+ 
 <div class="sidebar2">
     <h2>마이페이지</h2>
     <hr>

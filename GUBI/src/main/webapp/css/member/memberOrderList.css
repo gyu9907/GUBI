@@ -12,9 +12,9 @@
 
 @font-face {font-family: 'Noto Sans KR';font-style: normal;font-weight: 900;src: url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff2) format('woff2'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.woff) format('woff'),url(//fonts.gstatic.com/ea/notosanskr/v2/NotoSansKR-Black.otf) format('opentype');unicode-range: U+AC00-D7A3;}
 
-#content * {
-	font-family: 'Noto Sans KR', 'Times New Roman';
-}
+/* #content *, .sidebar * { */
+/* 	font-family: 'Noto Sans KR', 'Times New Roman'; */
+/* } */
 
 /* 장바구니 버튼 스타일 */
 .cart-button {
@@ -107,7 +107,7 @@
 .container h2 {
 	font-size: 1.5rem;
     text-align: center;
-    font-weight: 500;
+    font-weight: bold;
     margin-bottom: 10px;
     color: #333;
 }
@@ -116,7 +116,7 @@
 .container p {
 	font-size: medium;
     text-align: left;
-    font-weight: 500;
+    font-weight: bold;
     font-size: 12px;
     color: black;
     margin-bottom: 20px;
@@ -231,22 +231,28 @@ button#submit-btn:hover {
 div.sidebar {
 	
     position: sticky;
+    font-size: 8px;
     top:50px;
     left:0;
     border: solid 0px red;
     width: 170px; /* 사이드바 너비 */
     background-color: white; /* 배경색 */
     padding: 15px;
-    margin-top: 68px; /* 패딩 */
+    margin-top: 110px; /* 패딩 */
     float: left; 
     margin-left: 5px; 
    
 }
 
+
+.sidebar hr {
+	border: solid 1px #eee !important;
+}
+
 .sidebar h2 {
     font-size: 0.9rem; /* 제목 크기 */
     margin-bottom: 10px; /* 아래 여백 */
-    font-weight:500;
+    font-weight:bold;
 }
 
 .custom3-hr {
@@ -263,8 +269,8 @@ div.sidebar {
 }
 
 .section h3 {
-	font-weight:500;
-    font-size: 0.9rem; /* 섹션 제목 크기 */
+	font-weight:bold;
+    font-size: 0.8rem; /* 섹션 제목 크기 */
     margin-bottom: 10px; /* 아래 여백 */
 }
 
@@ -281,6 +287,7 @@ div.sidebar {
 .section a {
     text-decoration: none; /* 링크 밑줄 제거 */
     color: #333 !important; /* 링크 색상 */
+    font-size: 0.8rem; /* 섹션 제목 크기 */
 }
 
 .section a:hover {
@@ -294,7 +301,7 @@ a:hover {
 	color: black;
 }
 a.active{
-	font-weight: 500;
+	font-weight: bold;
 }
 
 .ProductImg_container {
@@ -319,7 +326,7 @@ a.active{
 .container h6 {
 	padding-top: 5px;
     font-size: 0.9rem; /* 제목 크기 */
-    font-weight:500;
+    font-weight:bold;
 }
 
 table button {

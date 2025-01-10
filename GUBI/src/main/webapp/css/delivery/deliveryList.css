@@ -2,6 +2,10 @@
 
 /* deliveryList.css */
 
+#content {
+	margin-top: 100px;
+}
+
 /* 네비게이션 바 */
 .nav-bar {
     display: flex;
