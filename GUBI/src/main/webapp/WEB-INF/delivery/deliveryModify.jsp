@@ -6,35 +6,12 @@
 <%
     String ctxPath = request.getContextPath();
 %>
-
+<jsp:include page="/WEB-INF/common/header.jsp" />
+<jsp:include page="/WEB-INF/common/bootstrap.jsp" />
 
 <script type="text/javascript">
 const ctxPath = "${pageContext.request.contextPath}";
 </script>
-<html>
-<head>
-
-<title>::: 배송지 수정 :::</title>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" type="text/css"
-	href="<%= ctxPath%>/bootstrap-4.6.2-dist/css/bootstrap.min.css">
-
-<!-- Font Awesome 6 Icons -->
-<link rel="stylesheet"
-	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css">
-
-
-<!-- Optional JavaScript -->
-<script type="text/javascript"
-	src="<%= ctxPath%>/js/jquery-3.7.1.min.js"></script>
-<script type="text/javascript"
-	src="<%= ctxPath%>/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js"></script>
-
 
 
 <%-- 직접 만든 JS --%>
@@ -47,31 +24,6 @@ const ctxPath = "${pageContext.request.contextPath}";
 </head>
 <body data-ctxPath="<%= request.getContextPath() %>">
 
-	<!-- 임시 헤더 네비게이션 바 // 나중에 팀원 header로 변경함 -->
-	<nav class="nav-bar">
-		<div class="logo">GUBIN</div>
-		<ul class="menu">
-			<li>Products</li>
-			<li>Collections</li>
-			<li>GUBIN's Story</li>
-		</ul>
-		<!-- 헤더 장바구니 아이콘 버튼이다. 이걸 누르면 오른쪽에 숨겨진 사이드바가 나타나서 장바구니를 보여준다. -->
-		<div class="sidebar" id="cartSidebar">
-			<h2>장바구니</h2>
-			<ul>
-				<li>${loginuser.product}</li>
-				<li>${loginuser.product}</li>
-				<li>${loginuser.product}</li>
-			</ul>
-			<button class="close-button" onclick="closeSidebar()">
-				<i class="fa-solid fa-x"></i>
-			</button>
-		</div>
-		<!-- 장바구니 아이콘 -->
-		<button class="cart-button" onclick="openSidebar()">
-			<i class="fa-solid fa-cart-shopping"></i>
-		</button>
-	</nav>
 	<div id="content">
 		<!-- 콘텐츠 영역 시작 -->
 		<div class="sidebar2">
@@ -80,18 +32,18 @@ const ctxPath = "${pageContext.request.contextPath}";
 			<div class="section">
 				<h3>나의 쇼핑 정보</h3>
 				<ul>
-					<li><a href="#">주문/배송</a></li>
-					<li><a href="#">취소/반품/교환</a></li>
+		            <li><a href="${pageContext.request.contextPath}/member/memberOrderList.gu?status=order">주문/배송</a></li>
+		            <li><a href="${pageContext.request.contextPath}/member/memberOrderList.gu?status=refund">취소/반품/교환</a></li>
 				</ul>
 			</div>
 			<div class="section">
 				<h3>나의 활동 정보</h3>
 				<ul>
-					<li><a href="#">회원정보 및 탈퇴</a></li>
-					<li><a href="#">배송지 관리</a></li>
-					<li><a href="#">마일리지</a></li>
-					<li><a href="#">나의 리뷰</a></li>
-					<li><a href="#">1:1 문의</a></li>
+		            <li><a href="${pageContext.request.contextPath}/member/memberEdit.gu">회원정보 수정</a></li>
+		            <li><a href="${pageContext.request.contextPath}/member/memberDelete.gu">회원 탈퇴</a></li>
+		            <li><a href="${pageContext.request.contextPath}/delivery/deliveryList.gu">배송지 관리</a></li>
+		            <li><a href="${pageContext.request.contextPath}/review/myReviewList.gu">나의 리뷰</a></li>
+		            <li><a href="${pageContext.request.contextPath}/ask/askList.gu">1:1 문의</a></li>
 				</ul>
 			</div>
 		</div>
@@ -110,7 +62,7 @@ const ctxPath = "${pageContext.request.contextPath}";
 						<tbody>
 							<!-- 배송지 수정 폼 -->
 							   <tr>												     
-							   <td colspan="2"><input type="checkbox" name="is_default" ${ delivery.is_default == 1 ? "checked" : "" }>  기본 배송지로 저장</td> 
+							   <td colspan="2"><input type="checkbox" id="is_default" ${ delivery.is_default == 1 ? "checked" : "" }>  기본 배송지로 저장</td> 
 							    </tr>						                                          
 							<tr>
 								<td>배송지명&nbsp;</td>

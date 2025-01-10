@@ -829,7 +829,7 @@ public class OrderDAO_imple implements OrderDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " select orderno, total_price, total_cnt, to_char(orderday, 'yyyy-mm-dd') AS orderday "
+			String sql = " select orderno, total_price, total_cnt, fk_deliveryno, to_char(orderday, 'yyyy-mm-dd') AS orderday "
 					   + "      , to_char(delivery_end_day, 'yyyy-mm-dd') AS delivery_end_day "
 					   + "      , status, use_point, o.delivery_price, reward_point "
 					   + "      , '[' || LISTAGG( "
@@ -850,7 +850,7 @@ public class OrderDAO_imple implements OrderDAO {
 					   + " join tbl_product p "
 					   + " on op.fk_productno = p.productno "
 					   + " where orderno = ? "
-					   + " group by orderno, total_price, total_cnt, to_char(orderday, 'yyyy-mm-dd') "
+					   + " group by orderno, total_price, total_cnt, fk_deliveryno, to_char(orderday, 'yyyy-mm-dd') "
 					   + "      , to_char(delivery_end_day, 'yyyy-mm-dd') "
 					   + "      , status, use_point, o.delivery_price, reward_point ";
 			
@@ -871,6 +871,7 @@ public class OrderDAO_imple implements OrderDAO {
 				ovo.setUse_point(rs.getInt("use_point"));
 				ovo.setDelivery_price(rs.getInt("delivery_price"));
 				ovo.setReward_point(rs.getInt("reward_point"));
+				ovo.setFk_deliveryno(rs.getInt("fk_deliveryno"));
 				
 				// 주문상세를 JSON 배열 객체로 가져온다
 				JSONArray jsonArr = new JSONArray(rs.getString("order_detail_json"));
@@ -924,11 +925,12 @@ public class OrderDAO_imple implements OrderDAO {
 					   + "      , o.status, use_point, o.delivery_price, reward_point "
 					   + "      , '[' || LISTAGG( "
 					   + "             '{\"order_detailno\":' || order_detailno || "
+					   + "             ',\"fk_optionno\":' || od.fk_optionno || "
 					   + "             ',\"p_no\":\"' || p.productno || '\"' || "
 					   + "             ',\"p_name\":\"' || cast(p.name as varchar2(100)) || '\"' || "
 					   + "             ',\"op_name\":\"' || cast(op.name as varchar2(100)) || '\"' || "
 					   + "             ',\"op_img\":\"' || cast(op.img as varchar2(200)) || '\"' || "
-					   + "             ',\"reviewno\":\"' || r.reviewno || '\"' || "
+					   + "             ',\"reviewno\":\"' || NVL(r.reviewno, 0) || '\"' || "
 					   + "             ',\"cnt\":\"' || od.cnt || '\"' || "
 					   + "             ',\"price\":\"' || od.price || '\"}', "
 					   + "             ',' "
@@ -1025,10 +1027,12 @@ public class OrderDAO_imple implements OrderDAO {
 					
 					OrderDetailVO odvo = new OrderDetailVO();
 					odvo.setOrder_detailno(jsonObj.getInt("order_detailno"));
+					odvo.setFk_optionno(jsonObj.getInt("fk_optionno"));
 					odvo.setP_no(jsonObj.getInt("p_no"));
 					odvo.setP_name(jsonObj.getString("p_name"));
 					odvo.setOp_name(jsonObj.getString("op_name"));
 					odvo.setOp_img(jsonObj.getString("op_img"));
+					odvo.setReviewno(jsonObj.getInt("reviewno"));
 					odvo.setCnt(jsonObj.getInt("cnt"));
 					odvo.setPrice(jsonObj.getInt("price"));
 					

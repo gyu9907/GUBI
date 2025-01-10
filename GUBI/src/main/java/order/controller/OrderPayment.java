@@ -22,10 +22,10 @@ public class OrderPayment extends AbstractController {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		// 로그인하지 않은 경우, 이전 페이지로 돌아가기
+		// 로그인하지 않은 경우, 팝업을 닫기
 		if (!super.checkLogin(request)) {
 			request.setAttribute("message", "로그인 후 이용 가능합니다.");
-			request.setAttribute("loc", "javascript:history.back()");
+			request.setAttribute("loc", "javascript: self.close();");
 
 			super.setRedirect(false);
 			super.setViewPage("/WEB-INF/common/msg.jsp");
@@ -37,7 +37,7 @@ public class OrderPayment extends AbstractController {
 		if (!"POST".equalsIgnoreCase(request.getMethod())) {
 
 			request.setAttribute("message", "잘못된 접근입니다.");
-			request.setAttribute("loc", "javascript:history.back()");
+			request.setAttribute("loc", "javascript: self.close();");
 
 			super.setRedirect(false);
 			super.setViewPage("/WEB-INF/common/msg.jsp");
@@ -59,7 +59,7 @@ public class OrderPayment extends AbstractController {
 		
 		if(usePoint > memberPoint) {
 			request.setAttribute("message", "보유 포인트보다 많은 포인트를 사용할 수 없습니다.");
-			request.setAttribute("loc", "javascript:history.back()");
+			request.setAttribute("loc", "javascript: self.close();");
 
 			super.setRedirect(false);
 			super.setViewPage("/WEB-INF/common/msg.jsp");
@@ -83,7 +83,7 @@ public class OrderPayment extends AbstractController {
 			if (Integer.parseInt(resultMap.get("cnt")) < Integer.parseInt(cnt)) {
 
 				request.setAttribute("message", "상품의 재고가 부족합니다.");
-				request.setAttribute("loc", "javascript:history.back()");
+				request.setAttribute("loc", "javascript: self.close();");
 
 				super.setRedirect(false);
 				super.setViewPage("/WEB-INF/common/msg.jsp");
@@ -108,7 +108,7 @@ public class OrderPayment extends AbstractController {
 				System.out.println("cartList.size() "+cartList.size());
 				
 				request.setAttribute("message", "상품의 재고가 부족합니다.");
-				request.setAttribute("loc", "javascript:history.back()");
+				request.setAttribute("loc", "javascript: self.close();");
 				
 				super.setRedirect(false);
 				super.setViewPage("/WEB-INF/common/msg.jsp");
@@ -129,7 +129,7 @@ public class OrderPayment extends AbstractController {
 		}
 		else {
 			request.setAttribute("message", "잘못된 접근입니다.");
-			request.setAttribute("loc", "javascript:history.back()");
+			request.setAttribute("loc", "javascript: self.close();");
 			
 			super.setRedirect(false);
 			super.setViewPage("/WEB-INF/common/msg.jsp");
@@ -138,15 +138,16 @@ public class OrderPayment extends AbstractController {
 		}
 		
 		// 결제 테스트를 위해 값을 10000원 이해로 낮춤
-//		while(amount_paid > 10000) {
-//			amount_paid = amount_paid/10;
-//		}
+		while(amount_paid > 10000) {
+			amount_paid = amount_paid/10;
+		}
 
 		// 결제 테스트를 위해 값을 1000원 으로 낮춤
-		amount_paid = 1000;
+//		amount_paid = 1000;
 		
 		request.setAttribute("order_name", order_name);
 		request.setAttribute("amount_paid", amount_paid);
+		request.setAttribute("use_point", use_point);
 		
 		super.setRedirect(false);
 		super.setViewPage("/WEB-INF/order/orderPayment.jsp");

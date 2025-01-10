@@ -8,6 +8,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 
+
 public class DeliveryModify extends AbstractController {
 
     private DeliveryDAO ddao = new DeliveryDAO_imple();
@@ -15,6 +16,18 @@ public class DeliveryModify extends AbstractController {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+    	 // 로그인하지 않은 경우 처리
+        if (!super.checkLogin(request)) {
+        	 goBackURL(request);
+
+            request.setAttribute("message", "로그인 후 이용 가능합니다.");
+            request.setAttribute("loc", request.getContextPath() + "/login/login.gu");
+
+            super.setViewPage("/WEB-INF/common/msg.jsp"); // 메시지 페이지로 이동
+            return; // 함수 종료
+        }
+        
+    	
         String method = request.getMethod(); // "GET" 또는 "POST"
         String deliveryno = request.getParameter("deliveryno"); // query parameter로 전달된 deliveryno
         if (deliveryno == null || deliveryno.isBlank()) { 
@@ -57,7 +70,7 @@ public class DeliveryModify extends AbstractController {
              String memo = request.getParameter("memo");
 
              String receiver_tel = hp1 + hp2 + hp3;  // 전화번호 조합
-             boolean is_default = "on".equals(request.getParameter("is_default"));  // 체크박스를 확인하여 기본 배송지 설정
+             boolean is_default = "true".equals(request.getParameter("is_default"));  // 체크박스를 확인하여 기본 배송지 설정
              
              // 기본 배송지가 체크되었을 경우 다른 배송지는 기본 배송지 설정을 해제해야 하므로 해당 로직 추가
              if (is_default) {
@@ -83,7 +96,7 @@ public class DeliveryModify extends AbstractController {
              String loc;
              if (result > 0) {
                  message = "배송지 정보 수정이 완료되었습니다.";
-                 loc = "/myPage.gu"; // 성공 후 이동할 페이지
+                 loc = request.getContextPath() + "/member/myPage.gu"; // 성공 후 이동할 페이지
              } else {
                  message = "배송지 수정에 실패했습니다.";
                  loc = "javascript:history.back()";  // 실패 시 이전 페이지로 돌아가도록

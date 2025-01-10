@@ -22,6 +22,19 @@ public class MyReviewList extends AbstractController {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 
+		// 로그인하지 않은 경우
+		if(!super.checkLogin(request)) {
+			request.setAttribute("message", "로그인 후 이용 가능합니다.");
+			request.setAttribute("loc", request.getContextPath() + "/login/login.gu");
+			
+			super.goBackURL(request);
+			
+			super.setRedirect(false);
+			super.setViewPage("/WEB-INF/common/msg.jsp");
+			
+			return;
+		}
+		
 		HttpSession session = request.getSession();
 		MemberVO loginuser = (MemberVO) session.getAttribute("loginuser");
 

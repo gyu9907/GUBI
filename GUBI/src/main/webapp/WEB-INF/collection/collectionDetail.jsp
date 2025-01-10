@@ -21,6 +21,22 @@
 <!-- HelveticaNeueLTStd-Roman 폰트 -->
 <link href="https://db.onlinewebfonts.com/c/66e796dac9aff5a6967ebdd5e021db01?family=HelveticaNeueLTStd-Roman" rel="stylesheet">
 
+<style type="text/css">
+.header_wrapper.bg_main {
+  background-color: transparent;
+  box-shadow: none;
+}
+.header_wrapper.bg_main .header_menu a {
+  color: #fff;
+}
+.header_wrapper.bg_main .logo_wrapper img {
+  filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(288deg) brightness(102%) contrast(102%);
+}
+.header_wrapper.bg_main .header_icon a {
+  color: #fff;
+}
+</style>
+
 <script type="text/javascript">
 document.title = "${requestScope.collectionVO.name}";
 $(document).ready(function() {
@@ -29,6 +45,36 @@ $(document).ready(function() {
 		$(this).find(".hoverImg").fadeIn();
 	}, function(){
 		$(this).find(".hoverImg").fadeOut();
+	});
+
+	const header_product_menu = document.querySelector('li#product_menu>a');
+	const header_dropdown = document.querySelector('div#header_dropdown_menu');
+	const headerWrapper = $('#header_dropdown_menu').get(0); 
+	
+	header_product_menu.addEventListener('mouseenter', function() {
+		headerWrapper.classList.remove('bg_main');
+		header_dropdown.style.top = '0px';
+		header_dropdown.style.maxHeight = '100vh';
+	});
+	
+	header_dropdown.addEventListener('mouseleave', function() {
+		headerWrapper.classList.add('bg_main');
+		header_dropdown.style.top = '-780px';
+		header_dropdown.style.maxHeight = '0';
+		if (scrollTop === 0) {
+			headerWrapper.classList.add('bg_main');
+		}
+	});
+	// 스크롤 이벤트 추가
+	document.addEventListener('scroll', function() {
+		const scrollTop = document.documentElement.scrollTop || document.body.scrollTop; // scrollTop 체크
+
+		
+		if (scrollTop === 0) {
+			headerWrapper.classList.add('bg_main');
+		} else {
+			headerWrapper.classList.remove('bg_main');
+		}
 	});
 });
 </script>
@@ -71,7 +117,7 @@ $(document).ready(function() {
            		<c:forEach var="productVO" items="${requestScope.productList}">
            			<c:forEach var="optionVO" items="${productVO.optionList}">
 	            		<div class="ProductCard_container col-lg-3 col-6">
-		                    <a href="#">
+		                    <a href="${pageContext.request.contextPath}/product/productDetail.gu?productno=${productVO.productno}">
 		                        <div class="ProductImg_container">
 		                            <img class="option" src="${pageContext.request.contextPath}/data/images/${optionVO.img}"/>
 		                        </div>
@@ -89,7 +135,7 @@ $(document).ready(function() {
             	<c:if test="${fn:length(requestScope.productList) >= 3}">
             	<c:forEach var="productVO" items="${requestScope.productList}">
             		<div class="ProductCard_container col-lg-3 col-6">
-	                    <a href="#">
+	                    <a href="${pageContext.request.contextPath}/product/productDetail.gu?productno=${productVO.productno}">
 	                        <div class="ProductImg_container">
 	                            <img src="${pageContext.request.contextPath}/data/images/${productVO.thumbnail_img}"/>
 	                            <img class="hoverImg" src="${pageContext.request.contextPath}/data/images/${productVO.productImgList[0].img}"/>

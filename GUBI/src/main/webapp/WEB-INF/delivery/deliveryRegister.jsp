@@ -5,10 +5,9 @@
 	String ctxPath = request.getContextPath();
     //     /MyMVC
 %>
-<!-- jQuery 라이브러리 추가 -->
-<script type="text/javascript" src="<%= ctxPath%>/js/jquery-3.7.1.min.js"></script>
-<script type="text/javascript" src="<%= ctxPath%>/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js" ></script> 
 
+<jsp:include page="/WEB-INF/common/header.jsp" />
+<jsp:include page="/WEB-INF/common/bootstrap.jsp" />
 
 <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/delivery/deliveryRegister.css" />
 
@@ -19,35 +18,25 @@ const ctxPath = "${pageContext.request.contextPath}";
 </script>
 
 <script type="text/javascript" src="<%= ctxPath%>/js/delivery/deliveryRegister.js"></script> 
-  
-  <!-- 임시 헤더 네비게이션 바 // 나중에 팀원 header로 변경함 -->
-  <nav class="nav-bar">
-    <div class="logo">GUBIN</div>
-    <ul class="menu">
-      <li>Products</li>
-      <li>Collections</li>
-      <li>GUBIN's Story</li>
-    </ul>
-  </nav>
-  
+ 
 <div class="sidebar2">
     <h2>마이페이지</h2>
     <hr>
     <div class="section">
         <h3>나의 쇼핑 정보</h3>
         <ul>
-            <li><a href="#">주문/배송</a></li>
-            <li><a href="#">취소/반품/교환</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberOrderList.gu?status=order">주문/배송</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberOrderList.gu?status=refund">취소/반품/교환</a></li>
         </ul>
     </div>
     <div class="section">
         <h3>나의 활동 정보</h3>
         <ul>
-            <li><a href="#">회원정보 및 탈퇴</a></li>
-            <li><a href="<%= ctxPath%>/delivery/deliveryList.gu">배송지 목록</a></li>
-            <li><a href="#">포인트</a></li>
-            <li><a href="#">나의 리뷰</a></li>
-            <li><a href="#">1:1 문의</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberEdit.gu">회원정보 수정</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberDelete.gu">회원 탈퇴</a></li>
+            <li><a href="${pageContext.request.contextPath}/delivery/deliveryList.gu">배송지 관리</a></li>
+            <li><a href="${pageContext.request.contextPath}/review/myReviewList.gu">나의 리뷰</a></li>
+            <li><a href="${pageContext.request.contextPath}/ask/askList.gu">1:1 문의</a></li>
         </ul> 
     </div>
   </div>

@@ -58,10 +58,10 @@ $(document).ready(function() {
        }
 
    }); // end of IMP.request_pay()----------------------------
-   
 
-	window.opener.goPaymentSuccess("${requestScope.use_point}");
-
+//    디버깅용
+// 	window.opener.goPaymentSuccess("${requestScope.use_point}");
+//	self.close(); // 팝업창 닫기
 }); // end of $(document).ready()-----------------------------
 
 </script>

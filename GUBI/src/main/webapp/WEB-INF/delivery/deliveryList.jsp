@@ -3,14 +3,16 @@
 <%-- === JSTL( Java Standard Tag Library) 사용하기 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+<jsp:include page="/WEB-INF/common/header.jsp" />
+<jsp:include page="/WEB-INF/common/bootstrap.jsp" />
+
 <%
     String ctxPath = request.getContextPath();
 %>
 <script type="text/javascript">
     var ctxPath = "${pageContext.request.contextPath}";  // JSP에서 컨텍스트 경로를 가져와서 ctxPath에 할당
 </script>
-<html>
-<head>
+
 
 <title>::: 배송지 목록 :::</title>
 <!-- Required meta tags -->
@@ -38,55 +40,26 @@
 <script type="text/javascript" src="<%= ctxPath%>/js/delivery/deliveryList.js"></script>
 <link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/delivery/deliveryList.css" />
 
-</head>
-<body data-ctxPath="<%= request.getContextPath() %>">
-
-	<!-- 임시 헤더 네비게이션 바 // 나중에 팀원 header로 변경함 -->
-	<nav class="nav-bar">
-		<div class="logo">GUBIN</div>
-		<ul class="menu">
-			<li>Products</li>
-			<li>Collections</li>
-			<li>GUBIN's Story</li>
-		</ul>
-		<!-- 헤더 장바구니 아이콘 버튼이다. 이걸 누르면 오른쪽에 숨겨진 사이드바가 나타나서 장바구니를 보여준다. -->
-		<div class="sidebar" id="cartSidebar">
-			<h2>장바구니</h2>
-			<ul>
-				<li></li>
-				<li></li>
-				<li></li>
-			</ul>
-			<button class="close-button" onclick="closeSidebar()">
-				<i class="fa-solid fa-x"></i>
-			</button>
-		</div>
-		<!-- 장바구니 아이콘 -->
-		<button class="cart-button" onclick="openSidebar()">
-			<i class="fa-solid fa-cart-shopping"></i>
-		</button>
-	</nav>
-
 	<div id="content">
 		<!-- 콘텐츠 영역 시작 -->
 <div class="sidebar2">
-    <h2><a href="<%=ctxPath%>/member/myPage.gu">마이페이지</a></h2>
+    <h2><a href="${pageContext.request.contextPath}/member/myPage.gu">마이페이지</a></h2>
     <hr>
     <div class="section">
         <h3>나의 쇼핑 정보</h3>
         <ul>
-            <li><a href="#">주문/배송</a></li>
-            <li><a href="#">취소/반품/교환</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberOrderList.gu?status=order">주문/배송</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberOrderList.gu?status=refund">취소/반품/교환</a></li>
         </ul>
     </div>
     <div class="section">
         <h3>나의 활동 정보</h3>
         <ul>
-            <li><a href="#">회원정보 및 탈퇴</a></li>
-            <li><a href="<%= ctxPath%>/delivery/deliverList.gu">배송지 목록</a></li>
-            <li><a href="#">포인트</a></li>
-            <li><a href="#">나의 리뷰</a></li>
-            <li><a href="#">1:1 문의</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberEdit.gu">회원정보 수정</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberDelete.gu">회원 탈퇴</a></li>
+            <li><a href="${pageContext.request.contextPath}/delivery/deliveryList.gu">배송지 관리</a></li>
+            <li><a href="${pageContext.request.contextPath}/review/myReviewList.gu">나의 리뷰</a></li>
+            <li><a href="${pageContext.request.contextPath}/ask/askList.gu">1:1 문의</a></li>
         </ul> 
     </div>
   </div>
@@ -139,6 +112,3 @@
 
 	</div>
 	<!--블러 처리 콘텐츠 영역 끝--->
-
-</body>
-</html>

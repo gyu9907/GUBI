@@ -202,7 +202,7 @@ public class DeliveryDAO_imple implements DeliveryDAO {
    @Override
    public DeliveryVO getDeliveryByNo(String deliveryno) throws SQLException {
 	 
-	 
+	   DeliveryVO delivery = null;
 	   
        try {
            conn = ds.getConnection();
@@ -224,7 +224,7 @@ public class DeliveryDAO_imple implements DeliveryDAO {
            rs = pstmt.executeQuery();
 
            if (rs.next()) {
-               DeliveryVO delivery = new DeliveryVO();
+               delivery = new DeliveryVO();
                delivery.setDeliveryno(rs.getInt("deliveryno"));
                delivery.setDelivery_name(rs.getString("delivery_name"));
                delivery.setReceiver(rs.getString("receiver"));
@@ -234,8 +234,6 @@ public class DeliveryDAO_imple implements DeliveryDAO {
                delivery.setDetail_address(rs.getString("detail_address"));
                delivery.setMemo(rs.getString("memo"));
                delivery.setIs_default(rs.getInt("is_default"));
-
-               return delivery;
               
            }
        } catch (GeneralSecurityException | UnsupportedEncodingException e) {
@@ -245,7 +243,7 @@ public class DeliveryDAO_imple implements DeliveryDAO {
        } finally {
            close(); // 데이터베이스 연결 종료
        }
-       return null; // 배송지가 없으면 null 반환
+       return delivery; // 배송지가 없으면 null 반환
    }// end of public DeliveryVO getDeliveryByNo(String deliveryno) throws SQLException {}-----------------------------------------------------
 
 

@@ -102,7 +102,7 @@ input#hp3 {
 						<tbody>
 							<!-- 배송지 수정 폼 -->
 							   <tr>												     
-							   <td colspan="2"><input type="checkbox" name="is_default" ${ delivery.is_default == 1 ? "checked" : "" }>  기본 배송지로 저장</td> 
+							   <td colspan="2"><input type="checkbox" id="is_default" ${ delivery.is_default == 1 ? "checked" : "" }>  기본 배송지로 저장</td> 
 							    </tr>						                                          
 							<tr>
 								<td>배송지명&nbsp;</td>

@@ -18,6 +18,19 @@ public class AdminStatistics extends AbstractController {
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+
+		if(!super.checkAdmin(request) ) { // 관리자가 아닌 경우
+			// 로그인을 안한 경우 또는 일반사용자로 로그인 한 경우
+			String message = "관리자만 접근이 가능합니다.";
+			String loc = request.getContextPath() + "/index.gu";
+
+			request.setAttribute("message", message);
+			request.setAttribute("loc", loc);
+
+			// super.setRedirect(false);
+			super.setViewPage("/WEB-INF/common/msg.jsp");
+			return;
+		}
 		
 		String date = request.getParameter("date");
 		String type = request.getParameter("type");

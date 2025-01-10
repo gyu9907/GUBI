@@ -98,7 +98,7 @@ const ctxPath = "${pageContext.request.contextPath}";
 
         <div class="row">
             <div class="NextPrevButton_container col-lg-6 px-0">
-                <button id="PrevButton" type="button" onclick="javascript:history.back()">Prev</button>
+                <button id="PrevButton" type="button">Prev</button>
                 <button id="NextButton" type="button">Next</button>
             </div>
         </div>

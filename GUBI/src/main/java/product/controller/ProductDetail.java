@@ -21,6 +21,10 @@ public class ProductDetail extends AbstractController {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
+		if(!super.checkLogin(request)) {
+			super.goBackURL(request);
+		}
+		
 		String productno = request.getParameter("productno");
 		
 		try {

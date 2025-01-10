@@ -8,7 +8,7 @@ String ctxPath = request.getContextPath();
 %>
 
 <link rel="stylesheet" href="<%=ctxPath%>/css/review/myReviewList.css">
-<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/member/myPage.css" />
+<link rel="stylesheet" type="text/css" href="<%= ctxPath%>/css/member/myReviewList.css" />
 
 <script type="text/javascript" src="<%= ctxPath%>/js/jquery-3.7.1.min.js"></script>
 <jsp:include page="../common/bootstrap.jsp" />
@@ -23,18 +23,18 @@ String ctxPath = request.getContextPath();
     <div class="section">
         <h3>나의 쇼핑 정보</h3>
         <ul>
-            <li><a href="#">주문/배송</a></li>
-            <li><a href="#">취소/반품/교환</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberOrderList.gu?status=order">주문/배송</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberOrderList.gu?status=refund">취소/반품/교환</a></li>
         </ul>
     </div>
     <div class="section">
         <h3>나의 활동 정보</h3>
         <ul>
-            <li><a href="#">회원정보 및 탈퇴</a></li>
-            <li><a href="#">배송지 관리</a></li>
-            <li><a href="#">마일리지</a></li>
-            <li><a href="/GUBI/review/myReviewList.gu">나의 리뷰</a></li>
-            <li><a href="#">1:1 문의</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberEdit.gu">회원정보 수정</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberDelete.gu">회원 탈퇴</a></li>
+            <li><a href="${pageContext.request.contextPath}/delivery/deliveryList.gu">배송지 관리</a></li>
+            <li><a href="${pageContext.request.contextPath}/review/myReviewList.gu">나의 리뷰</a></li>
+            <li><a href="${pageContext.request.contextPath}/ask/askList.gu">1:1 문의</a></li>
         </ul> 
     </div>
   </div>

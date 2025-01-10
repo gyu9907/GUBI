@@ -31,8 +31,6 @@ public class CartAdd extends AbstractController {
 	         
 	         request.setAttribute("message", "장바구니에 담으려면 먼저 로그인 부터 하세요!! ");
 	         request.setAttribute("loc", request.getContextPath()+"/login/login.gu");
-	         super.goBackURL(request);
-	         
 	         
 	         super.setRedirect(false);
 	         super.setViewPage("/WEB-INF/common/msg.jsp");

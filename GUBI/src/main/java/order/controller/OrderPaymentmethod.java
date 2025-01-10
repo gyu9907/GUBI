@@ -22,8 +22,8 @@ public class OrderPaymentmethod extends AbstractController {
 		
 		// 로그인하지 않은 경우, 이전 페이지로 돌아가기
 		if(!super.checkLogin(request)) {
-			request.setAttribute("message", "로그인 후 이용 가능합니다.");
-			request.setAttribute("loc", "javascript:history.back()");
+			request.setAttribute("message", "세션이 만료되어 로그아웃 되었습니다.");
+			request.setAttribute("loc", request.getContextPath()+"/login/login.gu");
 			
 			super.setRedirect(false);
 			super.setViewPage("/WEB-INF/common/msg.jsp");

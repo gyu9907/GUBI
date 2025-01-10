@@ -24,6 +24,8 @@ public class MemberOrderList extends AbstractController {
 			request.setAttribute("message", "로그인 후 이용 가능합니다.");
 			request.setAttribute("loc", request.getContextPath() + "/login/login.gu");
 			
+			super.goBackURL(request);
+			
 			super.setRedirect(false);
 			super.setViewPage("/WEB-INF/common/msg.jsp");
 			

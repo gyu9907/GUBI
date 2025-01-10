@@ -56,33 +56,40 @@ document.title="Order completed";
                 <div class="h6 mt-5">DELIVERY DETAILS</div>
                 <hr>
 				<ul id="deliveryInfo">
-                    <li class="my-3">
+                    <li class="mt-3">
                         <label>Name</label>
+                    </li>
+                    <li class="mb-3">
                         <div>${requestScope.deliveryVO.receiver}</div>
-                        <!-- <span class="error">수령인 성명은 필수입력 사항입니다.</span> -->
                     </li>
-                    <li class="my-3">
+                    <li class="mt-3">
                         <label>Phone number</label>
+                    </li>
+                    <li class="mb-3">
                         <div>${requestScope.deliveryVO.receiver_tel}</div>
-                        <!-- <span class="error">휴대전화는 필수입력 사항입니다.</span> -->
                     </li>
-                    <li class="my-3">
+                    <li class="mt-3">
                         <label>Zip code / Postcode</label>
+                    </li>
+                    <li class="mb-3">
                         <div>${requestScope.deliveryVO.postcode}</div>
-                        <!-- <span class="error">우편번호는 필수입력 사항입니다.</span> -->
                     </li>
-                    <li class="my-3">
+                    <li class="mt-3">
                         <label>Address line 1</label>
+                    </li>
+                    <li class="mb-3">
                         <div>${requestScope.deliveryVO.address}</div>
-                        <!-- <span class="error">주소는 필수입력 사항입니다.</span> -->
                     </li>
-                    <li class="my-3">
+                    <li class="mt-3">
                         <label>Address line 2</label>
-                        <div>${requestScope.deliveryVO.detail_address}</div>
-                        <!-- <span class="error">상제주소는 필수입력 사항입니다.</span> -->
                     </li>
-                	<li class="my-3">
+                    <li class="mb-3">
+                        <div>${requestScope.deliveryVO.detail_address}</div>
+                    </li>
+                	<li class="mt-3">
                         <label>Additional notes for delivery</label>
+            		</li>
+                	<li class="mb-3">
                         <div>${requestScope.deliveryVO.memo}</div>
             		</li>
             	</ul>
@@ -90,7 +97,7 @@ document.title="Order completed";
 	    </div>
 	    
 	    <div class="button-container">
-	    	<button class="button" id="white" onclick="javascript: location.href='${pageContext.request.contextPath}/product/productList.gu'">Order list</button>
+	    	<button class="button" id="white" onclick="javascript: location.href='${pageContext.request.contextPath}/member/memberOrderList.gu'">Order list</button>
 	    	<button class="button" onclick="javascript: location.href='${pageContext.request.contextPath}/product/productList.gu'">Continue shopping</button>
 	    </div>
 	</div>

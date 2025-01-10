@@ -1,4 +1,17 @@
+let win;
+
 $(document).ready(function() {
+	
+	$("input#usePoint").on("focus", function(){
+		if(win && !win.closed){
+			$("input#usePoint").attr("readonly", true);
+			return;
+		}
+		else {
+			$("input#usePoint").attr("readonly", false);
+			return;
+		}
+	});
 	
 	// 포인트 input 태그
 	$("input#usePoint").on("input", function(e) {
@@ -28,6 +41,11 @@ $(document).ready(function() {
 	
 	// 포인트 전액사용 버튼
 	$("button#useAllPointBtn").on("click", function() {
+		
+		if(win && !win.closed){
+			alert("결제가 진행중이므로 수정이 불가합니다.");
+			return;
+		}
 
 		const memberPoint = Number($("div#memberPoint").text().replace(/[^0-9]/g, ''));
 		
@@ -45,24 +63,41 @@ $(document).ready(function() {
 	
 	// 다음 버튼
 	$("button#NextButton").on("click", function() {
+
+		if(win && !win.closed){
+			alert("이미 결제가 진행중입니다.");
+			return;
+		}
+		
 		const width = 1000;
 		const height = 600;
 
 		const left = Math.ceil((window.screen.width - width) / 2); // 정수로 만듬
 		const top = Math.ceil((window.screen.height - height) / 2); // 정수로 만듬
 
-		let win = window.open("", "payment",
+		const title = "payment";
+		
+		win = window.open("", title,
 			`left=${left}, top=${top}, width=${width}, height=${height}`);
 			
 		const orderFrm = document.orderFrm;
 		orderFrm.method = "post";
 		orderFrm.action = ctxPath + "/order/orderPayment.gu";
+		orderFrm.target = title;
 		orderFrm.submit();
+
+	});
+	
+	$("button#PrevButton").on("click", function() {
 		
+		if(win && !win.closed){
+			alert("결제가 진행중이므로 이동이 불가합니다.");
+			return;
+		}
+		
+		history.back();
 	});
 });
-
-
 
 function goPaymentSuccess(use_point) {
 	

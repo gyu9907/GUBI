@@ -1095,7 +1095,7 @@ public class ProductDAO_imple implements ProductDAO {
 					sql += " AND delivery_price = 0 ";
 				}
 			} else if(is_free) {
-				sql += " WHERE delivery_price = 0 ";
+				sql += " AND delivery_price = 0 ";
 			}
 			sql += " ORDER BY RNO "
 				 + " ) V "
@@ -2305,7 +2305,7 @@ public class ProductDAO_imple implements ProductDAO {
 		try {
 			conn = ds.getConnection();
 			
-			String sql = " select productno, name, price, thumbnail_img, cnt, delivery_price, to_char(registerday, 'yyyy-mm-dd') AS registerday, options_json, img "
+			String sql = " select productno, name, price, thumbnail_img, cnt, delivery_price, to_char(registerday, 'yyyy-mm-dd') AS registerday, options_json, img, major_category "
 					   + " from tbl_product p "
 					   + " join "
 					   + " ( "
@@ -2326,8 +2326,10 @@ public class ProductDAO_imple implements ProductDAO {
 					   + "     from tbl_product_img "
 					   + "     group by fk_productno "
 					   + " ) pimg "
-					   + " on p.productno = pimg.fk_productno "
-					   + " where is_delete = 0 and productno IN "
+					   + " on p.productno = pimg.fk_productno"
+					   + " join tbl_category c "
+					   + " on c.categoryno = p.fk_categoryno "
+					   + " where p.is_delete = 0 and productno IN "
 					   + " ( "
 					   + "     select fk_productno "
 					   + "     from tbl_col_product "
@@ -2351,6 +2353,10 @@ public class ProductDAO_imple implements ProductDAO {
 				pvo.setRegisterday(rs.getString("registerday"));
 				pvo.setCnt(rs.getInt("cnt"));
 				pvo.setDelivery_price(rs.getInt("delivery_price"));
+				
+				CategoryVO cvo = new CategoryVO();
+				cvo.setMajor_category(rs.getString("major_category"));
+				pvo.setCategoryVO(cvo);
 				
 				// 옵션을 JSON 배열 객체로 가져온다
 				JSONArray jsonArr = new JSONArray(rs.getString("options_json"));

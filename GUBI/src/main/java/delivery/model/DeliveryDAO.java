@@ -26,7 +26,9 @@ public interface DeliveryDAO {
    DeliveryVO getDefaultDeliveryByUser(String parameter) throws SQLException;
    
    // 기본 배송지를 설정하면 이미 설정된 기본 배송지값을 0으로 변경하는 메소드 
-   void set_Other_is_default_to_Null()throws SQLException;
+   void set_Other_is_default_to_Null() throws SQLException;
+
+
 
 
 

@@ -1,43 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-<title>관리자 컬렉션수정</title>
-
-<!-- jquery -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
-<!-- jQueryUI CSS 및 JS -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/jquery-ui-1.13.1.custom/jquery-ui.min.css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script> 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-4.6.2-dist/css/bootstrap.min.css" type="text/css">
-<!-- Bootstrap js -->
-<script src="${pageContext.request.contextPath}/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-<!-- Font Awesome 6 Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<!-- Quill 텍스트 에디터 stylesheet -->
-<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
-<!-- Quill 텍스트 에디터 library -->
-<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/quill-resize-module@2.0.4/dist/resize.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/quill-resize-module@2.0.4/dist/resize.min.css" rel="stylesheet">
+<jsp:include page="/WEB-INF/admin/adminHeader.jsp" />
 
 <!-- 직접 만든 CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/collection/adminCollectionRegister.css">
 <!-- 직접 만든 js -->
 <script type="text/javascript">
 
+document.title="관리자 컬렉션수정";
+
 const ctxPath = "${pageContext.request.contextPath}";
 
 $(document).ready(function() {
+	$(".nav-link.COLLECTION").addClass("active");
+	
 	$("tbody#collectionProductsTbody .table-empty").hide();
 	
 	$("div.html-container > div").each((index, elmt) => {
@@ -196,7 +176,7 @@ $(document).ready(function() {
 						</div>
 						
                         <div id="page" class="justify-content-center">
-                            <ul class="pagination pagination-sm justify-content-center" style="margin:20px 0">
+                            <ul class="pagination justify-content-center" style="margin:20px 0">
                               </ul>
                         </div>
 					</div>
@@ -214,36 +194,6 @@ $(document).ready(function() {
 	<%-- ****** 회원상세보기 모달 끝 ****** --%>
 
 	<div>
-		<%-- 관리자메뉴--%>
-		<div id="header">   
-			<img id="logo" src="${pageContext.request.contextPath}/images/ui/logo/gubi_logo.png"/>  
-		</div>
-		<div id="adminmenu">
-			<ul class="nav nav-tabs">
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#home">HOME</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" data-toggle="tab" href="#menu0">MEMBER</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" data-toggle="tab" href="#menu1">ORDER</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" data-toggle="tab" href="#menu2">CATEGORY</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" data-toggle="tab" href="#menu3">PRODUCT</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link active" data-toggle="tab" href="#menu4">COLLECTION</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#menu5">STATUS</a>
-				</li>
-			</ul>
-		</div><%-- header--%>
-
 		<div id="contents">
 			<%-- 사이드 메뉴 --%>
 			<div id="sidemenu" class="bg-light p-3">
@@ -364,7 +314,7 @@ $(document).ready(function() {
                                     <td id="no">${status.count}</td>
                                     <td class="image"><img src="${pageContext.request.contextPath}/data/images/${productVO.thumbnail_img}" class="img-fluid"/></td>
                                     <td>${productVO.productno}<input type="hidden" value="${productVO.productno}" name="fk_productno"/></td>
-                                    <td>${productVO.categoryVO.small_category}</td>
+                                    <td>${productVO.categoryVO.major_category}</td>
                                     <td>${productVO.name}</td>
                                     <td>${productVO.registerday}</td>
                                     
@@ -459,7 +409,7 @@ $(document).ready(function() {
 	
 			
 						<div class="mt-5 mb-4" align="center">
-							<button type="button" class="CollectionRegisterButton">컬렉션 등록</button>
+							<button type="button" class="CollectionRegisterButton">컬렉션 수정</button>
 						</div>
 							<input type="hidden" name="delete_img_no_arr" class="delete_img_no_arr"/>
 							<input type="hidden" name="retain_img_name_arr"/>
