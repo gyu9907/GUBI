@@ -70,10 +70,9 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
                 <ul>
 					<%-- 로그인 하기 전 헤더 --%>
 					<c:if test="${empty sessionScope.loginuser && empty sessionScope.loginadmin}">
-						<li class="header_icon" style="margin-top: 2.4px;"><a href="<%= ctxPath%>/login/login.gu"><i class="fa-regular fa-user fa-lg"></i></a></li>
+						<li class="header_icon"><a href="<%= ctxPath%>/login/login.gu"><i class="fa-regular fa-user fa-lg"></i></a></li>
 					    <li class="header_icon"><a href="<%= ctxPath%>/product/productSearch.gu"><i class="fa-solid fa-2em fa-magnifying-glass"></i></a></li>
 	                    <li class="header_icon"><a href=""><i class="fa-solid fa-location-dot"></i></a></li>
-	                    <li class="header_icon"><a href="<%= ctxPath%>/cart/cart.gu"><i class="fa-solid fa-cart-shopping"></i></a></li>
 				   </c:if>
 					<%-- 로그인 후 유저 헤더 --%>
 	                <c:if test="${not empty sessionScope.loginuser}">
@@ -86,7 +85,7 @@ sessionStorage.setItem("contextpath", "${pageContext.request.contextPath}");
 					<%-- 로그인 후 관리자 헤더 --%>
 	                <c:if test="${not empty sessionScope.loginadmin}">
 						<li class="header_icon"><a href="<%= ctxPath%>/login/logout.gu"><i class="fa-solid fa-arrow-right-from-bracket fa-2em"></i></a></li>
-                    	<li class="header_icon"><a href="<%= ctxPath%>/admin/admin.gu"><i class="fa-solid fa-user"></i></a></li>
+                    	<li class="header_icon"><a href="<%= ctxPath%>/admin/admin.gu"><i class="fa-solid fa-user-tie"></i></a></li>
                     	<li class="header_icon"><a href="<%= ctxPath%>/product/productSearch.gu"><i class="fa-solid fa-2em fa-magnifying-glass"></i></a></li>
                     	<li class="header_icon"><a href=""><i class="fa-solid fa-location-dot"></i></a></li>
 					</c:if>

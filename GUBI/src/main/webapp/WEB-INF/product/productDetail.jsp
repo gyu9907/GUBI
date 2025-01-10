@@ -67,8 +67,6 @@
   			</ul>
   		</div>
   		
-  		<!-- <div class="spacing"></div> -->
-  		
   		<c:if test="${requestScope.pvo.cnt != 0}">
 	  		<form name="addCartFrm" >
 		  		<div class="price-info">
@@ -99,8 +97,8 @@
   <div class="detail_container">
   	<c:import url="/data/html/${requestScope.pvo.detail_html}" charEncoding="UTF-8"/>
   </div>
-  
-	<hr class="border-divider" />
+  <!-- <hr class="border-divider" /> -->
+	
     <!-- 리뷰 작성 폼 -->
     <div class="review-section">
 		<div class="review-list" id="reviewList">

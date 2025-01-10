@@ -89,7 +89,7 @@ function selectReviewList() {
 								<span class="review_title">${item.title}</span>
 								<span class="review_registerday">${item.registerday.substring(0, 10)}</span>
 							  </div>
-							  <p class="review-rating">${score}<span class="review_font_s">${item.fk_userid}</span></p>
+							  <p class="review-rating">${score}<span class="review_font_s" style="margin-left:3px;">${item.fk_userid}</span></p>
 							  <p class="review_font_s" style="font-size: 11px;">${item.name}</p>`
 
 			  /*<button data-toggle="modal" data-target="#addReviewModal" onclick="editReview('${index}')">

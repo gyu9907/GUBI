@@ -9,7 +9,7 @@ window.onload = function() {
 	  listItems.forEach(function(item) {
 	    // 마우스를 올렸을 때 이벤트 처리
 	    item.addEventListener("mouseenter", function(e) {
-	      console.log("Hovered over: ", e.target);  // 실제로 마우스를 올린 요소 확인
+	      //console.log("Hovered over: ", e.target);  // 실제로 마우스를 올린 요소 확인
 	      var aTagText = item.querySelector("a").textContent; // a 태그의 텍스트 가져오기
 	      getHeaderCollection(aTagText); // 함수 호출
 	    });
