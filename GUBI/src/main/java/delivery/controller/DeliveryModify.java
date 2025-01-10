@@ -57,7 +57,7 @@ public class DeliveryModify extends AbstractController {
              String memo = request.getParameter("memo");
 
              String receiver_tel = hp1 + hp2 + hp3;  // 전화번호 조합
-             boolean is_default = "on".equals(request.getParameter("is_default"));  // 체크박스를 확인하여 기본 배송지 설정
+             boolean is_default = "true".equals(request.getParameter("is_default"));  // 체크박스를 확인하여 기본 배송지 설정
              
              // 기본 배송지가 체크되었을 경우 다른 배송지는 기본 배송지 설정을 해제해야 하므로 해당 로직 추가
              if (is_default) {
