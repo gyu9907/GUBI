@@ -3,6 +3,9 @@ $(document).ready(function(){
 	let modalId;
 	let modal;
 	
+	$("span.error1").hide();
+	$("span.error2").hide();
+	
 	// 행을 클릭했을 때 함수 
 	$("table.table tr#updateCategoryTr").on("click", function() {
 		
@@ -63,13 +66,20 @@ $(document).ready(function(){
 
 	// 수정하기 버튼 클릭했을 경우 
 	$("button#updataCategory").on("click",function (){	
-
+		
 		// 모달의 지금 값 (값을 변경하면 바뀜)
 		const majorCategory = modal.find("#major_category").val();
 	 	const smallCategory = modal.find("#small_category").val();
 		const categoryimg = modal.find("#viewcategoryimg").attr("src");
 		const filename = categoryimg.substring(categoryimg.lastIndexOf("/") + 1);
-
+		
+		if(smallCategory == null || smallCategory.trim() == "") { // small 카테고리 선택 안할경우
+			$("span.error1").show();
+			return;
+		} else {
+			$("span.error1").hide();
+		}
+		
 	  	const initialData = modal.data("initialData"); // 기본값들
 
 		const formData = new FormData();
@@ -95,17 +105,22 @@ $(document).ready(function(){
 		// 이미지 변경 여부 처리
 	    const newCategoryImg = modal.find("input#newcategoryimg")[0].files[0]; // 새로운 이미지 파일
 		
+		
 	    if(newCategoryImg) { // 새로운 파일이 있다면 덮어씀
 	        formData.append("categoryimg", newCategoryImg);
+			$("span.error2").hide();
 	    } else if (filename == initialData.filename) { // 기존파일과 새로운 파일 같다면 씀
 	        formData.append("categoryimg", filename);
+			$("span.error2").hide();
 	    } else { // 새파일 x 기존파일 xx 
-			alert("카테고리 사진을 선택하세요");
+			// 이미지 유효성검사
+			$("span.error2").show();
 			return;
 		}
 		
 		
-		// FormData 내용을 확인하기
+
+		/*// FormData 내용을 확인하기
 	    formData.forEach((value, key) => {
 	       if (value instanceof File) {
 	           // 파일일 경우 파일의 이름과 크기를 출력
@@ -114,7 +129,7 @@ $(document).ready(function(){
 	           // 파일이 아닌 값은 그대로 출력
 	           console.log(`${key}: ${value}`);
 	       }
-	    });
+	    });*/
 
 		$.ajax({
 		      url:"categoryUpdate.gu",

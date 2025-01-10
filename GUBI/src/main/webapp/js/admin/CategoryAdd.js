@@ -9,7 +9,7 @@ $(document).ready(function(){
 		
 		const fileReader =  new FileReader();
 		
-		fileReader.readAsDataURL(input_file.files[0]); 
+		fileReader.readAsDataURL(input_file.files[0]);
 		
 		fileReader.onload = function(e){ 
 		   $("img#viewcategoryimg").attr("src", e.target.result);

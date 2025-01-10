@@ -193,10 +193,10 @@ $(document).ready(function(){
 		            <tr>
 		               <th class="th"><span>이미지 1 *</span></th>
 		               <td>
-		                  <label for="img1"><img class="preview" id="preview" /></label>
+		                  <label for="img1"><img class="preview"/></label>
 		                  <div>
 		                     <label>이미지 *</label><span class="error">이미지는 필수입력 사항입니다.</span>
-		                     <input id="img1" class="infoData" name="img1" type="file" accept=".bmp, .jpg, .jpeg, .png, .webp"/>
+		                     <input id="img1" class="img_file infoData" name="img1" type="file" accept=".bmp, .jpg, .jpeg, .png, .webp"/>
 		
 		                     <label>제목 *</label> <span class="error">제목은 필수입력 사항입니다.</span>
 		                     <input class="infoData description_title" class="required"  name="description_title1" type="text" maxlength="100"/>

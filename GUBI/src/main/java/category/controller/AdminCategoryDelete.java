@@ -14,29 +14,48 @@ public class AdminCategoryDelete extends AbstractController {
 		
 		String method = request.getMethod();
 		
-		if("POST".equalsIgnoreCase(method)) {
+		if(!super.checkAdmin(request) ) { // 관리자가 아닌 경우
+			 // 로그인을 안한 경우 또는 일반사용자로 로그인 한 경우
+	         String message = "관리자만 접근이 가능합니다.";
+	         String loc = "/GUBI/index.gu";
+	         
+	         request.setAttribute("message", message);
+	         request.setAttribute("loc", loc);
+	         
+	         // super.setRedirect(false);
+	         super.setViewPage("/WEB-INF/common/msg.jsp");
+	         return;
+		} 
+		
+		else { // 관리자인경우
 			
-			String categoryno = request.getParameter("categoryno");
-			
-			if(categoryno != null && !categoryno.isEmpty()) {
-				int b = cdao.deleteCategory(categoryno); // 카테고리삭제
+			if("POST".equalsIgnoreCase(method)) {
 				
-				if(b==1) {
-					String message = "카테고리가 삭제되었습니다";
-					String loc = request.getContextPath()+"/admin/categoryAdd.gu";
+				String categoryno = request.getParameter("categoryno");
+				
+				if(categoryno != null && !categoryno.isEmpty()) {
+					int b = cdao.deleteCategory(categoryno); // 카테고리삭제
 					
-					request.setAttribute("message", message);
-					request.setAttribute("loc", loc);
-					
-					super.setRedirect(false); 
-					super.setViewPage("/WEB-INF/common/msg.jsp");
-					
-					return;
-				}
-			
-		   }
+					if(b==1) {
+						String message = "카테고리가 삭제되었습니다";
+						String loc = request.getContextPath()+"/admin/categoryAdd.gu";
+						
+						request.setAttribute("message", message);
+						request.setAttribute("loc", loc);
+						
+						super.setRedirect(false); 
+						super.setViewPage("/WEB-INF/common/msg.jsp");
+						
+						return;
+					}
+				
+			   }
 
-		} // end of if("POST".equalsIgnoreCase(method))
+			} // end of if("POST".equalsIgnoreCase(method))
+		}
+		
+		
+		
 		
 		
 	}

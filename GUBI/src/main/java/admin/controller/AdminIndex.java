@@ -3,6 +3,7 @@ package admin.controller;
 import common.controller.AbstractController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import member.domain.MemberVO;
 import order.domain.OrderVO;
 import review.domain.ReviewVO;
@@ -20,6 +21,22 @@ public class AdminIndex extends AbstractController {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		// super.checkAdmin(request)
+		// == 관리자(admin)로 로그인 했을 때만 제품등록이 가능하도록 한다. == //
+		
+		if(!super.checkAdmin(request) ) { // 관리자가 아닌 경우
+			 // 로그인을 안한 경우 또는 일반사용자로 로그인 한 경우
+	         String message = "관리자만 접근이 가능합니다.";
+	         String loc = request.getContextPath()+"/GUBI/index.gu";
+	         
+	         request.setAttribute("message", message);
+	         request.setAttribute("loc", loc);
+	         
+	         // super.setRedirect(false);
+	         super.setViewPage("/WEB-INF/common/msg.jsp");
+	         return;
+		}
 		
 		// *** 통계 *** // 
 		// 방문자통계
@@ -108,18 +125,20 @@ public class AdminIndex extends AbstractController {
 
         try {
         	List<OrderVO> orderlist = adao.orderlist(paraMap);
+        	int orderListCnt = adao.orderListCnt();
 
         	request.setAttribute("orderlist", orderlist);
         	request.setAttribute("pageBar", pageBar);
         	request.setAttribute("sizePerPage", sizePerPage);
         	request.setAttribute("currentShowPageNo", currentShowPageNo);
+        	request.setAttribute("orderListCnt", orderListCnt);
         	
         } catch(SQLException e) {
 			e.printStackTrace();
 		}
         
         
-        // ***** 최근주문 ***** //////////////////////////////////////////////////////  
+        // ***** 최근회원가입 ***** //////////////////////////////////////////////////////  
      	String sizePerpage = "10"; // 몇명씩 보여줄건가
      	String currentShowPageno = request.getParameter("currentShowPageno"); // 현재 페이지 
 
@@ -129,11 +148,11 @@ public class AdminIndex extends AbstractController {
 		if(currentShowPageno == null) {
 			currentShowPageno = "1";
 		}
-		System.out.println("currentShowPageno: " + currentShowPageno);
+		// System.out.println("currentShowPageno: " + currentShowPageno);
 
      	//  최근회원가입 페이지 수 
      	int regiPage = adao.registerTotalPage(paraMap2);
-     	System.out.println("regiPage"+regiPage);
+     	// System.out.println("regiPage"+regiPage);
 
      	try {
 	   		 if(Integer.parseInt(currentShowPageno) > regiPage || 
@@ -152,7 +171,7 @@ public class AdminIndex extends AbstractController {
 	    // loop 는 1 부터 증가하여 1개 블럭을 이루는 페이지번호의 개수(지금은 10개)까지만 증가하는 용도이다.
      	int blockSize2 = 5;
      	int pageno  = ( (Integer.parseInt(currentShowPageno) - 1)/blockSize2 ) * blockSize2 + 1;
-     	System.out.println("pageno"+ pageno);
+     	// System.out.println("pageno"+ pageno);
      	
      	String pageBar2 = "";
      	// *** [맨처음][이전] 만들기 *** //
@@ -184,10 +203,14 @@ public class AdminIndex extends AbstractController {
         
         try {
         	List<MemberVO> registerlist = adao.registerlist(paraMap2);
+        	int registerListCnt = adao.registerListCnt();
+        	// System.out.println("registerListCnt"+registerListCnt);
         	
         	request.setAttribute("pageBar2", pageBar2);
         	request.setAttribute("registerlist", registerlist);
         	request.setAttribute("currentShowPageno", currentShowPageno);
+        	request.setAttribute("sizePerpage", sizePerpage);
+        	request.setAttribute("registerListCnt", registerListCnt);
         	
         } catch(SQLException e) {
 			e.printStackTrace();
@@ -197,9 +220,8 @@ public class AdminIndex extends AbstractController {
 		List<ReviewVO> reviewList = adao.reviewList();
 		request.setAttribute("reviewList", reviewList);
 		
-
 		super.setRedirect(false);
         super.setViewPage("/WEB-INF/admin/adminHome.jsp");
-	}
+	} 
 
 }

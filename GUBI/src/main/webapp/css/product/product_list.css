@@ -3,6 +3,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  
+  font-family: "Times New Roman", Times;
 }
 .productList_wrapper .header-container {
   width: 66%;

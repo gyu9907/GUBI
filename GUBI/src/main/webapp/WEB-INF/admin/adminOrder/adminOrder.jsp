@@ -72,6 +72,59 @@ $(document).ready(function(){
 	$("input:text[name='startDate']").val("${requestScope.startDate}");
 	$("input:text[name='endDate']").val("${requestScope.endDate}");
 	$("input:radio[value='${requestScope.orderStatus}']").prop("checked",true);
+	
+	
+	// ***** 날짜함수 *****//
+	const now = new Date(); // 현재날짜
+	var year = now.getFullYear();
+	var month = (now.getMonth() + 1).toString().padStart(2, '0');
+	var day = now.getDate().toString().padStart(2, '0');
+	
+	const yyyymmdd = year+month+day; // 오늘날짜
+	const yesterday = year+month+(now.getDate()-1).toString().padStart(2, '0')	// 어제
+	const weekday = year+month+(now.getDate()-7).toString().padStart(2, '0')	// 일주일전
+	
+	const monthday = new Date(now);
+	monthday.setMonth(now.getMonth()-1);
+	const monthdaystr = monthday.getFullYear() + (monthday.getMonth() + 1).toString().padStart(2, '0') + monthday.getDate().toString().padStart(2, '0')
+	//console.log(monthdaystr); // 한달전
+	
+	const threeMonth = new Date(now);
+	threeMonth.setMonth(now.getMonth()-3);
+	const threeMonthstr = threeMonth.getFullYear() + (threeMonth.getMonth() + 1).toString().padStart(2, '0') + threeMonth.getDate().toString().padStart(2, '0')
+	//console.log(threeMonthstr); // 한달전
+	
+	// 오늘 
+	$("button.todaybtn").on("click",function(){	
+		$("input:text[name='startDate']").val(yyyymmdd);
+		$("input:text[name='endDate']").val(yyyymmdd);
+	});
+	
+	// 어제 
+	$("button.yesterdaybtn").on("click",function(){
+		$("input:text[name='startDate']").val(yesterday);
+		$("input:text[name='endDate']").val(yyyymmdd);
+	});
+	
+	// 일주일전 
+	$("button.weekbtn").on("click",function(){
+		$("input:text[name='startDate']").val(weekday);
+		$("input:text[name='endDate']").val(yyyymmdd);
+	});
+	
+	// 한달전 
+	$("button.monthbtn").on("click",function(){
+		$("input:text[name='startDate']").val(monthdaystr);
+		$("input:text[name='endDate']").val(yyyymmdd);
+	});
+	
+	// 세달전 
+	$("button.threemonthbtn").on("click",function(){
+		$("input:text[name='startDate']").val(threeMonthstr);
+		$("input:text[name='endDate']").val(yyyymmdd);
+	});
+	// ***** 날짜함수 끝 *****//
+
 });
 
 function searchOrder() {
@@ -166,11 +219,11 @@ function searchOrder() {
 									<td>
 										<input type="text" class="mr-1" name="startDate" id="datepicker1" size="10" />
 										<input type="text" class="mr-1" name="endDate" id="datepicker2" size="10"/>
-										<button type="button" class="datebtn btn btn-light">오늘</button>
-										<button type="button" class="datebtn btn btn-light">어제</button>
-										<button type="button" class="datebtn btn btn-light">일주일</button>
-										<button type="button" class="datebtn btn btn-light">1개월</button>
-										<button type="button" class="datebtn btn btn-light">3개월</button>
+										<button type="button" class="datebtn todaybtn btn btn-light" value="1">오늘</button>
+										<button type="button" class="datebtn yesterdaybtn btn btn-light" value="2">어제</button>
+										<button type="button" class="datebtn weekbtn btn btn-light" value="3">일주일</button>
+										<button type="button" class="datebtn monthbtn btn btn-light" value="4">1개월</button>
+										<button type="button" class="datebtn threemonthbtn btn btn-light" value="5">3개월</button>
 									</td>
 								</tr>
 								<tr>

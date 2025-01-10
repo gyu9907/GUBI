@@ -14,10 +14,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="<%= ctx_Path%>/css/common/common.css">
-
 <!-- Font Awesome 6 Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -52,6 +48,14 @@
             <a href="<%= ctx_Path%>/admin/admin.gu">
 	 			<img id="logo" src="<%= ctx_Path%>/image/logo.png" onclick="<%= ctx_Path%>/admin/admin.gu" style="width:72px;"/>
 	  		</a>
+	  		<div>
+		  		<span class="adminHome mr-4"> <!-- 구비홈 -->
+		  			<a href="<%= ctx_Path%>/index.gu"><i class="fa-solid fa-house fa-xl"></i></i></a>
+		  		</span> 
+		  		<span class="adminLogout mr-3"> <!-- 로그아웃 -->
+		  			<a href="<%= ctx_Path%>/login/logout.gu"><i class="fa-solid fa-right-from-bracket fa-xl"></i></a>
+		  		</span> 
+	  		</div>
         </div><!-- header-->
 
         <div id="article" class="bg-light">
@@ -74,7 +78,10 @@
                         <a class="nav-link" href="<%= ctx_Path%>/admin/product.gu">PRODUCT</a>
                         </li>
                         <li class="li dropdown-item">
-                        <a class="nav-link">STATUS</a>
+                        <a class="nav-link" href="<%= ctx_Path%>/admin/collection.gu">COLLECTION</a>
+                        </li>
+                        <li class="li dropdown-item">
+                        <a class="nav-link" href="<%= ctx_Path%>/admin/statistics.gu">STATISTICS</a>
                         </li>
                     </ul>
             </div> <!-- adminmenu-->
@@ -148,17 +155,19 @@
                             <table class="table table-sm mt-2">
                                 <thead>
                                     <tr>
-                                    <th>주문번호</th>
+                                    <th>no</th>
                                     <th>주문자아이디</th>
                                     <th>주문수량</th>
                                     <th>총주문액</th>
                                     <th>주문일시</th>
                                     </tr>
                                 </thead>
-                                <c:forEach var="ovo" items="${requestScope.orderlist}">
+                                <c:forEach var="ovo" items="${requestScope.orderlist}" varStatus="status">
 	                                 <tbody>
 	                                    <tr>
-	                                    <td>${ovo.orderno}</td>
+	                                    <fmt:parseNumber var="currentShowPageNo" value="${requestScope.currentShowPageNo}"></fmt:parseNumber>
+				    			  		<fmt:parseNumber var="sizePerPage" value="${requestScope.sizePerPage}"></fmt:parseNumber>
+								  		<td>${(requestScope.orderListCnt)-(currentShowPageNo-1)*sizePerPage-(status.index)}</td>
 	                                    <td>${ovo.fk_userid}</td>
 	                                    <td>${ovo.total_cnt}</td>
 	                                    <td><fmt:formatNumber value="${ovo.total_price}" pattern="#,###"/>원</td>
@@ -187,17 +196,19 @@
                             <table class="table table-sm mt-2">
                                 <thead>
                                     <tr>
-                                    <th>회원번호</th>
+                                    <th>no</th>
                                     <th>이름</th>
                                     <th>아이디</th>
                                     <th>접속횟수</th>
                                     <th>가입일시</th>
                                     </tr>
                                 </thead>
-                                <c:forEach var="mvo" items="${requestScope.registerlist}">
+                                <c:forEach var="mvo" items="${requestScope.registerlist}" varStatus="status">
 	                                <tbody>
 	                                    <tr>
-	                                    <td>1001</td>
+	                                    <fmt:parseNumber var="currentShowPageno" value="${requestScope.currentShowPageno}"></fmt:parseNumber>
+				    			  		<fmt:parseNumber var="sizePerpage" value="${requestScope.sizePerpage}"></fmt:parseNumber>
+								  		<td>${(requestScope.registerListCnt)-(currentShowPageno-1)*sizePerpage-(status.index)}</td>
 	                                    <td>${mvo.userid}</td>
 	                                    <td>${mvo.name}</td>
 	                                    <td>${mvo.logincnt}</td>
@@ -224,7 +235,7 @@
                         <button type="button" class="viewbtn btn" onclick="location.href='<%= ctx_Path%>/admin/review.gu'"><span>+ more</span></button>
                     </div>
                     <div>
-                        <table class="table table-hover mt-2 overflow-auto">
+                        <table class="table mt-2 overflow-auto">
                             <thead>
                                 <tr>
                                 <th>상품번호</th>

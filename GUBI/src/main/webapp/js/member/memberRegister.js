@@ -540,7 +540,7 @@ $(document).ready(function () {
                         // 사용 가능한 이메일   인증번호 발송을 백엔드에서 구현하라
                         $(`div#emailCheckResult`).html(`${$(`input#email`).val()}로 인증번호 발송하였습니다!`).css({ "color": "blue" }).show();
                         b_email_auth_click = true;
-                        $(`.hide_emailAuth`).show(); // 인증번호 칸 나타내기
+                        $(`.hide_emailAuth`).slideDown(); // 인증번호 칸 나타내기
                     }
                 }
                 ,

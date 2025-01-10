@@ -1,23 +1,4 @@
 @charset "UTF-8";
-/* 로고 */
-div#header {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2);;
-}
-img#logo {
-    /* border: 1px solid red;   */
-    margin:1% ;
-}
-
-/* 관리자메뉴 */
-div#adminmenu{
-    /* border: solid 1px black; */
-    height: 40px;
-    text-align: center;
-}
-div#adminmenu > ul > li a {
-    color:BLACK;
-    font-size: 10pt;
-}
 /* 본문내용 */
 div#contents{
     /* border: solid 1px black; */
@@ -155,6 +136,7 @@ div.modal-body {
 }
 div.img > img {
     border: 1px solid red;
+    width:100px;
 }
 div.pname span {
     float: right;

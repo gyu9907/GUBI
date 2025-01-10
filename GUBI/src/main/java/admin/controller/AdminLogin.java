@@ -24,7 +24,7 @@ public class AdminLogin extends AbstractController {
 		if (!"POST".equals(method)) {
 			// post 아님
 
-			String message = "옳바른 방법으로 접속하지 않았습니다.";
+			String message = "올바른 방법으로 접속하지 않았습니다.";
 			String loc = "javascript:history.back()";
 
 			request.setAttribute("message", message);

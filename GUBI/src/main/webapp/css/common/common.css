@@ -1,98 +1,15 @@
 @charset "UTF-8";
 
-/* @font-face {
-    font-family: "Times New Roman";
-    src: url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.eot");
-    src: url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.eot?#iefix")format("embedded-opentype"),
-    url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.woff2")format("woff2"),
-    url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.woff")format("woff"),
-    url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.ttf")format("truetype"),
-    url("https://db.onlinewebfonts.com/t/32441506567156636049eb850b53f02a.svg#Times New Roman")format("svg");
-    unicode-range: U+0030-0039,U+0041-005A,U+0061-007A
-    
-}
-
-noto-sans-kr-300 - korean
-@font-face {
-  font-display: swap; Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options.
-  font-family: 'Noto Sans KR';
-  font-style: normal;
-  font-weight: 300;
-  src: url('../fonts/noto-sans-kr-v36-korean-300.eot'); IE9 Compat Modes
-  src: url('../fonts/noto-sans-kr-v36-korean-300.eot?#iefix') format('embedded-opentype'), IE6-IE8
-       url('../fonts/noto-sans-kr-v36-korean-300.woff2') format('woff2'), Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
-       url('../fonts/noto-sans-kr-v36-korean-300.woff') format('woff'), Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+
-       url('../fonts/noto-sans-kr-v36-korean-300.ttf') format('truetype'), Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+
-       url('../fonts/noto-sans-kr-v36-korean-300.svg#NotoSansKR') format('svg'); Legacy iOS
-       unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
-}
-noto-sans-kr-regular - korean
-@font-face {
-  font-display: swap; Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options.
-  font-family: 'Noto Sans KR';
-  font-style: normal;
-  font-weight: 400;
-  src: url('../fonts/noto-sans-kr-v36-korean-regular.eot'); IE9 Compat Modes
-  src: url('../fonts/noto-sans-kr-v36-korean-regular.eot?#iefix') format('embedded-opentype'), IE6-IE8
-       url('../fonts/noto-sans-kr-v36-korean-regular.woff2') format('woff2'), Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
-       url('../fonts/noto-sans-kr-v36-korean-regular.woff') format('woff'), Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+
-       url('../fonts/noto-sans-kr-v36-korean-regular.ttf') format('truetype'), Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+
-       url('../fonts/noto-sans-kr-v36-korean-regular.svg#NotoSansKR') format('svg'); Legacy iOS
-       unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
-}
-noto-sans-kr-500 - korean
-@font-face {
-  font-display: swap; Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options.
-  font-family: 'Noto Sans KR';
-  font-style: normal;
-  font-weight: 500;
-  src: url('../fonts/noto-sans-kr-v36-korean-500.eot'); IE9 Compat Modes
-  src: url('../fonts/noto-sans-kr-v36-korean-500.eot?#iefix') format('embedded-opentype'), IE6-IE8
-       url('../fonts/noto-sans-kr-v36-korean-500.woff2') format('woff2'), Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
-       url('../fonts/noto-sans-kr-v36-korean-500.woff') format('woff'), Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+
-       url('../fonts/noto-sans-kr-v36-korean-500.ttf') format('truetype'), Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+
-       url('../fonts/noto-sans-kr-v36-korean-500.svg#NotoSansKR') format('svg'); Legacy iOS
-       unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
-}
-noto-sans-kr-600 - korean
-@font-face {
-  font-display: swap; Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options.
-  font-family: 'Noto Sans KR';
-  font-style: normal;
-  font-weight: 600;
-  src: url('../fonts/noto-sans-kr-v36-korean-600.eot'); IE9 Compat Modes
-  src: url('../fonts/noto-sans-kr-v36-korean-600.eot?#iefix') format('embedded-opentype'), IE6-IE8
-       url('../fonts/noto-sans-kr-v36-korean-600.woff2') format('woff2'), Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
-       url('../fonts/noto-sans-kr-v36-korean-600.woff') format('woff'), Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+
-       url('../fonts/noto-sans-kr-v36-korean-600.ttf') format('truetype'), Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+
-       url('../fonts/noto-sans-kr-v36-korean-600.svg#NotoSansKR') format('svg'); Legacy iOS
-       unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
-}
-noto-sans-kr-700 - korean
-@font-face {
-  font-display: swap; Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options.
-  font-family: 'Noto Sans KR';
-  font-style: normal;
-  font-weight: 700;
-  src: url('../fonts/noto-sans-kr-v36-korean-700.eot'); IE9 Compat Modes
-  src: url('../fonts/noto-sans-kr-v36-korean-700.eot?#iefix') format('embedded-opentype'), IE6-IE8
-       url('../fonts/noto-sans-kr-v36-korean-700.woff2') format('woff2'), Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+
-       url('../fonts/noto-sans-kr-v36-korean-700.woff') format('woff'), Chrome 5+, Firefox 3.6+, IE 9+, Safari 5.1+, iOS 5+
-       url('../fonts/noto-sans-kr-v36-korean-700.ttf') format('truetype'), Chrome 4+, Firefox 3.5+, IE 9+, Safari 3.1+, iOS 4.2+, Android Browser 2.2+
-       url('../fonts/noto-sans-kr-v36-korean-700.svg#NotoSansKR') format('svg'); Legacy iOS
-       unicode-range: U+1100-11FF, U+3130-318F, U+A960-A97F, U+AC00-D7A3, U+D7B0-D7FF;
-} */
- 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Times New Roman", Times;
 }
 
 body {
   margin: 0;
   padding: 0;
+  min-height: calc(100% - 123px);
 }
 
 ul {
@@ -163,6 +80,7 @@ transition: 0.5s;
 }
 .header_wrapper .header_menu_list {
   width: 100%;
+  font-family: "Times New Roman", Times;
 }
 .header_wrapper .header_menu {
   display: flex;
@@ -228,6 +146,7 @@ transition: 0.5s;
   margin-right: 0;
 }
 .header_wrapper .menu_container {
+  font-family: "Times New Roman", Times;
   position: absolute;
   top:-800px;
   /* transition: top 1s; */
@@ -313,14 +232,13 @@ transition: 0.5s;
 
 /* footer */
 .footer_wrapper {
-  font-family: "Noto Sans", serif;
-  font-optical-sizing: auto;
-  font-style: normal;
-  font-variation-settings: "wdth" 100;
+  
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  
+  width: 100%;
   height: 123px;
   background: #F8F7F7;
 }
