@@ -69,4 +69,5 @@ $(document).ready(function() {
 			<button type="button" class="offset-2 col-4 btn btn-light" id="viewCollection">등록한 컬렉션<br>확인하기</button>
 		</div>
 	</div>
-<jsp:include page="/WEB-INF/admin/adminFooter.jsp" />  
+</body>
+</html>
