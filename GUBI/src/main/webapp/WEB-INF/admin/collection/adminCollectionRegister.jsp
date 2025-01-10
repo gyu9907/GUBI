@@ -3,42 +3,20 @@
 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"> 
-<title>관리자 컬렉션등록</title>
-
-<!-- jquery -->
-<script type="text/javascript" src="${pageContext.request.contextPath}/js/jquery-3.7.1.min.js"></script>
-<!-- jQueryUI CSS 및 JS -->
-<link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/jquery-ui-1.13.1.custom/jquery-ui.min.css" />
-<script type="text/javascript" src="${pageContext.request.contextPath}/jquery-ui-1.13.1.custom/jquery-ui.min.js"></script> 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap-4.6.2-dist/css/bootstrap.min.css" type="text/css">
-<!-- Bootstrap js -->
-<script src="${pageContext.request.contextPath}/bootstrap-4.6.2-dist/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-<!-- Font Awesome 6 Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-<!-- Quill 텍스트 에디터 stylesheet -->
-<link href="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css" rel="stylesheet" />
-<!-- Quill 텍스트 에디터 library -->
-<script src="https://cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/quill-resize-module@2.0.4/dist/resize.min.js"></script>
-<link href="https://cdn.jsdelivr.net/npm/quill-resize-module@2.0.4/dist/resize.min.css" rel="stylesheet">
+<jsp:include page="/WEB-INF/admin/adminHeader.jsp" />
 
 <!-- 직접 만든 CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/collection/adminCollectionRegister.css">
 <!-- 직접 만든 js -->
 <script type="text/javascript">
+document.title="관리자 컬렉션등록";
 const ctxPath = "${pageContext.request.contextPath}";
+$(document).ready(function() {
+	$(".nav-link.COLLECTION").addClass("active");
+});
 </script>
 <script src="${pageContext.request.contextPath}/js/admin/adminCollectionRegister.js"></script>
 
-</head>
-
-<body>
 	<%-- ****** 회원상세보기 모달 시작 ****** --%>
 	<div class="modal fade" id="addProductModal" data-backdrop="static"> 
 		<div class="modal-dialog modal-dialog-centered AddProductModal">
@@ -175,7 +153,7 @@ const ctxPath = "${pageContext.request.contextPath}";
 						</div>
 						
                         <div id="page" class="justify-content-center">
-                            <ul class="pagination pagination-sm justify-content-center" style="margin:20px 0">
+                            <ul class="pagination justify-content-center" style="margin:20px 0">
                               </ul>
                         </div>
 					</div>
@@ -193,36 +171,6 @@ const ctxPath = "${pageContext.request.contextPath}";
 	<%-- ****** 회원상세보기 모달 끝 ****** --%>
 
 	<div>
-		<%-- 관리자메뉴--%>
-		<div id="header">   
-			<img id="logo" src="${pageContext.request.contextPath}/images/ui/logo/gubi_logo.png"/>  
-		</div>
-		<div id="adminmenu">
-			<ul class="nav nav-tabs">
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#home">HOME</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" data-toggle="tab" href="#menu0">MEMBER</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" data-toggle="tab" href="#menu1">ORDER</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" data-toggle="tab" href="#menu2">CATEGORY</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link" data-toggle="tab" href="#menu3">PRODUCT</a>
-				</li>
-				<li class="nav-item">
-				  <a class="nav-link active" data-toggle="tab" href="#menu4">COLLECTION</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" data-toggle="tab" href="#menu5">STATUS</a>
-				</li>
-			</ul>
-		</div><%-- header--%>
-
 		<div id="contents">
 			<%-- 사이드 메뉴 --%>
 			<div id="sidemenu" class="bg-light p-3">
@@ -356,64 +304,45 @@ const ctxPath = "${pageContext.request.contextPath}";
 			
 						<h6 class="h6 mb-3 font-weight-bold">상세설명</h6>
 						
-						<ul class="nav nav-tabs mb-2" id="EditorNav">
-							<li class="nav-item">
-								<a class="nav-link active" data-toggle="tab" href="#ImageEditor">Image Editor</a>
-							</li>
-							<li class="nav-item">
-								<a class="nav-link" data-toggle="tab" href="#TextEditor">Text Editor</a>
-							</li>
-						</ul>
+						<div class="tab-pane show active" id="ImageEditor">
+			
+							<div id="productupdate">
+								<button type="button" class="AddImgBtn btn btn-light"><span>이미지추가</span></button>
+								<button type="button" class="RemoveImgBtn btn btn-danger"><span>- 선택이미지삭제</span></button>
+							</div>
+							
+							<input type="hidden" name="detailCnt" value="1"/>
 
-						<div class="tab-content">
-						
-							<div class="tab-pane show active" id="ImageEditor">
-				
-								<div id="productupdate">
-									<button type="button" class="AddImgBtn btn btn-light"><span>이미지추가</span></button>
-									<button type="button" class="RemoveImgBtn btn btn-danger"><span>- 선택이미지삭제</span></button>
-								</div>
-								
-								<input type="hidden" name="detailCnt" value="1"/>
-	
-								<div style="position: relative;">
-									<div class="toast align-items-center" id="addImgToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1000" style="position: absolute;">
-										<div class="d-flex">
-											<div class="toast-body">
-												이미지가 추가되었습니다.
-											</div>
+							<div style="position: relative;">
+								<div class="toast align-items-center" id="addImgToast" role="alert" aria-live="assertive" aria-atomic="true" data-bs-delay="1000" style="position: absolute;">
+									<div class="d-flex">
+										<div class="toast-body">
+											이미지가 추가되었습니다.
 										</div>
 									</div>
 								</div>
-								
-								<table class="ImageTable table table-sm mt-2">
-									<thead class="thead-light">
-										<tr>
-											<th class="th"><label>이미지 1 *</label></th>
-											<td>
-												<label for="img1"><img class="preview" /></label>
-												<div>
-													<label>이미지 *</label> <span class="error">이미지는 필수입력 사항입니다.</span>
-													<input id="img1" name="img1" type="file" class="img_file required" accept=".bmp, .jpg, .jpeg, .png, .webp"/>
-													
-													<label>제목 *</label> <span class="error">제목은 필수입력 사항입니다.</span>
-													<input class="description_title required" name="description_title1" class="required" type="text" maxlength="100"/>
-													
-													<label>설명 *</label> <span class="error">설명은 필수입력 사항입니다.</span>
-													<textarea class="description_detail required" name="description_detail1" class="required" rows="6" cols="70" maxlength="1000"></textarea>
-												</div>
-											</td>
-										</tr>
-									</thead>
-								</table>
 							</div>
-	
-							<%-- Quill 텍스트 에디터 container --%>
-							<div class="tab-pane" id="TextEditor">
-								<div id="editor">
-	
-								</div>
-							</div>
+							
+							<table class="ImageTable table table-sm mt-2">
+								<thead class="thead-light">
+									<tr>
+										<th class="th"><label>이미지 1 *</label></th>
+										<td>
+											<label for="img1"><img class="preview" /></label>
+											<div>
+												<label>이미지 *</label> <span class="error">이미지는 필수입력 사항입니다.</span>
+												<input id="img1" name="img1" type="file" class="img_file required" accept=".bmp, .jpg, .jpeg, .png, .webp"/>
+												
+												<label>제목 *</label> <span class="error">제목은 필수입력 사항입니다.</span>
+												<input class="description_title required" name="description_title1" class="required" type="text" maxlength="100"/>
+												
+												<label>설명 *</label> <span class="error">설명은 필수입력 사항입니다.</span>
+												<textarea class="description_detail required" name="description_detail1" class="required" rows="6" cols="70" maxlength="1000"></textarea>
+											</div>
+										</td>
+									</tr>
+								</thead>
+							</table>
 						</div>
 			
 						<div class="mt-5 mb-4" align="center">

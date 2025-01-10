@@ -418,7 +418,7 @@ function searchProduct(ctxPath, page) {
                                         <td id="no">${json.totalProductCnt - (json.currentShowPageNo - 1) * json.sizePerPage - i}</td>
                                         <td class="image"><img src="${ctxPath}/data/images/${productList[i].thumbnail_img}"/></td>
                                         <td>${productList[i].productno}<input type="hidden" value="${productList[i].productno}" name="fk_productno"/></td>
-                                        <td>${productList[i].categoryVO.small_category}</td>
+                                        <td>${productList[i].categoryVO.major_category}</td>
                                         <td>${productList[i].name}</td>
                                         <td>${productList[i].registerday}</td>
                                         <td style="color:${productList[i].cnt==0?"red":"black"};">

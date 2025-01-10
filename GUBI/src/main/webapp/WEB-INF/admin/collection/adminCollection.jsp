@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<jsp:include page="../adminHeader.jsp" />	
+<jsp:include page="/WEB-INF/admin/adminHeader.jsp" />
 
 <!-- 직접 만든 CSS -->
 <link rel="stylesheet" href="${pageContext.request.contextPath}/css/admin/collection/adminCollection.css">
@@ -193,7 +193,7 @@ $(document).ready(function() {
 						</form>
 						
                         <div id="page" class="justify-content-center">
-                            <ul class="pagination pagination-sm justify-content-center" style="margin:20px 0">
+                            <ul class="pagination justify-content-center" style="margin:20px 0">
                               </ul>
                         </div>
 					</div>
