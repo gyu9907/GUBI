@@ -38,7 +38,7 @@ public class AdminOrderStatus extends AbstractController {
 			if("GET".equalsIgnoreCase(method)) {
 				
 				String status = request.getParameter("status");
-				System.out.println("status"+status);
+				// System.out.println("status"+status);
 				
 				String sizePerPage = "10";
 				String currentShowPageNo = request.getParameter("currentShowPageNo");
@@ -54,7 +54,7 @@ public class AdminOrderStatus extends AbstractController {
 
 				// 페이징 하기 위해서 페이지 넘버
 				int totalPage = odao.StatusTotalPage(paraMap);
-				System.out.println("totalPage"+totalPage);
+				// System.out.println("totalPage"+totalPage);
 							
 				try {
 			   		 if(Integer.parseInt(currentShowPageNo) > totalPage || 

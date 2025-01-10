@@ -135,8 +135,8 @@ div.modal-body {
     border: 1px solid gray;
 }
 div.img > img {
-    border: 1px solid red;
-    width:100px;
+    /* border: 1px solid red; */
+
 }
 div.pname span {
     float: right;
