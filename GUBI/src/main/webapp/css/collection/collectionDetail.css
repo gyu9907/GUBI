@@ -1,5 +1,10 @@
 @charset "UTF-8";
 
+body{
+
+	font-family: "Times New Roman", Times;
+}
+
 /* title 폰트 */
 @media (min-width: 0px) { .ColDetailTitle > .title { font-size: 36px;} .ColDetailTitle > .sub-title { font-size: 18pt;}}
 @media (min-width: 768px) { .ColDetailTitle > .title { font-size: 56px;} .ColDetailTitle > .sub-title { font-size: 18pt;}}

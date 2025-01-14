@@ -409,3 +409,30 @@ ul.pagination > li.page-item a {
     color: black;
     background-color: rgba(255, 255, 255, 0.25);
 }
+
+/* Button wrapper */
+.modal-body .button-wrapper {
+   margin-top: 20px;
+   width: 100%;
+   display: flex;
+   justify-content: space-between;
+   gap: 8px;
+}
+
+.modal-body .button-wrapper button {
+   background-color: #fff;
+   color: black;
+   border: 1px solid black;
+   padding: 10px 20px;
+   border-radius: 4px;
+   cursor: pointer;
+   font-size: 16px;
+   transition: background-color 0.3s ease;
+   width: 100%;
+   height: 65px;
+}
+
+modal-body .button-wrapper button:hover {
+   background-color: #333;
+   color: #fff;
+}
