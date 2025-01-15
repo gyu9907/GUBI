@@ -14,7 +14,7 @@ import util.check.Check;
 
 public class AdminStatistics extends AbstractController {
 
-	AdminDAO adao = new AdminDAO_imple();
+	private AdminDAO adao = new AdminDAO_imple();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

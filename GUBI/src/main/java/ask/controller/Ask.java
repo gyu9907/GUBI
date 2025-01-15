@@ -12,7 +12,6 @@ import common.controller.AbstractController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import member.domain.MemberVO;
 import util.url.GetURL;
 
 public class Ask extends AbstractController {

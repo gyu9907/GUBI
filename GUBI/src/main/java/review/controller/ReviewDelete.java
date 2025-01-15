@@ -9,13 +9,12 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import member.domain.MemberVO;
 import review.model.ReviewDAO;
 import review.model.ReviewDAO_imple;
 
 public class ReviewDelete extends AbstractController {
 	
-	ReviewDAO rdao = new ReviewDAO_imple();
+	private ReviewDAO rdao = new ReviewDAO_imple();
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		

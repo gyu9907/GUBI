@@ -12,8 +12,8 @@ import collection.model.*;
 
 public class IndexController extends AbstractController {
 	
-	ProductDAO pdao = new ProductDAO_imple();
-	CollectionDAO cdao = new CollectionDAO_imple();
+	private ProductDAO pdao = new ProductDAO_imple();
+	private CollectionDAO cdao = new CollectionDAO_imple();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -5,7 +5,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import category.domain.CategoryVO;
 import common.controller.AbstractController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -14,7 +13,7 @@ import order.model.*;
 
 public class AdminDetailOrder extends AbstractController {
 
-	OrderDAO odao = new OrderDAO_imple();
+	private OrderDAO odao = new OrderDAO_imple();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

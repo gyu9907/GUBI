@@ -13,7 +13,7 @@ import review.model.*;
 
 public class AdminReviewList extends AbstractController {
 
-	ReviewDAO rdao = new ReviewDAO_imple();
+	private ReviewDAO rdao = new ReviewDAO_imple();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

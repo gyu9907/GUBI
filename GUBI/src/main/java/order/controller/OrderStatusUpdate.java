@@ -18,8 +18,8 @@ import order.model.OrderDAO_imple;
 
 public class OrderStatusUpdate extends AbstractController {
 
-	MemberDAO mdao = new MemberDAO_imple();
-	OrderDAO odao = new OrderDAO_imple();
+	private MemberDAO mdao = new MemberDAO_imple();
+	private OrderDAO odao = new OrderDAO_imple();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -55,8 +55,6 @@ public class OrderStatusUpdate extends AbstractController {
 		}
 		
 		MemberVO loginuser = (MemberVO) request.getSession().getAttribute("loginuser");
-		
-		String userid = loginuser.getUserid();
 		
 		String orderno = request.getParameter("orderno");
 		String status = request.getParameter("status");

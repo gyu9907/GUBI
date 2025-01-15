@@ -13,9 +13,6 @@
 <link rel="stylesheet" href="<%= ctxPath%>/css/review/review.css">
 <link rel="stylesheet" type="text/css" href="${pageContext.request.contextPath}/css/ask/ask.css" />
 
-<jsp:include page="../common/header.jsp" />	
-<jsp:include page="../common/bootstrap.jsp" />	
-
 <%-- 직접 만든 JS --%>
 <script>
     // JSP 표현식을 통해 sessionScope 값을 JavaScript 변수로 설정

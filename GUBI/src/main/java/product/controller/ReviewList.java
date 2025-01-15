@@ -18,7 +18,7 @@ import review.domain.ReviewVO;
 // 상품별 리뷰 조회
 public class ReviewList extends AbstractController {
 
-	ProductDAO pdao = new ProductDAO_imple();
+	private ProductDAO pdao = new ProductDAO_imple();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

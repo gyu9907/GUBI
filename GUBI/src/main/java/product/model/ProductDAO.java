@@ -7,7 +7,6 @@ import java.util.Map;
 import category.domain.CategoryVO;
 import collection.domain.CollectionVO;
 import product.domain.OptionVO;
-import product.domain.ProductImgVO;
 import product.domain.ProductVO;
 import review.domain.ReviewVO;
 

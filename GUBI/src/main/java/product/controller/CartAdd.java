@@ -14,7 +14,7 @@ import product.model.ProductDAO_imple;
 
 public class CartAdd extends AbstractController {
 	
-	ProductDAO pdao = new ProductDAO_imple();
+	private ProductDAO pdao = new ProductDAO_imple();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

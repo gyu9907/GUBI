@@ -1,5 +1,9 @@
 @charset "UTF-8";
 
+body{
+	font-family: "Times New Roman", Times;
+}
+
 .container-fluid { max-width: 1536px; min-height: 100vh; }
 
 .CollectionHeader_container {

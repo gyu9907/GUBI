@@ -2,7 +2,6 @@ package ask.controller;
 
 import java.sql.SQLException;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +11,6 @@ import org.json.JSONObject;
 import ask.domain.AskVO;
 import ask.model.AskDAO;
 import ask.model.AskDAO_imple;
-import category.domain.CategoryVO;
 import common.controller.AbstractController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -110,7 +108,7 @@ public class SortAsk extends AbstractController {
 			} 
 			else { // 리스트가 0 인 경우
 				
-				JSONObject jsonObj = new JSONObject(); // {}
+//				JSONObject jsonObj = new JSONObject(); // {}
 				
 //				jsonArr.put(jsonObj);
 				

@@ -99,15 +99,23 @@ $(document).ready(function() {
 	});
 });
 
-function goPaymentSuccess(use_point) {
+function goPaymentSuccess(userid, use_point) {
 	
-	$("input#usePoint").val(use_point);
+	console.log(userid, use_point);
+
+	const formData = new FormData(document.orderFrm);
 	
-	const data = $(document.orderFrm).serialize();
+	formData.append("userid", userid);
+	formData.set("use_point", use_point);
+	
+	formData
 	
 	$.ajax({
 		url: ctxPath + "/order/orderRegister.gu",
-		data: data,
+		enctype: 'multipart/form-data',
+		data: formData,
+		processData: false,
+		contentType: false,
 		type: "post",
 		dataType: "json",
 		success: function(json) {

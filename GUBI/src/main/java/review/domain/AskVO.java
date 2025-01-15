@@ -5,22 +5,20 @@ import product.domain.ProductVO;
 
 public class AskVO {
 
-	
-	 private int askno; /* 문의 일련번호 */
-	 private String fk_userid; /* 회원 아이디 */
-	 private int fk_productno; /* 상품 일련번호 */
-	 private String fk_adminid; /* 관리자 아이디 */
-	 private String question; /* 질문 */
-	 private String answer; /* 답변 */
-	 private String passwd; /* 비밀번호 */
-	 private int is_hide; /* 공개여부 */
-	 private String registerday; /* 등록일자 */
-	 private String answerday; /* 답변일자 */
-	 private int category; /* 분류 */
-	 
-	 
-	MemberVO mvo;
-	ProductVO pvo;
+	private int askno; /* 문의 일련번호 */
+	private String fk_userid; /* 회원 아이디 */
+	private int fk_productno; /* 상품 일련번호 */
+	private String fk_adminid; /* 관리자 아이디 */
+	private String question; /* 질문 */
+	private String answer; /* 답변 */
+	private String passwd; /* 비밀번호 */
+	private int is_hide; /* 공개여부 */
+	private String registerday; /* 등록일자 */
+	private String answerday; /* 답변일자 */
+	private int category; /* 분류 */
+
+	private MemberVO mvo;
+	private ProductVO pvo;
 	 
 	public MemberVO getMvo() {
 		return mvo;

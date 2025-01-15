@@ -3,7 +3,6 @@ package review.controller;
 import java.io.File;
 import java.sql.SQLException;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,7 +20,7 @@ import review.model.ReviewDAO_imple;
 
 public class ReviewAdd extends AbstractController {
 	
-	ReviewDAO rdao = new ReviewDAO_imple();
+	private ReviewDAO rdao = new ReviewDAO_imple();
 	private String extractFileName(String partHeader) {
       for(String cd : partHeader.split("\\;")) {
          if(cd.trim().startsWith("filename")) {
@@ -79,7 +78,7 @@ public class ReviewAdd extends AbstractController {
 	                    }
 	            	}
 	            } else { // form 태그에서 전송되어온 것이 파일이 아닐 경우
-	            	String formValue = request.getParameter(part.getName());
+//	            	String formValue = request.getParameter(part.getName());
 	            }
 	            String optionno = request.getParameter("optionno");
 	    		String title = request.getParameter("title");

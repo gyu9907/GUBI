@@ -1,7 +1,5 @@
 package review.domain;
 
-import java.util.List;
-
 import product.domain.OptionVO;
 import member.domain.MemberVO;
 import product.domain.ProductVO;
@@ -20,8 +18,8 @@ public class ReviewVO {
 	// select 용 field
 	private OptionVO optionvo;
 	// join
-	MemberVO mvo;
-	ProductVO pvo;
+	private MemberVO mvo;
+	private ProductVO pvo;
 	
 	/////////////////////////////
 	public MemberVO getMvo() {

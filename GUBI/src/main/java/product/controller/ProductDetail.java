@@ -12,7 +12,7 @@ import product.model.ProductDAO_imple;
 
 public class ProductDetail extends AbstractController {
 	
-	ProductDAO pdao = new ProductDAO_imple();
+	private ProductDAO pdao = new ProductDAO_imple();
 	
 	public void redirect(HttpServletRequest request) {
 		super.setRedirect(true);

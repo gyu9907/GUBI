@@ -3,7 +3,6 @@ package product.controller;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
@@ -20,13 +19,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
-import product.domain.OptionVO;
-import product.domain.ProductImgVO;
 import product.model.*;
 
 public class AdminAddProduct extends AbstractController {
 	
-	ProductDAO pdao = new ProductDAO_imple();
+	private ProductDAO pdao = new ProductDAO_imple();
 	
 	private String extractFileName(String partHeader) {
 	      for(String cd : partHeader.split("\\;")) {

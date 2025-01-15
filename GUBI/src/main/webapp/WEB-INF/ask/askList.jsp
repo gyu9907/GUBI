@@ -54,18 +54,18 @@
     <div class="section">
         <h3>나의 쇼핑 정보</h3>
         <ul>
-            <li><a href="#">주문/배송</a></li>
-            <li><a href="#">취소/반품/교환</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberOrderList.gu?status=order">주문/배송</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberOrderList.gu?status=refund">취소/반품/교환</a></li>
         </ul>
     </div>
     <div class="section">
         <h3>나의 활동 정보</h3>
         <ul>
-            <li><a href="#">회원정보 및 탈퇴</a></li>
-            <li><a href="<%= ctxPath%>/delivery/deliverList.gu">배송지 목록</a></li>
-            <li><a href="#">포인트</a></li>
-            <li><a href="#">나의 리뷰</a></li>
-            <li><a href="#">1:1 문의</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberEdit.gu">회원정보 수정</a></li>
+            <li><a href="${pageContext.request.contextPath}/member/memberDelete.gu">회원 탈퇴</a></li>
+            <li><a href="${pageContext.request.contextPath}/delivery/deliveryList.gu">배송지 관리</a></li>
+            <li><a href="${pageContext.request.contextPath}/review/myReviewList.gu">나의 리뷰</a></li>
+            <li><a href="${pageContext.request.contextPath}/ask/askList.gu">1:1 문의</a></li>
         </ul> 
     </div>
   </div>
@@ -146,14 +146,15 @@
         <td>${ask.registerday}</td> <!-- 작성일 -->
         <td>
             <!-- 답변 여부 조건 --> 
-            <c:choose>
-                <c:when test="${not empty ask.answer}">
-                    O <!-- 답변 완료 -->
-                </c:when>
-                <c:otherwise>
-                    X <!-- 미답변 -->
-                </c:otherwise>
-            </c:choose>
+             <!-- 답변 여부 조건 --> 
+           <c:choose>
+	           <c:when test="${ask.answer != null and not empty ask.answer}">
+	           <i class="fa-solid fa-comments"></i> <!-- 답변 완료 아이콘 -->
+	           </c:when>
+	           <c:otherwise>
+	           <i class="fa-solid fa-comment-slash"></i> <!-- 미답변 아이콘 -->
+	           </c:otherwise>
+           </c:choose>
         </td>
     </tr>
 </c:forEach>

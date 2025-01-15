@@ -5,8 +5,6 @@ import org.json.JSONObject;
 import ask.model.AskDAO;
 import ask.model.AskDAO_imple;
 import common.controller.AbstractController;
-import delivery.model.DeliveryDAO;
-import delivery.model.DeliveryDAO_imple;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

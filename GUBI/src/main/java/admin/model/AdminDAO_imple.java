@@ -1,6 +1,5 @@
 package admin.model;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -20,8 +19,6 @@ import member.domain.MemberVO;
 import order.domain.OrderVO;
 import product.domain.ProductVO;
 import review.domain.ReviewVO;
-import util.security.AES256;
-import util.security.SecretMyKey;
 import util.security.Sha256;
 
 public class AdminDAO_imple implements AdminDAO {
@@ -30,8 +27,6 @@ public class AdminDAO_imple implements AdminDAO {
 	private Connection conn;
 	private PreparedStatement pstmt;
 	private ResultSet rs;
-	
-	private AES256 aes; // 양방향 암호화 객체 만들어야함
 
 	// 생성자
 	public AdminDAO_imple() {
@@ -41,12 +36,7 @@ public class AdminDAO_imple implements AdminDAO {
 			Context envContext = (Context) initContext.lookup("java:/comp/env");
 			ds = (DataSource) envContext.lookup("jdbc/semioracle");
 			
-			aes = new AES256(SecretMyKey.KEY);          
-			// SecretMyKey.KEY 은 우리가 만든 암호화/복호화 키이다.
-			
 		} catch (NamingException e) {
-			e.printStackTrace();
-		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 

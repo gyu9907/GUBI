@@ -41,7 +41,7 @@ public class AskList extends AbstractController {
         // 문의 목록 설정
         if (askList.isEmpty()) {
             request.setAttribute("message", "문의 내역이 없습니다. 문의를 추가하시겠습니까?");
-            request.setAttribute("loc", request.getContextPath() + "/ask.gu");
+            request.setAttribute("loc", request.getContextPath() + "/ask/ask.gu");
             super.setRedirect(false);
             super.setViewPage("/WEB-INF/common/msg.jsp");  // 메시지 페이지로 이동
         } else {

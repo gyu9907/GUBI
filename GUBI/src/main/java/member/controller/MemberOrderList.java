@@ -14,7 +14,7 @@ import order.model.OrderDAO_imple;
 
 public class MemberOrderList extends AbstractController {
 
-	OrderDAO odao = new OrderDAO_imple();
+	private OrderDAO odao = new OrderDAO_imple();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

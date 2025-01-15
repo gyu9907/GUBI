@@ -36,7 +36,7 @@ const ctxPath = "${pageContext.request.contextPath}";
                             <div id="memberPoint"><fmt:formatNumber value="${sessionScope.loginuser.point}" pattern="#,###" />P</div>
                         </li>
                         <li class="my-3">
-                            <label for="use_point">사용</label>
+                            <label for="usePoint">사용</label>
                             <div style="position: relative;">
                                 <input type="number" name="use_point" id="usePoint" maxlength="10"/>
                                 <button id="useAllPointBtn" type="button" style="position: absolute; right: 0px;">전액 사용</button>

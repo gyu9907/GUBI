@@ -3,7 +3,6 @@ package admin.controller;
 import common.controller.AbstractController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 import member.domain.MemberVO;
 import order.domain.OrderVO;
 import review.domain.ReviewVO;
@@ -17,7 +16,7 @@ import admin.model.*;
 
 public class AdminIndex extends AbstractController {
 	
-	AdminDAO adao = new AdminDAO_imple();
+	private AdminDAO adao = new AdminDAO_imple();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

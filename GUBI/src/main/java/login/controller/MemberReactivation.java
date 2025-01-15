@@ -14,7 +14,7 @@ import member.model.MemberDAO_imple;
 
 public class MemberReactivation extends AbstractController {
 
-	MemberDAO mdao = new MemberDAO_imple();
+	private MemberDAO mdao = new MemberDAO_imple();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

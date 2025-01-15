@@ -8,10 +8,7 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.servlet.http.Part;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -20,7 +17,6 @@ import org.json.JSONObject;
 
 import category.domain.CategoryVO;
 import category.model.*;
-import java.io.*;
 
 public class AdminCategoryUpdate extends AbstractController {
 
