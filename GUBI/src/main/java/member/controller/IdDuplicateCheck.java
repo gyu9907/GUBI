@@ -10,7 +10,7 @@ import member.model.MemberDAO_imple;
 
 public class IdDuplicateCheck extends AbstractController {
 	
-	MemberDAO mdao = new MemberDAO_imple();
+	private MemberDAO mdao = new MemberDAO_imple();
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse respone) throws Exception {

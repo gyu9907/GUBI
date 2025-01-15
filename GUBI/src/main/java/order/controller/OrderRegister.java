@@ -30,17 +30,6 @@ public class OrderRegister extends AbstractController {
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		// 로그인하지 않은 경우, 이전 페이지로 돌아가기
-		if (!super.checkLogin(request)) {
-			request.setAttribute("message", "세션이 만료되어 로그아웃 되었습니다.");
-			request.setAttribute("loc", request.getContextPath()+"/login/login.gu");
-
-			super.setRedirect(false);
-			super.setViewPage("/WEB-INF/common/msg.jsp");
-
-			return;
-		}
-		
 		// GET 방식으로는 접근 불가, 이전 페이지로 돌아가기
 		if (!"POST".equalsIgnoreCase(request.getMethod())) {
 
@@ -62,20 +51,7 @@ public class OrderRegister extends AbstractController {
 		
 		int usePoint = Integer.parseInt(use_point);
 		
-		HttpSession session = request.getSession();
-		MemberVO loginuser = (MemberVO) session.getAttribute("loginuser");
-		int memberPoint = loginuser.getPoint();
-		
-		if(usePoint > memberPoint) {
-			request.setAttribute("message", "보유 포인트보다 많은 포인트를 사용할 수 없습니다.");
-			request.setAttribute("loc", "javascript:history.back()");
-
-			super.setRedirect(false);
-			super.setViewPage("/WEB-INF/common/msg.jsp");
-
-			return;
-		}
-		
+		String userid = request.getParameter("userid"); // userid를 파라미터로 받는 이유 : 로그인이 결제 중 풀려도 완료된 결제는 진행되어야 함
 
 		String optionno = request.getParameter("optionno");         // 옵션 일련번호        (상품 페이지에서 바로 구매하기 버튼을 누른 경우)
 		String[] cartno_arr = request.getParameterValues("cartno"); // 장바구니 일련번호 배열 (장바구니에서 넘어온 경우)
@@ -152,7 +128,7 @@ public class OrderRegister extends AbstractController {
 		}
 		
 		ovo.setOrderno(orderno);
-		ovo.setFk_userid(loginuser.getUserid());
+		ovo.setFk_userid(userid);
 		ovo.setFk_deliveryno(deliveryno);
 		ovo.setTotal_price(total_price);
 		ovo.setUse_point(usePoint);
@@ -163,9 +139,15 @@ public class OrderRegister extends AbstractController {
 		int n = odao.insertOrder(ovo);
 		
 		if(n == 1) {
-			loginuser.setPoint(loginuser.getPoint() - usePoint); // 회원 포인트 차감
-			session.setAttribute("loginuser", loginuser);
-			session.setAttribute("orderno", String.valueOf(orderno));
+			// 로그인 되어있는 경우 세션에서 포인트 차감
+			if (super.checkLogin(request)) {
+				HttpSession session = request.getSession();
+				MemberVO loginuser = (MemberVO) session.getAttribute("loginuser");
+				
+				loginuser.setPoint(loginuser.getPoint() - usePoint); // 회원 포인트 차감
+				session.setAttribute("loginuser", loginuser);
+				session.setAttribute("orderno", String.valueOf(orderno));
+			}
 
 			JSONObject jsonObj = new JSONObject();
 			

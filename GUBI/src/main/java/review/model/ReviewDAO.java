@@ -3,8 +3,6 @@ package review.model;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
-import category.domain.CategoryVO;
-import product.domain.ProductVO;
 import review.domain.AskVO;
 import review.domain.ReviewVO;
 

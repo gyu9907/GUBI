@@ -17,11 +17,10 @@ import jakarta.servlet.http.Part;
 import member.domain.MemberVO;
 import review.model.ReviewDAO;
 import review.model.ReviewDAO_imple;
-import util.check.Check;
 
 public class ReviewEdit extends AbstractController {
 	
-	ReviewDAO rdao = new ReviewDAO_imple();
+	private ReviewDAO rdao = new ReviewDAO_imple();
 	
 	private String extractFileName(String partHeader) {
       for(String cd : partHeader.split("\\;")) {

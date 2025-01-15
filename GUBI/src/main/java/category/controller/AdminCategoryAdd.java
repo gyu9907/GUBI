@@ -21,7 +21,7 @@ import category.model.*;
 
 public class AdminCategoryAdd extends AbstractController {
 
-	CategoryDAO cdao = new CategoryDAO_imple();
+	private CategoryDAO cdao = new CategoryDAO_imple();
 	
 	private String extractFileName(String partHeader) {
 	      for(String cd : partHeader.split("\\;")) {

@@ -10,11 +10,10 @@ import common.controller.AbstractController;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import member.domain.MemberVO;
 
 public class AdminLogin extends AbstractController {
 
-	AdminDAO adao = new AdminDAO_imple();
+	private AdminDAO adao = new AdminDAO_imple();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

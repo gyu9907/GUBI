@@ -17,7 +17,7 @@
 $(document).ready(function() {
 	// 참고 링크 http://www.iamport.kr/getstarted
     var IMP = window.IMP;     // 생략가능
-    IMP.init(iamportApiKey);  // 아임포트에 가입시 부여받은 "가맹점 식별코드". "iamportApiKey.js"에서 가져옴
+    IMP.init("${requestScope.iamportApiKey}");  // 아임포트에 가입시 부여받은 "가맹점 식별코드". "iamportApiKey.js"에서 가져옴
 	
    // 결제요청하기
    IMP.request_pay({
@@ -48,7 +48,7 @@ $(document).ready(function() {
 	   */
 
 		if ( rsp.success ) {
-			window.opener.goPaymentSuccess("${requestScope.use_point}");
+			window.opener.goPaymentSuccess("${sessionScope.loginuser.userid}", "${requestScope.use_point}");
 			
 		    self.close(); // 팝업창 닫기
 			
@@ -60,8 +60,8 @@ $(document).ready(function() {
    }); // end of IMP.request_pay()----------------------------
 
 //    디버깅용
-// 	window.opener.goPaymentSuccess("${requestScope.use_point}");
-//	self.close(); // 팝업창 닫기
+// 	window.opener.goPaymentSuccess("${sessionScope.loginuser.userid}", "${requestScope.use_point}");
+// 	self.close(); // 팝업창 닫기
 }); // end of $(document).ready()-----------------------------
 
 </script>

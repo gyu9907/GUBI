@@ -15,7 +15,7 @@ import order.model.*;
 
 public class AdminOrderStatus extends AbstractController {
 
-	OrderDAO odao = new OrderDAO_imple();
+	private OrderDAO odao = new OrderDAO_imple();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

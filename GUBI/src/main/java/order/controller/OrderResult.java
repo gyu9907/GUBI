@@ -13,8 +13,8 @@ import order.model.OrderDAO_imple;
 
 public class OrderResult extends AbstractController {
 
-	DeliveryDAO ddao = new DeliveryDAO_imple();
-	OrderDAO odao = new OrderDAO_imple();
+	private DeliveryDAO ddao = new DeliveryDAO_imple();
+	private OrderDAO odao = new OrderDAO_imple();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

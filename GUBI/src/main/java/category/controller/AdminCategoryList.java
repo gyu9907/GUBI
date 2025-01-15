@@ -14,7 +14,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class AdminCategoryList extends AbstractController {
 
-	CategoryDAO cdao = new CategoryDAO_imple();
+	private CategoryDAO cdao = new CategoryDAO_imple();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

@@ -11,7 +11,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class GetDeliveryJSON extends AbstractController {
 
-	DeliveryDAO ddao = new DeliveryDAO_imple();
+	private DeliveryDAO ddao = new DeliveryDAO_imple();
 	
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws Exception {

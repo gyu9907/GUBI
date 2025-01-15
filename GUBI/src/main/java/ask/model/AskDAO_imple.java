@@ -1,6 +1,5 @@
 package ask.model;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,9 +14,6 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 import ask.domain.AskVO;
-import product.domain.OptionVO;
-import util.security.AES256;
-import util.security.SecretMyKey;
 import util.security.Sha256;
 
 public class AskDAO_imple implements AskDAO {
@@ -27,8 +23,6 @@ public class AskDAO_imple implements AskDAO {
 	private PreparedStatement pstmt;
 	private ResultSet rs;
 	
-	private AES256 aes;
-	
 	// 생성자
 	public AskDAO_imple() {
 		try {
@@ -36,12 +30,7 @@ public class AskDAO_imple implements AskDAO {
 		    Context envContext  = (Context)initContext.lookup("java:/comp/env");
 		    ds = (DataSource)envContext.lookup("jdbc/semioracle");
 		    
-		    aes = new AES256(SecretMyKey.KEY);
-		    // SecretMyKey.KEY 은 우리가 만든 암호화/복호화 키이다.
-		    
 		} catch(NamingException e) {
-			e.printStackTrace();
-		} catch(UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
 	}

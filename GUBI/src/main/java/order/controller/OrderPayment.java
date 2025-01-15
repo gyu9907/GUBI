@@ -13,6 +13,7 @@ import member.domain.MemberVO;
 import product.model.ProductDAO;
 import product.model.ProductDAO_imple;
 import util.check.Check;
+import util.config.AppConfig;
 
 public class OrderPayment extends AbstractController {
 
@@ -148,6 +149,7 @@ public class OrderPayment extends AbstractController {
 		request.setAttribute("order_name", order_name);
 		request.setAttribute("amount_paid", amount_paid);
 		request.setAttribute("use_point", use_point);
+		request.setAttribute("iamportApiKey", AppConfig.iamportApiKey);
 		
 		super.setRedirect(false);
 		super.setViewPage("/WEB-INF/order/orderPayment.jsp");
