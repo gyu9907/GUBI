@@ -1,7 +1,7 @@
 # GUBI
 GUBI 가구 쇼핑몰 세미 프로젝트
 
-내가왔다
+
 
 <a href="https://github.com/devxb/gitanimals">
 <img
@@ -9,7 +9,7 @@ GUBI 가구 쇼핑몰 세미 프로젝트
   width="600"
   height="300"
 />
-</a>                           <-- 이건 뭡니까..?
+</a>                           
 
 
 
