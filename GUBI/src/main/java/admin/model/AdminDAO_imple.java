@@ -176,7 +176,7 @@ public class AdminDAO_imple implements AdminDAO {
 			}
 
 			String sql = " select NVL(to_char(orderday, "+dateSql+"), '합계') AS orderday, NVL(sum(cnt), 0)"
-					   + "      , NVL(ROUND(RATIO_TO_REPORT(sum(cnt)) OVER(PARTITION BY (to_char(orderday, "+dateSql+"))), 3) * 100, 0) "
+					   + "      , NVL(ROUND(RATIO_TO_REPORT(sum(cnt)) OVER(PARTITION BY (GROUPING(to_char(orderday, "+dateSql+")))), 3) * 100, 0) "
 					   + " from tbl_order o "
 					   + " join tbl_order_detail od "
 					   + " on o.orderno = od.fk_orderno "
@@ -229,7 +229,8 @@ public class AdminDAO_imple implements AdminDAO {
 
 			String sql = " select NVL(to_char(loginday, "+dateSql+"), '합계') AS loginday "
 					   + "      , count(distinct fk_userid || to_char(loginday, "+dateSql+")) as value "
-					   + "      , ROUND(RATIO_TO_REPORT(count(distinct fk_userid || to_char(loginday, "+dateSql+"))) OVER(PARTITION BY GROUPING(to_char(loginday, "+dateSql+"))), 3) * 100 as percentage "
+					   + "      , ROUND(RATIO_TO_REPORT(count(distinct fk_userid || to_char(loginday, "+dateSql+"))) "
+					   + "              OVER(PARTITION BY GROUPING(to_char(loginday, "+dateSql+"))), 3) * 100 as percentage "
 					   + " from tbl_login "
 					   + " group by ROLLUP(to_char(loginday, "+dateSql+")) ";
 			

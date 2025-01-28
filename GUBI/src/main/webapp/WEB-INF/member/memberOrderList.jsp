@@ -110,17 +110,13 @@ const ctxPath = "${pageContext.request.contextPath}";  // JSP에서 컨텍스트
 									<button type="button" id="orderCancel" data-orderno="${orderVO.orderno}">주문취소</button>
 								</td>
 								</c:if>
-								<%-- <c:if test="${orderVO.status eq 3}">주문취소</c:if> --%>
-								<%-- <c:if test="${orderVO.status eq 4}">배송중</c:if> --%>
 								<c:if test="${orderVO.status eq 5 && status.index eq 0}"><%-- 배송완료 상태일 때 구매확정, 환불신청 버튼을 표시 --%>
 								<td rowspan="${fn:length(orderVO.orderDetailList)}">
 									<button type="button" id="orderConfirm" class="black" data-orderno="${orderVO.orderno}">구매확정</button>
 									<button type="button" id="orderRefund" data-orderno="${orderVO.orderno}">환불신청</button>
 								</td>
 								</c:if>
-								<%-- <c:if test="${orderVO.status eq 7}">환불접수</c:if> --%>
-								<%-- <c:if test="${orderVO.status eq 8}">환불완료</c:if> --%>
-								<c:if test="${orderVO.status eq 6 && odvo.reviewno eq 0}">
+								<c:if test="${orderVO.status eq 6 && odvo.reviewno eq 0}"><%-- 구매확정 상태일 때 작성된 리뷰가 없다면 리뷰작성 버튼을 표시 --%>
 								<td>
 									<div class="button-wrapper">
 							            <button type="button" class="reviewBtn black" data-toggle="modal" data-target="#addReviewModal" data-value="${odvo.fk_optionno}">
@@ -128,12 +124,12 @@ const ctxPath = "${pageContext.request.contextPath}";  // JSP에서 컨텍스트
 							            </button>
 							         </div>
 								</td>	
-								</c:if><%-- 구매확정 상태일 때 리뷰작성 버튼을 표시 --%>
+								</c:if><%-- 구매확정 상태일 때 작성된 리뷰가 있다면 리뷰확인 버튼을 표시 --%>
 								<c:if test="${orderVO.status eq 6 && odvo.reviewno ne 0}">
 								<td>
 									<button type="button" id=reviewCheck data-productno="${odvo.p_no}">리뷰확인</button>
 								</td>
-								</c:if><%-- 구매확정 상태일 때 리뷰확인 버튼을 표시 --%>
+								</c:if>
 							</tr>
 						</c:forEach>
 						</c:forEach>

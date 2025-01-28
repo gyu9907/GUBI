@@ -163,21 +163,21 @@ public class OrderRegister extends AbstractController {
 			
 			return;
 		}
-		else if (n == -1) {
-			JSONObject jsonObj = new JSONObject();
-			
-			jsonObj.put("message", "주문하신 상품의 재고가 부족합니다.");
-			jsonObj.put("loc", "javascript:history.back()");
-			
-			String json = jsonObj.toString();
-			
-			request.setAttribute("json", json);
-			
-			super.setRedirect(false);
-			super.setViewPage("/WEB-INF/common/jsonview.jsp");
-			
-			return;
-		}
+//		else if (n == -1) {
+//			JSONObject jsonObj = new JSONObject();
+//			
+//			jsonObj.put("message", "주문하신 상품의 재고가 부족합니다.");
+//			jsonObj.put("loc", "javascript:history.back()");
+//			
+//			String json = jsonObj.toString();
+//			
+//			request.setAttribute("json", json);
+//			
+//			super.setRedirect(false);
+//			super.setViewPage("/WEB-INF/common/jsonview.jsp");
+//			
+//			return;
+//		}
 		else {
 			JSONObject jsonObj = new JSONObject();
 			

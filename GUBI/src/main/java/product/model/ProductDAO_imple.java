@@ -343,8 +343,6 @@ public class ProductDAO_imple implements ProductDAO {
 					   + "        price, thumbnail_img, registerday, "
 					   + "        cnt, delivery_price, detail_html, "
 					   + "        p_is_delete, point_pct, "
-					   + "        optioncnt, "
-					   + "        productimgcnt, "
 					   + "        major_category, "
 					   + "        small_category,"
 					   + "        c_is_delete "
@@ -354,25 +352,10 @@ public class ProductDAO_imple implements ProductDAO {
 					   + "        price, thumbnail_img, to_char(registerday, 'yyyy-mm-dd') AS registerday, "
 					   + "        cnt, delivery_price, detail_html, "
 					   + "        P.is_delete AS p_is_delete, point_pct, "
-					   + "        O.optioncnt, "
-					   + "        I.productimgcnt, "
 					   + "        major_category, "
 					   + "        small_category,"
 					   + "        C.is_delete AS c_is_delete "
-					   + "    FROM tbl_product P JOIN "
-					   + "    ( "
-					   + "        select fk_productno, count(*) as optionCnt "
-					   + "        from tbl_option "
-					   + "        group by fk_productno "
-					   + "    )O "
-					   + "    ON P.productno = O.fk_productno "
-					   + "    JOIN "
-					   + "    ( "
-					   + "        select fk_productno, count(*) as productImgCnt "
-					   + "        from tbl_product_img "
-					   + "        group by fk_productno "
-					   + "    )I "
-					   + "    ON P.productno = I.fk_productno "
+					   + "    FROM tbl_product P "
 					   + "    JOIN tbl_category C "
 					   + "    ON P.fk_categoryno = C.categoryno "
 					   + "    WHERE ";
@@ -546,9 +529,6 @@ public class ProductDAO_imple implements ProductDAO {
 				pvo.setDelivery_price(rs.getInt("delivery_price"));
 				pvo.setIs_delete(rs.getInt("p_is_delete"));
 				pvo.setPoint_pct(rs.getInt("point_pct"));
-				
-				pvo.setOptionCnt(rs.getInt("optionCnt")); // 상품 옵션의 개수
-				pvo.setProductImgCnt(rs.getInt("productImgCnt")); // 상품 이미지의 개수
 				
 				CategoryVO cvo = new CategoryVO();
 				
