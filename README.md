@@ -1,4 +1,5 @@
 # GUBI
+![Image](https://github.com/user-attachments/assets/2498f957-e51c-41c2-a244-78e27ed11c47)
 <h2>GUBI 가구 쇼핑몰</h2>
 <P>
 jsp와servlet을 활용하여 MVC패턴을 기반으로 제작한 웹애플리케이션 GUBI 입니다.
